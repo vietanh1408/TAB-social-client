@@ -1,33 +1,33 @@
 // libs
-import React, { Suspense } from 'react'
-import { Provider } from 'react-redux'
-import { BrowserRouter as Router } from 'react-router-dom'
-import { PersistGate } from 'redux-persist/integration/react'
-// store
-import { persistor, store } from 'app/store'
+import React, { Suspense, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 // components
-import LoadingPage from 'components/LoadingPage'
-import Header from 'components/layout/header/Header'
+import CustomNotification from 'components/CustomNotification'
 import Footer from 'components/layout/footer/Footer'
+import Header from 'components/layout/header/Header'
+import LoadingPage from 'components/LoadingPage'
 // route
 import GenerateRoute from 'routes/GenerateRoute'
-import CustomNotification from 'components/CustomNotification'
+// socket.io
+import io from 'socket.io-client'
+import { socketAction } from 'features/socket/api'
 
 const App = () => {
-  console.log('run...')
+  const dispatch = useDispatch()
+  useEffect((): any => {
+    // @ts-ignore
+    const socket = io(process.env.REACT_APP_SOCKET_URL)
+    dispatch(socketAction(socket))
+    return () => socket.close()
+  }, [dispatch])
+
   return (
-    <Router>
-      <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <Suspense fallback={<LoadingPage />}>
-            <Header />
-            <GenerateRoute />
-            <Footer />
-            <CustomNotification />
-          </Suspense>
-        </PersistGate>
-      </Provider>
-    </Router>
+    <Suspense fallback={<LoadingPage />}>
+      <Header />
+      <GenerateRoute />
+      <Footer />
+      <CustomNotification />
+    </Suspense>
   )
 }
 

@@ -7,6 +7,7 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import persistReducer from 'redux-persist/es/persistReducer'
 import persistStore from 'redux-persist/es/persistStore'
 import storage from 'redux-persist/lib/storage'
+import thunk from 'redux-thunk'
 import { rootReducer } from './rootReducer'
 
 const persistConfig = {
@@ -26,7 +27,8 @@ export const createStore = (
   return configureStore({
     reducer: persistedReducer,
     ...options,
-    devTools: process.env.NODE_ENV !== 'production'
+    devTools: process.env.NODE_ENV !== 'production',
+    middleware: [thunk]
   })
 }
 

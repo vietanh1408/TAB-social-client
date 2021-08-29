@@ -4,12 +4,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import { fetchLogin, fetchRegister } from './api'
 import { toast } from 'react-toastify'
 import { useHistory } from 'react-router'
+import { useNotification } from 'hook/useNotification'
 
 export const useLogin = () => {
   const dispatch: AppDispatch = useDispatch()
   const history = useHistory()
   const onFetch = async (data: LoginAccount) => {
-    const resultAction: any = await dispatch(fetchLogin(data))
+    // @ts-ignore
+    const resultAction = await dispatch(fetchLogin(data))
     if (fetchLogin.fulfilled.match(resultAction)) {
       toast.success('Login success')
       history.push('/')
@@ -24,8 +26,10 @@ export const useRegister = () => {
   const dispatch: AppDispatch = useDispatch()
   const history = useHistory()
   const onFetch = async (data: RegisterAccount) => {
-    const resultAction: any = await dispatch(fetchRegister(data))
-    if (fetchRegister.fulfilled.match(resultAction)) {
+    // @ts-ignore
+    const resultAction = await dispatch(fetchRegister(data))
+    const isSuccess = fetchRegister.fulfilled.match(resultAction)
+    if (isSuccess) {
       toast.success('Register success')
       history.push('/')
     } else {
