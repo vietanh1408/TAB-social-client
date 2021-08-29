@@ -1,0 +1,5 @@
+@import url('./layout.css');
+
+#news-feed {
+    background-color: var(--background-color);
+}

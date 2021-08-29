@@ -1,0 +1,28 @@
+.custom__input {
+	min-height: 3.375rem;
+	border-radius: 0.5rem;
+}
+
+/* --mobile-- */
+@media only screen and (max-width: 767px) {
+	.custom__input {
+		min-height: 2.75rem;
+		border-radius: 0.5rem;
+	}
+	.auth__social {
+		height: 2.75rem;
+	}
+}
+
+/* --Tablet-- */
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+	.custom__input {
+		min-height: 2.75rem;
+		border-radius: 0.5rem;
+	}
+	.auth__social {
+		height: 2.75rem;
+	}
+}
+ 
