@@ -1,11 +1,11 @@
-import { useGetToken } from 'features/auth/hooks'
+import { useGetAuth } from 'features/auth/hooks'
 import React from 'react'
 import HeaderLeft from './HeaderLeft'
 import HeaderNav from './HeaderNav'
 import HeaderRight from './HeaderRight'
 
 const Header = () => {
-  const { token } = useGetToken()
+  const { token } = useGetAuth()
   return (
     <>
       {token && (

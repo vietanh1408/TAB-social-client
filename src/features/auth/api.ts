@@ -1,5 +1,5 @@
-import { showError } from 'extensions/alertNotify'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { showError } from 'extensions/index'
 import authApi from 'api/authApi'
 import {
   AuthState,
@@ -78,7 +78,7 @@ const authSlice = createSlice({
   extraReducers: (builder) => {
     builder
       // login
-      .addCase(fetchLogin.pending, (state: AuthState, { payload }) => {
+      .addCase(fetchLogin.pending, (state: AuthState, action: any) => {
         state.isLoading = true
       })
       .addCase(fetchLogin.fulfilled, (state: AuthState, action: any) => {
@@ -88,10 +88,10 @@ const authSlice = createSlice({
       })
       .addCase(fetchLogin.rejected, (state: AuthState, action: any) => {
         state.isLoading = false
-        state.error = action.payload?.message
+        state.error = action.payload?.data?.message
       })
       // register
-      .addCase(fetchRegister.pending, (state: AuthState, { payload }) => {
+      .addCase(fetchRegister.pending, (state: AuthState, action: any) => {
         state.isLoading = true
       })
       .addCase(fetchRegister.fulfilled, (state: AuthState, action: any) => {
@@ -101,11 +101,11 @@ const authSlice = createSlice({
       })
       .addCase(fetchRegister.rejected, (state: AuthState, action: any) => {
         state.isLoading = false
-        state.error = action.payload?.message
+        state.error = action.payload?.data?.message
       })
 
       // verify
-      .addCase(fetchVerifyEmail.pending, (state: AuthState, { payload }) => {
+      .addCase(fetchVerifyEmail.pending, (state: AuthState, action: any) => {
         state.isVerify = false
       })
       .addCase(fetchVerifyEmail.fulfilled, (state: AuthState, action: any) => {

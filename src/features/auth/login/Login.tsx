@@ -4,14 +4,14 @@ import { LoginAccount } from 'Models'
 import React, { useEffect } from 'react'
 import { useHistory } from 'react-router'
 import LoginForm from './Form'
-import { useGetToken, useLogin } from '../hooks'
+import { useGetAuth, useLogin } from '../hooks'
 
 const Login = () => {
   const history = useHistory()
 
   const [onFetch] = useLogin()
 
-  const { token, isLoading } = useGetToken()
+  const { token, isLoading } = useGetAuth()
 
   const handleSubmitForm = (data: LoginAccount) => {
     onFetch(data)

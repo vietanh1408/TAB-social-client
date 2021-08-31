@@ -3,15 +3,15 @@ import { VerifyEmailInput } from 'Models'
 import React from 'react'
 import { useEffect } from 'react'
 import { useHistory } from 'react-router'
-import { useGetToken, useSendMail, useVerifyEmail } from '../hooks'
+import { useGetAuth, useSendMail, useVerifyEmail } from '../hooks'
 import VerifyForm from './Form'
 
 const VerifyEmail = () => {
-  const { isVerify } = useGetToken()
+  const { isVerify } = useGetAuth()
 
   const history = useHistory()
 
-  const [onFetch] = useSendMail()
+  const [onSendMail] = useSendMail()
 
   const [onVerify] = useVerifyEmail()
 
@@ -20,7 +20,7 @@ const VerifyEmail = () => {
   }
 
   useEffect(() => {
-    onFetch()
+    onSendMail()
   }, [])
 
   useEffect(() => {

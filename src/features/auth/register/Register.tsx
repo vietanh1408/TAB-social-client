@@ -7,7 +7,7 @@ import LoadingPage from 'components/LoadingPage'
 // constants
 import { navName } from 'constants/navName'
 // hooks
-import { useGetToken, useRegister } from '../hooks'
+import { useGetAuth, useRegister } from '../hooks'
 
 import { RegisterAccount } from 'Models'
 import AuthImage from 'assets/Auth-image.png'
@@ -17,7 +17,7 @@ const RegisterPage = () => {
 
   const [onFetch] = useRegister()
 
-  const { token, isLoading } = useGetToken()
+  const { token, isLoading } = useGetAuth()
 
   const handleSubmitForm = (data: RegisterAccount) => {
     onFetch(data)

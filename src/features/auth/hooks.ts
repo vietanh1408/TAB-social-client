@@ -44,18 +44,18 @@ export const useRegister = () => {
 }
 
 export const useSendMail = () => {
-  const { user, token } = useGetToken()
+  const { user, token } = useGetAuth()
   const dispatch: AppDispatch = useDispatch()
-  const onFetch = () => {
+  const onSendMail = () => {
     // @ts-ignore
     dispatch(fetchSendMail({ email: user?.email, token }))
   }
-  return [onFetch]
+  return [onSendMail]
 }
 
 export const useVerifyEmail = () => {
   const dispatch: AppDispatch = useDispatch()
-  const { token } = useGetToken()
+  const { token } = useGetAuth()
   const onVerify = async (data: VerifyEmailInput) => {
     // @ts-ignore
     const resultAction = await dispatch(fetchVerifyEmail({ data, token }))
@@ -69,6 +69,6 @@ export const useVerifyEmail = () => {
   return [onVerify]
 }
 
-export const useGetToken = () => {
+export const useGetAuth = () => {
   return useSelector((state: RootState) => state.auth)
 }

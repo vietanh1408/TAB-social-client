@@ -1,5 +1,5 @@
 // libs
-import { useGetToken } from 'features/auth/hooks'
+import { useGetAuth } from 'features/auth/hooks'
 import React from 'react'
 import {
   Redirect,
@@ -24,7 +24,7 @@ interface Iprops {
 
 const ProtectedRoute = (props: RouteProps & Iprops) => {
   const { component, resource, path, isAuth, isProtected, ...rest } = props
-  const { token } = useGetToken()
+  const { token } = useGetAuth()
   const renderFn = (Component?: RouteComponent) => (props: RouteProps) => {
     if (!Component) {
       return <div>Page Not Found</div>

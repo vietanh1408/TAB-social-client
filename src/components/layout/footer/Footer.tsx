@@ -2,10 +2,10 @@ import React from 'react'
 import { HomeOutlined, TeamOutlined, UserAddOutlined } from '@ant-design/icons'
 import CustomLink from 'components/CustomLink'
 import { navName } from 'constants/navName'
-import { useGetToken } from 'features/auth/hooks'
+import { useGetAuth } from 'features/auth/hooks'
 
 const Footer = () => {
-  const { token } = useGetToken()
+  const { token } = useGetAuth()
   return (
     <>
       {token && (

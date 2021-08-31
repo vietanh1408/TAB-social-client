@@ -7,10 +7,6 @@ const authApi = {
     const url = '/auth/login'
     return axiosClient.post(url, params)
   },
-  loadUser(token: string) {
-    const url = '/auth'
-    return axiosClient.get(url, setHeaders(token))
-  },
   register(params: RegisterAccount) {
     const url = '/auth/register'
     return axiosClient.post(url, params)
