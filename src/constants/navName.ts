@@ -3,5 +3,6 @@ export const navName = {
   LOGIN: '/login',
   REGISTER: '/register',
   FRIEND: '/friends',
-  ADD_FRIEND: '/add-friends'
+  ADD_FRIEND: '/add-friends',
+  VERIFY_EMAIL: '/verify-email'
 }

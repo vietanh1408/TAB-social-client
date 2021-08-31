@@ -25,7 +25,7 @@ type LoginFormProps = {
 }
 
 const schema = yup.object().shape({
-  email: yupExtension.emailRequired,
+  emailOrPhone: yupExtension.emailOrPhoneRequired,
   password: yupExtension.passwordRequired
 })
 
@@ -34,7 +34,7 @@ const LoginForm = (props: LoginFormProps) => {
 
   const formProps = useForm<LoginAccount>({
     defaultValues: {
-      email: '',
+      emailOrPhone: '',
       password: ''
     },
     resolver: yupResolver(schema)
@@ -100,7 +100,7 @@ const LoginForm = (props: LoginFormProps) => {
               {/* Email */}
               <FormItem
                 required={true}
-                fieldName="email"
+                fieldName="emailOrPhone"
                 isValidate={true}
                 hideLabel={true}
               >
@@ -110,7 +110,7 @@ const LoginForm = (props: LoginFormProps) => {
                     value={value}
                     onBlur={onBlur}
                     onChange={onChange}
-                    placeholder={'Email'}
+                    placeholder={'Email hoặc số điện thoại'}
                   />
                 )}
               </FormItem>

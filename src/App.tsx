@@ -14,6 +14,7 @@ import { socketAction } from 'features/socket/api'
 
 const App = () => {
   const dispatch = useDispatch()
+
   useEffect((): any => {
     // @ts-ignore
     const socket = io(process.env.REACT_APP_SOCKET_URL)

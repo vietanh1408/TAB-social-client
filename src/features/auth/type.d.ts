@@ -13,5 +13,6 @@ declare module 'Models' {
     user: UserState | null
     error: anym
     isLoading: boolean
+    isVerify: boolean
   }
 }

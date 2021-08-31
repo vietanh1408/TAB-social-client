@@ -23,12 +23,9 @@ const Login = () => {
     }
   }, [token, history])
 
-  if (isLoading) {
-    return <LoadingPage />
-  }
-
   return (
     <div id="auth_page">
+      {isLoading && <LoadingPage />}
       <div className="container py-28 xl:py-32 flex justify-between items-center w-full h-full">
         <div className="image h-full w-full hidden lg:flex justify-center items-center">
           <img src={AuthImage} alt="login-img" />

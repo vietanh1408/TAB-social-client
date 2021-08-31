@@ -10,18 +10,33 @@ import {
   registerResource,
   registerRoutes
 } from 'features/auth/register/nav'
+import {
+  verifyEmailNav,
+  verifyEmailResource,
+  verifyEmailRoutes
+} from 'features/auth/verifyEmail/nav'
 
-export const mainNav = [...loginNav, ...registerNav, ...newsFeedNav]
+export const mainNav = [
+  ...loginNav,
+  ...registerNav,
+  ...verifyEmailNav,
+
+  ...newsFeedNav
+]
 
 export const routes = {
   ...loginRoutes,
   ...registerRoutes,
+  ...verifyEmailRoutes,
+
   ...newsFeedRoutes
 }
 
 export const resources = {
   ...loginResource,
   ...registerResource,
+  ...verifyEmailResource,
+
   ...newsFeedResource
 }
 

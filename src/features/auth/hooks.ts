@@ -1,22 +1,26 @@
-import { AppDispatch, RootState } from 'app/store'
-import { LoginAccount, RegisterAccount } from 'Models'
-import { useDispatch, useSelector } from 'react-redux'
-import { fetchLogin, fetchRegister } from './api'
+// libs
 import { toast } from 'react-toastify'
-import { useHistory } from 'react-router'
-import { useNotification } from 'hook/useNotification'
+import { useDispatch, useSelector } from 'react-redux'
+// models
+import { AppDispatch, RootState } from 'app/store'
+import { LoginAccount, RegisterAccount, VerifyEmailInput } from 'Models'
+// api
+import {
+  fetchLogin,
+  fetchRegister,
+  fetchSendMail,
+  fetchVerifyEmail
+} from './api'
 
 export const useLogin = () => {
   const dispatch: AppDispatch = useDispatch()
-  const history = useHistory()
   const onFetch = async (data: LoginAccount) => {
     // @ts-ignore
     const resultAction = await dispatch(fetchLogin(data))
     if (fetchLogin.fulfilled.match(resultAction)) {
-      toast.success('Login success')
-      history.push('/')
+      toast.success('Đăng nhập thành công')
     } else {
-      toast.error(resultAction.payload.data.message)
+      toast.error(resultAction.payload?.data?.message)
     }
   }
   return [onFetch]
@@ -24,19 +28,45 @@ export const useLogin = () => {
 
 export const useRegister = () => {
   const dispatch: AppDispatch = useDispatch()
-  const history = useHistory()
   const onFetch = async (data: RegisterAccount) => {
     // @ts-ignore
     const resultAction = await dispatch(fetchRegister(data))
     const isSuccess = fetchRegister.fulfilled.match(resultAction)
     if (isSuccess) {
-      toast.success('Register success')
-      history.push('/')
+      toast.success(
+        'Đăng ký thành công, Mã xác thực đã được gửi vào email của bạn'
+      )
     } else {
-      toast.error(resultAction.payload.data.message)
+      toast.error(resultAction.payload?.data?.message)
     }
   }
   return [onFetch]
+}
+
+export const useSendMail = () => {
+  const { user, token } = useGetToken()
+  const dispatch: AppDispatch = useDispatch()
+  const onFetch = () => {
+    // @ts-ignore
+    dispatch(fetchSendMail({ email: user?.email, token }))
+  }
+  return [onFetch]
+}
+
+export const useVerifyEmail = () => {
+  const dispatch: AppDispatch = useDispatch()
+  const { token } = useGetToken()
+  const onVerify = async (data: VerifyEmailInput) => {
+    // @ts-ignore
+    const resultAction = await dispatch(fetchVerifyEmail({ data, token }))
+    const isSuccess = fetchVerifyEmail.fulfilled.match(resultAction)
+    if (isSuccess) {
+      toast.success('Xác thực tài khoản thành công')
+    } else {
+      toast.error(resultAction.payload?.data?.message)
+    }
+  }
+  return [onVerify]
 }
 
 export const useGetToken = () => {

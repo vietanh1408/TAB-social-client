@@ -1,12 +1,19 @@
+import { showError } from 'extensions/alertNotify'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import authApi from 'api/authApi'
-import { AuthState, LoginAccount, RegisterAccount } from 'Models'
+import {
+  AuthState,
+  LoginAccount,
+  RegisterAccount,
+  VerifyEmailInput
+} from 'Models'
 
 const initialState: AuthState = {
   token: '',
   user: null,
   error: null,
-  isLoading: false
+  isLoading: false,
+  isVerify: false
 }
 
 export const fetchLogin = createAsyncThunk(
@@ -16,6 +23,7 @@ export const fetchLogin = createAsyncThunk(
       const { data: response } = await authApi.login(data)
       return response
     } catch (err: any) {
+      showError(err)
       return rejectWithValue(err.response)
     }
   }
@@ -28,6 +36,36 @@ export const fetchRegister = createAsyncThunk(
       const { data: response } = await authApi.register(data)
       return response
     } catch (err: any) {
+      showError(err)
+      return rejectWithValue(err.response)
+    }
+  }
+)
+
+export const fetchSendMail = createAsyncThunk(
+  'auth/send-mail',
+  async ({ email, token }: any, { rejectWithValue }) => {
+    try {
+      const { data: response } = await authApi.sendMail({ email: email }, token)
+      return response
+    } catch (err: any) {
+      showError(err)
+      return rejectWithValue(err.response)
+    }
+  }
+)
+
+export const fetchVerifyEmail = createAsyncThunk(
+  'auth/verify-email',
+  async (
+    { data, token }: { data: VerifyEmailInput; token: string },
+    { rejectWithValue }
+  ) => {
+    try {
+      const response = await authApi.verifyEmail(data, token)
+      return response.data.success
+    } catch (err: any) {
+      showError(err)
       return rejectWithValue(err.response)
     }
   }
@@ -50,7 +88,7 @@ const authSlice = createSlice({
       })
       .addCase(fetchLogin.rejected, (state: AuthState, action: any) => {
         state.isLoading = false
-        state.error = action.payload.message
+        state.error = action.payload?.message
       })
       // register
       .addCase(fetchRegister.pending, (state: AuthState, { payload }) => {
@@ -63,7 +101,18 @@ const authSlice = createSlice({
       })
       .addCase(fetchRegister.rejected, (state: AuthState, action: any) => {
         state.isLoading = false
-        state.error = action.payload.message
+        state.error = action.payload?.message
+      })
+
+      // verify
+      .addCase(fetchVerifyEmail.pending, (state: AuthState, { payload }) => {
+        state.isVerify = false
+      })
+      .addCase(fetchVerifyEmail.fulfilled, (state: AuthState, action: any) => {
+        state.isVerify = action.payload
+      })
+      .addCase(fetchVerifyEmail.rejected, (state: AuthState, action: any) => {
+        state.isVerify = false
       })
   }
 })

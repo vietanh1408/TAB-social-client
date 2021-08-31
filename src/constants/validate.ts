@@ -4,7 +4,9 @@ const validate = {
   email: 'Email không đúng định dạng',
   phone: 'Số điện thoại phải có ít nhất 9 số và bắt đầu bằng số 0',
   password: 'Mật khẩu phải có ít nhát 6 ký tự',
-  confirmPassword: 'Mật khẩu không trùng khớp'
+  confirmPassword: 'Mật khẩu không trùng khớp',
+  emailOrPhone: 'Email or phone number is invalid',
+  code: 'Mã code phải có 6 ký tự và không có ký tự đặc biệt'
 }
 
 export default validate

@@ -1,6 +1,6 @@
 declare module 'Models' {
   export interface LoginAccount {
-    email: string
+    emailOrPhone: string
     password: string
   }
 }
