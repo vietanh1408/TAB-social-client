@@ -4,5 +4,6 @@ export const navName = {
   REGISTER: '/register',
   FRIEND: '/friends',
   ADD_FRIEND: '/add-friends',
-  VERIFY_EMAIL: '/verify-email'
+  VERIFY_EMAIL: '/verify-email',
+  FORGOR_PASSWORD: '/forgot-password'
 }

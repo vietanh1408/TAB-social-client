@@ -74,7 +74,13 @@ export const fetchVerifyEmail = createAsyncThunk(
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    logout: (state: AuthState) => {
+      state.token = null
+      state.user = null
+      state.isVerify = false
+    }
+  },
   extraReducers: (builder) => {
     builder
       // login
@@ -118,4 +124,5 @@ const authSlice = createSlice({
 })
 
 const { reducer } = authSlice
+export const { logout } = authSlice.actions
 export default reducer

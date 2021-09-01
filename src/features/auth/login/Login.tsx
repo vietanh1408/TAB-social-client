@@ -1,10 +1,15 @@
-import AuthImage from 'assets/Auth-image.png'
-import LoadingPage from 'components/LoadingPage'
-import { LoginAccount } from 'Models'
+// libs
 import React, { useEffect } from 'react'
 import { useHistory } from 'react-router'
+// components
 import LoginForm from './Form'
+import AuthPage from '../AuthPage'
+// models
+import { LoginAccount } from 'Models'
+// hooks
 import { useGetAuth, useLogin } from '../hooks'
+// constants
+import { navName } from 'constants/navName'
 
 const Login = () => {
   const history = useHistory()
@@ -19,25 +24,19 @@ const Login = () => {
 
   useEffect(() => {
     if (token) {
-      history.push('/')
+      history.push(navName.HOME)
     }
   }, [token, history])
 
   return (
-    <div id="auth_page">
-      {isLoading && <LoadingPage />}
-      <div className="container py-28 xl:py-32 flex justify-between items-center w-full h-full">
-        <div className="image h-full w-full hidden lg:flex justify-center items-center">
-          <img src={AuthImage} alt="login-img" />
-        </div>
-        <LoginForm
-          handleSubmitForm={handleSubmitForm}
-          title="Đăng nhập"
-          text="Chào mừng bạn đã đến với TAB !"
-          isLoading={isLoading}
-        />
-      </div>
-    </div>
+    <AuthPage>
+      <LoginForm
+        handleSubmitForm={handleSubmitForm}
+        title="Đăng nhập"
+        text="Chào mừng bạn đã đến với TAB !"
+        isLoading={isLoading}
+      />
+    </AuthPage>
   )
 }
 

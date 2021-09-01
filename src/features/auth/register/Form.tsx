@@ -12,6 +12,7 @@ import FormItem from 'components/Form/FormItem'
 import yupExtension from 'extensions/yup'
 // models
 import { RegisterAccount } from 'Models'
+import { navName } from 'constants/navName'
 
 type RegisterFormProps = {
   handleSubmitForm(args: RegisterAccount): void
@@ -49,8 +50,8 @@ const RegisterForm = (props: RegisterFormProps) => {
   }
 
   return (
-    <div className="w-full h-full flex justify-center items-center px-10 xl:px-35">
-      <div className="auth_form h-full flex flex-col items-center justify-start px-8 py-8 bg-white rounded-lg">
+    <div className="w-full h-full flex justify-center items-center xl:px-35">
+      <div className="auth_form h-full flex flex-col items-center justify-center px-8 py-8 bg-white rounded-lg">
         <div className="w-full text-4xl font-bold">
           <h2 className="auth_title text-left">{title}</h2>
         </div>
@@ -166,7 +167,7 @@ const RegisterForm = (props: RegisterFormProps) => {
               {/* Redirect register */}
               <p className="text-center my-4 text-xs xl:text-lg">
                 Nếu bạn đã có tài khoản? Hãy
-                <Link to="/" className="custom__link px-1">
+                <Link to={navName.LOGIN} className="custom__link px-1">
                   Đăng nhập
                 </Link>
                 ngay

@@ -16,6 +16,7 @@ import FormItem from 'components/Form/FormItem'
 import yupExtension from 'extensions/yup'
 // models
 import { LoginAccount } from 'Models'
+import { navName } from 'constants/navName'
 
 type LoginFormProps = {
   handleSubmitForm(args: LoginAccount): void
@@ -59,8 +60,8 @@ const LoginForm = (props: LoginFormProps) => {
   }
 
   return (
-    <div className="w-full h-full flex justify-center items-center px-10 xl:px-35">
-      <div className="auth_form h-full flex flex-col items-center justify-start px-8 py-8 bg-white rounded-lg">
+    <div className="w-full h-full flex justify-center items-center xl:px-35">
+      <div className="auth_form h-full flex flex-col items-center justify-center px-8 py-8 bg-white rounded-lg">
         <div className="w-full text-4xl font-bold">
           <h2 className="auth_title text-left">{title}</h2>
         </div>
@@ -140,7 +141,7 @@ const LoginForm = (props: LoginFormProps) => {
                   <p className="text-xs xl:text-base">Ghi nhớ tài khoản</p>
                 </Checkbox>
                 <Link
-                  to="/forgot-password"
+                  to={navName.FORGOR_PASSWORD}
                   className="custom__link text-xs xl:text-base"
                 >
                   Quên mật khẩu ?
@@ -163,7 +164,7 @@ const LoginForm = (props: LoginFormProps) => {
               {/* Redirect register */}
               <p className="text-center my-4 text-xs xl:text-lg">
                 Nếu bạn chưa có tài khoản? Hãy
-                <Link to="/register" className="custom__link px-1">
+                <Link to={navName.REGISTER} className="custom__link px-1">
                   Đăng ký
                 </Link>
                 ngay

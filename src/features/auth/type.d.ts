@@ -9,7 +9,7 @@ declare module 'Models' {
   }
 
   export interface AuthState {
-    token: string
+    token: string | null
     user: UserState | null
     error: anym
     isLoading: boolean

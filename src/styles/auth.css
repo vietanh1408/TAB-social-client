@@ -1,15 +1,7 @@
 @import url('./layout.css');
 
 #auth_page{
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-
     width: 100%;
-    height: 100%;
-
     display: flex;
     justify-content: center;
     align-items: center;
@@ -24,6 +16,15 @@
     width: 30rem;
     min-height: 42rem;
 }
+
+.auth_image {
+    flex: 1;
+}
+
+.auth_child {
+    flex: 1;
+}
+
 
 /* --mobile-- */
 @media only screen and (max-width: 767px) {

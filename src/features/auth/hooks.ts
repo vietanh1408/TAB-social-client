@@ -9,7 +9,8 @@ import {
   fetchLogin,
   fetchRegister,
   fetchSendMail,
-  fetchVerifyEmail
+  fetchVerifyEmail,
+  logout
 } from './api'
 
 export const useLogin = () => {
@@ -67,6 +68,17 @@ export const useVerifyEmail = () => {
     }
   }
   return [onVerify]
+}
+
+export const useLogout = () => {
+  const dispatch: AppDispatch = useDispatch()
+
+  const onLogout = () => {
+    dispatch(logout())
+    toast.success('Vui lòng đăng nhập để tiếp tục')
+  }
+
+  return [onLogout]
 }
 
 export const useGetAuth = () => {
