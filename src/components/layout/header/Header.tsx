@@ -9,7 +9,7 @@ const Header = () => {
   return (
     <>
       {token && (
-        <header className="sticky top-0 left-0 right-0 md:h-20 h-14 bg-white shadow-md">
+        <header className="sticky top-0 left-0 right-0 md:h-20 h-14 bg-white shadow-md z-50">
           <div className="md:container container mx-auto h-full w-full py-2 md:py-4 px-2 md:px-3 lg:px-4 xl:px-6">
             <div className="h-full flex justify-around items-center flex-nowrap">
               <HeaderLeft />

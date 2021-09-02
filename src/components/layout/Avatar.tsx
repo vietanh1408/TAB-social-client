@@ -12,7 +12,7 @@ const Avatar = () => {
   const { user } = useGetAuth()
   return (
     <Popover placement={'bottomRight'} content={SettingList} trigger="click">
-      <div className="rounded-full h-full bg-red-300 w-12 cursor-pointer overflow-hidden">
+      <div className="rounded-full bg-red-300 w-10 h-10 md:w-12 md:h-12 cursor-pointer overflow-hidden">
         {user && user.avatar ? (
           <img src={user.avatar} alt="avatar" />
         ) : (
