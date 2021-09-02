@@ -3,15 +3,27 @@ import { toast } from 'react-toastify'
 import { useDispatch, useSelector } from 'react-redux'
 // models
 import { AppDispatch, RootState } from 'app/store'
-import { LoginAccount, RegisterAccount, VerifyEmailInput } from 'Models'
+import {
+  LoginAccount,
+  LoginGoogle,
+  RegisterAccount,
+  VerifyEmailInput
+} from 'Models'
 // api
-import { fetchLogin, fetchRegister, fetchVerifyEmail, logout } from './api'
+import {
+  fetchLogin,
+  fetchLoginGoogle,
+  fetchRegister,
+  fetchVerifyEmail,
+  logout
+} from './api'
 
 export const useLogin = () => {
   const dispatch: AppDispatch = useDispatch()
   const onFetch = async (data: LoginAccount) => {
     // @ts-ignore
     const resultAction = await dispatch(fetchLogin(data))
+    console.log('resultAction......', resultAction)
     if (fetchLogin.fulfilled.match(resultAction)) {
       toast.success('Đăng nhập thành công')
     } else {
@@ -63,6 +75,17 @@ export const useLogout = () => {
   }
 
   return [onLogout]
+}
+
+export const useLoginWithGoogle = () => {
+  const dispatch: AppDispatch = useDispatch()
+
+  const onLoginGoogle = async (data: LoginGoogle) => {
+    // @ts-ignore
+    const resultAction = await dispatch(fetchLoginGoogle(data))
+  }
+
+  return [onLoginGoogle]
 }
 
 export const useGetAuth = () => {

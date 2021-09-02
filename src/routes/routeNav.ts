@@ -15,11 +15,18 @@ import {
   verifyEmailResource,
   verifyEmailRoutes
 } from 'features/auth/verifyEmail/nav'
+import {
+  profileNav,
+  profileResource,
+  profileRoutes
+} from 'features/profile/nav'
 
 export const mainNav = [
   ...loginNav,
   ...registerNav,
   ...verifyEmailNav,
+
+  ...profileNav,
 
   ...newsFeedNav
 ]
@@ -29,6 +36,8 @@ export const routes = {
   ...registerRoutes,
   ...verifyEmailRoutes,
 
+  ...profileRoutes,
+
   ...newsFeedRoutes
 }
 
@@ -36,6 +45,8 @@ export const resources = {
   ...loginResource,
   ...registerResource,
   ...verifyEmailResource,
+
+  ...profileResource,
 
   ...newsFeedResource
 }

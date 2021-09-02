@@ -5,9 +5,9 @@ import { useHistory } from 'react-router'
 import LoginForm from './Form'
 import AuthPage from '../AuthPage'
 // models
-import { LoginAccount } from 'Models'
+import { LoginAccount, LoginGoogle } from 'Models'
 // hooks
-import { useGetAuth, useLogin } from '../hooks'
+import { useGetAuth, useLogin, useLoginWithGoogle } from '../hooks'
 // constants
 import { navName } from 'constants/navName'
 
@@ -16,10 +16,16 @@ const Login = () => {
 
   const [onFetch] = useLogin()
 
+  const [onLoginGoogle] = useLoginWithGoogle()
+
   const { token, isLoading } = useGetAuth()
 
   const handleSubmitForm = (data: LoginAccount) => {
     onFetch(data)
+  }
+
+  const handleLoginGoogle = (data: LoginGoogle) => {
+    onLoginGoogle(data)
   }
 
   useEffect(() => {
@@ -32,6 +38,7 @@ const Login = () => {
     <AuthPage>
       <LoginForm
         handleSubmitForm={handleSubmitForm}
+        handleLoginGoogle={handleLoginGoogle}
         title="Đăng nhập"
         text="Chào mừng bạn đã đến với TAB !"
         isLoading={isLoading}

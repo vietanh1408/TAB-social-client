@@ -3,4 +3,8 @@ declare module 'Models' {
     emailOrPhone: string
     password: string
   }
+
+  export interface LoginGoogle {
+    tokenId: string
+  }
 }

@@ -1,4 +1,9 @@
-import { LoginAccount, RegisterAccount, VerifyEmailInput } from 'Models'
+import {
+  LoginAccount,
+  LoginGoogle,
+  RegisterAccount,
+  VerifyEmailInput
+} from 'Models'
 import { setHeaders } from 'utils/setHeaders'
 import axiosClient from './axiosClient'
 
@@ -14,6 +19,10 @@ const authApi = {
   verifyEmail(params: VerifyEmailInput, token: string) {
     const url = `auth/check-verify`
     return axiosClient.post(url, params, setHeaders(token))
+  },
+  loginGoogle(params: LoginGoogle) {
+    const url = `/auth/google-login`
+    return axiosClient.post(url, params)
   }
 }
 

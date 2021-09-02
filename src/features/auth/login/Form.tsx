@@ -15,11 +15,13 @@ import FormItem from 'components/Form/FormItem'
 // extensions
 import yupExtension from 'extensions/yup'
 // models
-import { LoginAccount } from 'Models'
+import { LoginAccount, LoginGoogle } from 'Models'
 import { navName } from 'constants/navName'
+import GoogleLogin from 'react-google-login'
 
 type LoginFormProps = {
   handleSubmitForm(args: LoginAccount): void
+  handleLoginGoogle(args: LoginGoogle): void
   title?: string
   text?: string
   isLoading?: boolean
@@ -31,7 +33,7 @@ const schema = yup.object().shape({
 })
 
 const LoginForm = (props: LoginFormProps) => {
-  const { handleSubmitForm, title, text, isLoading } = props
+  const { handleLoginGoogle, handleSubmitForm, title, text, isLoading } = props
 
   const formProps = useForm<LoginAccount>({
     defaultValues: {
@@ -47,8 +49,8 @@ const LoginForm = (props: LoginFormProps) => {
     handleSubmitForm(data)
   }
 
-  const handleLoginWithGoogle = () => {
-    console.log('login with Google...')
+  const handleLoginWithGoogle = (response: any) => {
+    handleLoginGoogle(response)
   }
 
   const handleLoginWithFacebook = () => {
@@ -72,7 +74,7 @@ const LoginForm = (props: LoginFormProps) => {
           <FormProvider {...formProps}>
             <Form onFinish={handleSubmit(onSubmit)}>
               {/* Google */}
-              <div
+              {/* <div
                 onClick={handleLoginWithGoogle}
                 className="auth__social custom__input border-2 border-gray-400 cursor-pointer mb-4 py-2 xl:px-8 flex justify-around items-center"
               >
@@ -80,7 +82,14 @@ const LoginForm = (props: LoginFormProps) => {
                 <p className="font-bold text-xs xl:text-base">
                   Đăng nhập với tài khoản Google
                 </p>
-              </div>
+              </div> */}
+              <GoogleLogin
+                className="auth__social custom__input w-full border-2 border-gray-400 cursor-pointer mb-4 py-2 xl:px-8 flex justify-around items-center outline-none"
+                clientId={`${process.env.REACT_APP_GOOGLE_CLIENT_ID}`}
+                buttonText="Đăng nhập với tài khoản Google"
+                onSuccess={handleLoginWithGoogle}
+                cookiePolicy={'single_host_origin'}
+              />
               {/* End Google */}
               {/* Facebook */}
               <div
@@ -93,11 +102,9 @@ const LoginForm = (props: LoginFormProps) => {
                 </p>
               </div>
               {/* End Facebook */}
-
               <div className="w-full my-2 xl:my-4 text-center text-xs xl:text-base">
                 <p>Đăng nhập bằng tài khoản</p>
               </div>
-
               {/* Email */}
               <FormItem
                 required={true}
@@ -134,7 +141,6 @@ const LoginForm = (props: LoginFormProps) => {
                 )}
               </FormItem>
               {/* End password */}
-
               {/* Forgot password */}
               <div className="w-full px-2 xl:px-4 mb-2 xl:mb-8 flex justify-between items-center">
                 <Checkbox onChange={handleCheckBox}>
@@ -148,7 +154,6 @@ const LoginForm = (props: LoginFormProps) => {
                 </Link>
               </div>
               {/* End forgot password */}
-
               {/* Button LOGIN */}
               <Button
                 type="primary"
@@ -160,7 +165,6 @@ const LoginForm = (props: LoginFormProps) => {
                 Đăng nhập
               </Button>
               {/* End Button LOGIN */}
-
               {/* Redirect register */}
               <p className="text-center my-4 text-xs xl:text-lg">
                 Nếu bạn chưa có tài khoản? Hãy

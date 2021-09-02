@@ -4,6 +4,7 @@ import authApi from 'api/authApi'
 import {
   AuthState,
   LoginAccount,
+  LoginGoogle,
   RegisterAccount,
   VerifyEmailInput
 } from 'Models'
@@ -51,6 +52,19 @@ export const fetchVerifyEmail = createAsyncThunk(
     try {
       const response = await authApi.verifyEmail(data, token)
       return response.data.success
+    } catch (err: any) {
+      showError(err)
+      return rejectWithValue(err.response)
+    }
+  }
+)
+
+export const fetchLoginGoogle = createAsyncThunk(
+  'auth/loginGoogle',
+  async (data: LoginGoogle, { rejectWithValue }) => {
+    try {
+      const { data: response } = await authApi.loginGoogle(data)
+      return response
     } catch (err: any) {
       showError(err)
       return rejectWithValue(err.response)
@@ -106,6 +120,20 @@ const authSlice = createSlice({
       })
       .addCase(fetchVerifyEmail.rejected, (state: AuthState, action: any) => {
         state.isVerify = false
+      })
+
+      // login with Google
+      .addCase(fetchLoginGoogle.pending, (state: AuthState, action: any) => {
+        state.isLoading = true
+      })
+      .addCase(fetchLoginGoogle.fulfilled, (state: AuthState, action: any) => {
+        state.isLoading = false
+        state.token = action.payload.accessToken
+        state.user = action.payload.user
+      })
+      .addCase(fetchLoginGoogle.rejected, (state: AuthState, action: any) => {
+        state.isLoading = false
+        state.error = action.payload?.data?.message
       })
   }
 })
