@@ -11,10 +11,6 @@ const authApi = {
     const url = '/auth/register'
     return axiosClient.post(url, params)
   },
-  sendMail(params: any, token: string) {
-    const url = `auth/send-mail`
-    return axiosClient.post(url, params, setHeaders(token))
-  },
   verifyEmail(params: VerifyEmailInput, token: string) {
     const url = `auth/check-verify`
     return axiosClient.post(url, params, setHeaders(token))

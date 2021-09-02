@@ -5,13 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from 'app/store'
 import { LoginAccount, RegisterAccount, VerifyEmailInput } from 'Models'
 // api
-import {
-  fetchLogin,
-  fetchRegister,
-  fetchSendMail,
-  fetchVerifyEmail,
-  logout
-} from './api'
+import { fetchLogin, fetchRegister, fetchVerifyEmail, logout } from './api'
 
 export const useLogin = () => {
   const dispatch: AppDispatch = useDispatch()
@@ -35,23 +29,13 @@ export const useRegister = () => {
     const isSuccess = fetchRegister.fulfilled.match(resultAction)
     if (isSuccess) {
       toast.success(
-        'Đăng ký thành công, Mã xác thực đã được gửi vào email của bạn'
+        'Mã xác thực đã được gửi vào email của bạn. Vui lòng kiểm tra email và nhập mã'
       )
     } else {
       toast.error(resultAction.payload?.data?.message)
     }
   }
   return [onFetch]
-}
-
-export const useSendMail = () => {
-  const { user, token } = useGetAuth()
-  const dispatch: AppDispatch = useDispatch()
-  const onSendMail = () => {
-    // @ts-ignore
-    dispatch(fetchSendMail({ email: user?.email, token }))
-  }
-  return [onSendMail]
 }
 
 export const useVerifyEmail = () => {

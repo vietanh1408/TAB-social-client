@@ -42,19 +42,6 @@ export const fetchRegister = createAsyncThunk(
   }
 )
 
-export const fetchSendMail = createAsyncThunk(
-  'auth/send-mail',
-  async ({ email, token }: any, { rejectWithValue }) => {
-    try {
-      const { data: response } = await authApi.sendMail({ email: email }, token)
-      return response
-    } catch (err: any) {
-      showError(err)
-      return rejectWithValue(err.response)
-    }
-  }
-)
-
 export const fetchVerifyEmail = createAsyncThunk(
   'auth/verify-email',
   async (
