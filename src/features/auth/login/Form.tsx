@@ -18,6 +18,7 @@ import yupExtension from 'extensions/yup'
 import { LoginAccount, LoginGoogle } from 'Models'
 import { navName } from 'constants/navName'
 import GoogleLogin from 'react-google-login'
+import FacebookLogin from 'react-facebook-login'
 
 type LoginFormProps = {
   handleSubmitForm(args: LoginAccount): void
@@ -53,8 +54,8 @@ const LoginForm = (props: LoginFormProps) => {
     handleLoginGoogle(response)
   }
 
-  const handleLoginWithFacebook = () => {
-    console.log('login with Facebook...')
+  const handleLoginWithFacebook = (response: any) => {
+    console.log('login with Facebook...', response)
   }
 
   const handleCheckBox = () => {
@@ -74,15 +75,6 @@ const LoginForm = (props: LoginFormProps) => {
           <FormProvider {...formProps}>
             <Form onFinish={handleSubmit(onSubmit)}>
               {/* Google */}
-              {/* <div
-                onClick={handleLoginWithGoogle}
-                className="auth__social custom__input border-2 border-gray-400 cursor-pointer mb-4 py-2 xl:px-8 flex justify-around items-center"
-              >
-                <img src={GoogleIcon} alt="google-icon" />
-                <p className="font-bold text-xs xl:text-base">
-                  Đăng nhập với tài khoản Google
-                </p>
-              </div> */}
               <GoogleLogin
                 className="auth__social custom__input w-full border-2 border-gray-400 cursor-pointer mb-4 py-2 xl:px-8 flex justify-around items-center outline-none"
                 clientId={`${process.env.REACT_APP_GOOGLE_CLIENT_ID}`}
@@ -92,15 +84,15 @@ const LoginForm = (props: LoginFormProps) => {
               />
               {/* End Google */}
               {/* Facebook */}
-              <div
-                onClick={handleLoginWithFacebook}
-                className="auth__social custom__input border-2 border-gray-400 cursor-pointer py-2 xl:px-8 flex justify-around items-center"
-              >
-                <img src={facebookIcon} alt="google-icon" />
-                <p className="font-bold text-xs xl:text-base">
-                  Đăng nhập với tài khoản Facebook
-                </p>
-              </div>
+              <FacebookLogin
+                appId={`${process.env.REACT_APP_FACEBOOK_ID}`}
+                autoLoad={false}
+                fields="name,email,picture"
+                callback={handleLoginWithFacebook}
+                icon="fa-facebook"
+                cssClass="fb-btn"
+                textButton="Đăng nhập với tài khoản Facebook"
+              />
               {/* End Facebook */}
               <div className="w-full my-2 xl:my-4 text-center text-xs xl:text-base">
                 <p>Đăng nhập bằng tài khoản</p>
