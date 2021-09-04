@@ -13,7 +13,11 @@ export const fetchGetOnlineUser = createAsyncThunk(
 const onlineUserSlice = createSlice({
   name: 'onlineUser',
   initialState,
-  reducers: {},
+  reducers: {
+    getOnlineUser: (state, action) => {
+      state.onlineUsers = action.payload
+    }
+  },
   extraReducers: (builder) => {
     builder.addCase(
       fetchGetOnlineUser.fulfilled,
@@ -25,4 +29,5 @@ const onlineUserSlice = createSlice({
 })
 
 const { reducer } = onlineUserSlice
+export const { getOnlineUser } = onlineUserSlice.actions
 export default reducer

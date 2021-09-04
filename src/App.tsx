@@ -11,10 +11,13 @@ import GenerateRoute from 'routes/GenerateRoute'
 // socket.io
 import io from 'socket.io-client'
 import { socketAction } from 'features/socket/api'
+import { useGetAuth } from 'features/auth/hooks'
+import SocketClient from 'features/socket/SocketClient'
 
 const App = () => {
-  const dispatch = useDispatch()
+  const { token } = useGetAuth()
 
+  const dispatch = useDispatch()
   useEffect((): any => {
     // @ts-ignore
     const socket = io(process.env.REACT_APP_SOCKET_URL)
@@ -28,6 +31,7 @@ const App = () => {
       <GenerateRoute />
       <Footer />
       <CustomNotification />
+      {token && <SocketClient />}
     </Suspense>
   )
 }
