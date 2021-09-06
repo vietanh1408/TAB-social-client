@@ -9,7 +9,7 @@ export const profileNavName = 'profile'
 
 export const nav: NavigatorParams[] = [
   {
-    path: navName.PROFILE,
+    path: `${navName.PROFILE}/:id`,
     isMenu: false,
     isProtected: true,
     component: Profile

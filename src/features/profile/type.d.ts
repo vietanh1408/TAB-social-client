@@ -1,5 +1,5 @@
 declare module 'Models' {
-  export interface UserState {
+  export interface ProfileType {
     _id: string
     name: string
     email: string
@@ -23,11 +23,8 @@ declare module 'Models' {
     verifyCode: string
   }
 
-  export interface AuthState {
-    token: string | null
-    user: UserState | null
-    error: anym
-    isLoading: boolean
-    isVerify: boolean
+  export interface ProfileState {
+    profile: ProfileType | null
+    isLoading: Boolean
   }
 }

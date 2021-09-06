@@ -6,6 +6,7 @@ import { createBrowserHistory } from 'history'
 import authReducer from 'features/auth/api'
 import socketReducer from 'features/socket/api'
 import onlineUserReducer from 'features/onlineUser/api'
+import profileReducer from 'features/profile/api'
 
 const history = createBrowserHistory()
 
@@ -13,5 +14,6 @@ export const rootReducer = {
   router: connectRouter(history),
   socket: socketReducer,
   onlineUser: onlineUserReducer,
-  auth: authReducer
+  auth: authReducer,
+  profile: profileReducer
 }

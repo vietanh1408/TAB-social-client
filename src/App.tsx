@@ -15,7 +15,7 @@ import { useGetAuth } from 'features/auth/hooks'
 import SocketClient from 'features/socket/SocketClient'
 
 const App = () => {
-  const { token } = useGetAuth()
+  const { token, user } = useGetAuth()
 
   const dispatch = useDispatch()
   useEffect((): any => {
@@ -27,9 +27,9 @@ const App = () => {
 
   return (
     <Suspense fallback={<LoadingPage />}>
-      <Header />
+      {token && user?.isVerifiedMail && <Header />}
       <GenerateRoute />
-      <Footer />
+      {token && <Footer />}
       <CustomNotification />
       {token && <SocketClient />}
     </Suspense>
