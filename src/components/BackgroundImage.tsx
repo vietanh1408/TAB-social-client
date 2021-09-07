@@ -32,17 +32,11 @@ const BackgroundImage = () => {
       <div className="w-full h-full md:container container mx-auto py-2 md:py-10 px-2 md:px-3 lg:px-4 xl:px-6 flex justify-center md:justify-start items-end">
         <div className="flex flex-col md:flex-row justify-start items-center z-40">
           <div className="profile_avatar">
-            {profile?.avatar ? (
-              <img
-                src={profile?.avatar}
-                className=" w-full h-full rounded-full overflow-hidden"
-                alt="avt"
-              />
-            ) : (
-              <div className="default-avatar h-full flex justify-center items-center text-3xl font-bold text-white ">
-                <span>{generateDefaultAvt(profile?.name)}</span>
-              </div>
-            )}
+            <img
+              src={profile?.avatar}
+              className=" w-full h-full rounded-full overflow-hidden"
+              alt="avt"
+            />
             {isOwnProfile && (
               <div className="upload_avt">
                 <EditOutlined
@@ -59,7 +53,7 @@ const BackgroundImage = () => {
 
             {isOwnProfile && <UploadImage />}
 
-            {isOwnProfile && (
+            {/* {isOwnProfile && (
               <Upload
                 className="z-50"
                 type={'select'}
@@ -75,7 +69,7 @@ const BackgroundImage = () => {
                     : 'Thêm ảnh đại diện'}
                 </Button>
               </Upload>
-            )}
+            )} */}
           </div>
         </div>
       </div>

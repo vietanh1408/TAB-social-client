@@ -20,6 +20,18 @@ import {
   profileResource,
   profileRoutes
 } from 'features/profile/nav'
+import {
+  friendMenu,
+  friendNav,
+  friendResource,
+  friendRoutes
+} from 'features/friend/nav'
+import {
+  friendRequestMenu,
+  friendRequestNav,
+  friendRequestResource,
+  friendRequestRoutes
+} from 'features/friendRequest/nav'
 
 export const mainNav = [
   ...loginNav,
@@ -27,6 +39,8 @@ export const mainNav = [
   ...verifyEmailNav,
 
   ...profileNav,
+  ...friendNav,
+  ...friendRequestNav,
 
   ...newsFeedNav
 ]
@@ -37,6 +51,8 @@ export const routes = {
   ...verifyEmailRoutes,
 
   ...profileRoutes,
+  ...friendRoutes,
+  ...friendRequestRoutes,
 
   ...newsFeedRoutes
 }
@@ -47,8 +63,10 @@ export const resources = {
   ...verifyEmailResource,
 
   ...profileResource,
+  ...friendResource,
+  ...friendRequestResource,
 
   ...newsFeedResource
 }
 
-export const menu = [...newsFeedMenu]
+export const menu = [...newsFeedMenu, ...friendMenu, ...friendRequestMenu]

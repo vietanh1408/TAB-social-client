@@ -5,7 +5,6 @@ import React, { useState } from 'react'
 
 const UploadImage = () => {
   const { token } = useGetAuth()
-
   const [previewSource, setPreviewSource] = useState('')
 
   const getBase64 = (file: any) => {
@@ -35,7 +34,6 @@ const UploadImage = () => {
   const uploadImage = async (base46Code: any) => {
     try {
       const response = await uploadApi.upload({ data: base46Code }, token)
-      console.log(response)
     } catch (err) {}
   }
   return (
