@@ -1,39 +1,40 @@
-import React from 'react'
-import { Upload, Button } from 'antd'
-import { EditOutlined, UploadOutlined } from '@ant-design/icons'
+import { EditOutlined } from '@ant-design/icons'
+import { Image } from 'antd'
 import { useGetAuth } from 'features/auth/hooks'
-import { uploadImageApi } from 'features/upload/api'
+import { useEditProfile } from 'features/profile/hooks'
+import { useGetUpload } from 'features/upload/hooks'
 import UploadImage from 'features/upload/UploadImage'
-import { useSelector } from 'react-redux'
-import { RootState } from 'app/store'
-import Avatar from './layout/Avatar'
-import { generateDefaultAvt } from 'extensions'
+import React from 'react'
 
-const BackgroundImage = () => {
+const BackgroundImage = (props: any) => {
   const { user, token } = useGetAuth()
-  const { profile } = useSelector((state: RootState) => state.profile)
+  const { onEditProfile, profile, isLoading } = useEditProfile()
 
   const handleUploadAvt = (e: any) => {}
 
-  const handleUploadBackground = (e: any) => {
-    const files = e.target.files[0]
-    console.log('files....', files)
-  }
-
   const isOwnProfile = token && profile?._id === user?._id
+
+  const handleEditBackground = (response: any) => {
+    const data = {
+      publicId: response?.public_id,
+      url: response?.url
+    }
+    if (response?.success) {
+      onEditProfile(profile?._id, { background: data }, token)
+    }
+  }
 
   return (
     <div className="profile_bg overflow-hidden">
-      <img
-        className="absolute w-full h-full object-cover"
-        src="https://scontent-hkt1-1.xx.fbcdn.net/v/t1.6435-9/36779307_1242878312552393_5097897061026627584_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=19026a&_nc_ohc=A04GZcv92p0AX86kpd2&_nc_ht=scontent-hkt1-1.xx&oh=75f1352ca36d99e200743f4326f8217f&oe=61556A22"
-        alt="bg"
+      <Image
+        className="z-0 object-contain h-full"
+        src={profile?.background?.url}
       />
-      <div className="w-full h-full md:container container mx-auto py-2 md:py-10 px-2 md:px-3 lg:px-4 xl:px-6 flex justify-center md:justify-start items-end">
+      <div className="w-full h-full md:container container mx-auto py-2 md:py-10 px-2 md:px-3 lg:px-4 xl:px-6 flex justify-center md:justify-start items-end z-10">
         <div className="flex flex-col md:flex-row justify-start items-center z-40">
           <div className="profile_avatar">
             <img
-              src={profile?.avatar}
+              src={profile?.avatar?.url}
               className=" w-full h-full rounded-full overflow-hidden"
               alt="avt"
             />
@@ -47,29 +48,16 @@ const BackgroundImage = () => {
             )}
           </div>
           <div className="md:ml-6 flex flex-col justify-center items-center md:items-start">
-            <p className="profile_name z-40 text-3xl text-white font-bold m-3">
+            <p className="profile_name z-40 text-3xl text-white font-bold mb-3">
               {profile?.name}
             </p>
-
-            {isOwnProfile && <UploadImage />}
-
-            {/* {isOwnProfile && (
-              <Upload
-                className="z-50"
-                type={'select'}
-                name="file"
-                id="file"
-                multiple={false}
-                accept="image/*, video/*"
-                onChange={handleUploadBackground}
-              >
-                <Button icon={<UploadOutlined />}>
-                  {profile?.background
-                    ? 'Thay đổi ảnh đại diện'
-                    : 'Thêm ảnh đại diện'}
-                </Button>
-              </Upload>
-            )} */}
+            {isOwnProfile && (
+              <UploadImage
+                handleSubmit={handleEditBackground}
+                isUpdating={isLoading}
+                text={'Cập nhật ảnh bìa'}
+              />
+            )}
           </div>
         </div>
       </div>

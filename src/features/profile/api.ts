@@ -21,12 +21,26 @@ export const fetchProfile = createAsyncThunk(
   }
 )
 
+export const fetchEditProfile = createAsyncThunk(
+  'profile/editProfile',
+  async ({ id, data, token }: any, { rejectWithValue }) => {
+    try {
+      const response = await profileApi.editProfile(id, data, token)
+      return response.data
+    } catch (err: any) {
+      showError(err)
+      return rejectWithValue(err.response)
+    }
+  }
+)
+
 const profileSlice = createSlice({
   name: 'profile',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
+      // get profile
       .addCase(fetchProfile.pending, (state, action) => {
         state.isLoading = true
       })
@@ -37,6 +51,20 @@ const profileSlice = createSlice({
       })
 
       .addCase(fetchProfile.rejected, (state, { payload }) => {
+        state.isLoading = false
+      })
+
+      // edit profile
+      .addCase(fetchEditProfile.pending, (state, action) => {
+        state.isLoading = true
+      })
+
+      .addCase(fetchEditProfile.fulfilled, (state, { payload }) => {
+        state.profile = payload.profile
+        state.isLoading = false
+      })
+
+      .addCase(fetchEditProfile.rejected, (state, { payload }) => {
         state.isLoading = false
       })
   }

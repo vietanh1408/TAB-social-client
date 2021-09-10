@@ -5,3 +5,20 @@
 .ant-popover-inner-content {
     padding: 0;
 }
+
+.ant-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+}
+
+.ant-image-preview-img {
+    margin: 4rem auto;
+    width: 600px;
+}
+
+.ant-image-preview-img-wrapper::before {
+    height: 20%;
+}

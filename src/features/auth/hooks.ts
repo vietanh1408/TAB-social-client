@@ -23,7 +23,6 @@ export const useLogin = () => {
   const onFetch = async (data: LoginAccount) => {
     // @ts-ignore
     const resultAction = await dispatch(fetchLogin(data))
-    console.log('resultAction......', resultAction)
     if (fetchLogin.fulfilled.match(resultAction)) {
       toast.success('Đăng nhập thành công')
     } else {

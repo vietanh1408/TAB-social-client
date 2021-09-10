@@ -9,3 +9,5 @@ export const FORM_ITEM_LAYOUT = {
     md: { span: 16 }
   }
 }
+
+export const imageType = 'image/*,video/*'

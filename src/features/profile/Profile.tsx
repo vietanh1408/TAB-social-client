@@ -1,22 +1,21 @@
 import BackgroundImage from 'components/BackgroundImage'
 import LoadingPage from 'components/LoadingPage'
 import React from 'react'
-import { useGetProfile } from './hooks'
+import { useLoadProfile } from './hooks'
 
 const Profile = () => {
-  const { profile, isLoading } = useGetProfile()
+  const { profile, isLoading } = useLoadProfile()
 
   if (isLoading) {
     return <LoadingPage />
   }
 
-  console.log('profile....', profile)
-
   return (
     <div id="profile_page" style={{ height: '1000px' }}>
-      <BackgroundImage />
-      <div className="md:container container mx-auto px-2 md:px-64 py-4">
-        profile
+      <BackgroundImage profile={profile} />
+      <div className="md:container container mx-auto px-2 md:px-64 py-4 bg-gray-400">
+        <div className="add-friend bg-white"></div>
+        Profile
       </div>
     </div>
   )

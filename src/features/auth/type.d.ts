@@ -5,8 +5,8 @@ declare module 'Models' {
     email: string
     phone: string
     password: string
-    avatar: string | undefined
-    background: string | undefined
+    avatar: AvatarType | undefined
+    background: BackgroundType | undefined
     gender: Number
     friends: Array
     followers: Array

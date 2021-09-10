@@ -1,12 +1,20 @@
 declare module 'Models' {
+  export interface AvatarType {
+    publicId: any
+    url: any
+  }
+  export interface BackgroundType {
+    publicId: any
+    url: any
+  }
   export interface ProfileType {
     _id: string
     name: string
     email: string
     phone: string
     password: string
-    avatar: string | undefined
-    background: string | undefined
+    avatar: AvatarType | undefined
+    background: BackgroundType | undefined
     gender: Number
     friends: Array
     followers: Array

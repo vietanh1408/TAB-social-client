@@ -13,8 +13,12 @@ const Avatar = () => {
   return (
     <Popover placement={'bottomRight'} content={SettingList} trigger="click">
       <div className="rounded-full bg-red-300 w-10 h-10 md:w-12 md:h-12 cursor-pointer overflow-hidden">
-        {user && user.avatar ? (
-          <img src={user.avatar} alt="avatar" className="w-full object-cover" />
+        {user && user?.avatar?.url ? (
+          <img
+            src={user?.avatar?.url}
+            alt="avatar"
+            className="w-full object-cover"
+          />
         ) : (
           <div className="default-avatar h-full flex justify-center items-center text-3xl font-bold text-white ">
             <span>{generateDefaultAvt(user?.name)}</span>
