@@ -1,5 +1,5 @@
 import { EditOutlined } from '@ant-design/icons'
-import { Image } from 'antd'
+import { Avatar, Badge, Image } from 'antd'
 import { useGetAuth } from 'features/auth/hooks'
 import { useEditProfile } from 'features/profile/hooks'
 import { useGetUpload } from 'features/upload/hooks'
@@ -31,22 +31,8 @@ const BackgroundImage = (props: any) => {
         src={profile?.background?.url}
       />
       <div className="w-full h-full md:container container mx-auto py-2 md:py-10 px-2 md:px-3 lg:px-4 xl:px-6 flex justify-center md:justify-start items-end z-10">
-        <div className="flex flex-col md:flex-row justify-start items-center z-40">
-          <div className="profile_avatar">
-            <img
-              src={profile?.avatar?.url}
-              className=" w-full h-full rounded-full overflow-hidden"
-              alt="avt"
-            />
-            {isOwnProfile && (
-              <div className="upload_avt">
-                <EditOutlined
-                  className="bg-white z-10 absolute rounded-full overflow-hidden update-avatar"
-                  onClick={handleUploadAvt}
-                />
-              </div>
-            )}
-          </div>
+        <div className="flex flex-col md:flex-row justify-start items-center z-10">
+          <Avatar src={profile?.avatar?.url} size={150} />
           <div className="md:ml-6 flex flex-col justify-center items-center md:items-start">
             <p className="profile_name z-40 text-3xl text-white font-bold mb-3">
               {profile?.name}

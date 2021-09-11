@@ -28,7 +28,9 @@ const App = () => {
   return (
     <Suspense fallback={<LoadingPage />}>
       {token && <Header />}
-      <GenerateRoute />
+      <div className="md:container container mx-auto px-2 md:px-3 lg:px-4 xl:px-6">
+        <GenerateRoute />
+      </div>
       {token && <Footer />}
       <CustomNotification />
       {token && <SocketClient />}

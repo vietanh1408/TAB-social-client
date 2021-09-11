@@ -3,17 +3,18 @@ import { menu } from 'routes/routeNav'
 
 const HeaderNav = () => {
   return (
-    <div className="header__nav h-full hidden md:block">
-      <ul className="w-full h-full flex justify-center items-center px-auto xl:px-6 lg:px-4 md:px-2">
-        {menu.map((item: any, index) => (
-          <CustomLink to={item.path} key={index}>
-            <li className="header__nav__item flex w-full h-full justify-center items-center text-2xl">
-              {item.icon.render()}
-            </li>
+    <ul className="header__nav hidden w-full h-full md:flex justify-center items-center px-auto xl:px-6 lg:px-4 md:px-2">
+      {menu.map((item: any, index) => (
+        <li
+          className="header__nav__item flex w-full h-full justify-center items-center text-2xl mx-10"
+          key={index}
+        >
+          <CustomLink to={item.path} className="w-full h-full text-center">
+            {item.icon.render()}
           </CustomLink>
-        ))}
-      </ul>
-    </div>
+        </li>
+      ))}
+    </ul>
   )
 }
 

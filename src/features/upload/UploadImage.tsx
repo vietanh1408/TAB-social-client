@@ -1,10 +1,9 @@
-import { useRef, useState } from 'react'
 import { LoadingOutlined } from '@ant-design/icons'
 import { Button, Modal, Spin } from 'antd'
-import { useGetAuth } from 'features/auth/hooks'
-import { useGetProfile } from 'features/profile/hooks'
-import { useGetUpload, useUpload } from './hooks'
 import { imageType } from 'constants/index'
+import { useGetAuth } from 'features/auth/hooks'
+import { useRef, useState } from 'react'
+import { useGetUpload, useRemoveUpload, useUpload } from './hooks'
 
 const UploadImage = (props: any) => {
   const { handleSubmit, text, isUpdating } = props
@@ -18,6 +17,7 @@ const UploadImage = (props: any) => {
   const { response, isLoading: isUploading } = useGetUpload()
 
   const [onUpload] = useUpload()
+  const [onRemove] = useRemoveUpload()
 
   const getBase64 = (file: any) => {
     return new Promise((resolve, reject) => {
@@ -26,7 +26,6 @@ const UploadImage = (props: any) => {
       reader.onload = () => {
         // @ts-ignore
         setPreviewSource(reader.result)
-        setIsModalVisible(true)
         resolve(reader.result)
       }
       reader.onerror = (error) => reject(error)
@@ -36,6 +35,7 @@ const UploadImage = (props: any) => {
   const handleFileChange = async (e: any) => {
     const file = e.target.files[0]
     const base64Code = await getBase64(file)
+    setIsModalVisible(true)
     if (!base64Code) return
     uploadImage(base64Code)
   }
@@ -53,6 +53,7 @@ const UploadImage = (props: any) => {
 
   const handleCancel = () => {
     setIsModalVisible(false)
+    onRemove({ public_id: response?.public_id }, token)
   }
 
   const handleSelectFile = () => {
@@ -72,33 +73,32 @@ const UploadImage = (props: any) => {
       <Button ref={btnUpload} onClick={handleSelectFile}>
         {text}
       </Button>
-      {previewSource && response?.success ? (
-        <Modal
-          title="Basic Modal"
-          visible={isModalVisible}
-          onOk={handleSubmitFile}
-          onCancel={handleCancel}
-          footer={[
-            <Button key="back" onClick={handleCancel}>
-              Hủy
-            </Button>,
-            <Button
-              type="primary"
-              loading={isUploading || isUpdating}
-              onClick={handleSubmitFile}
-            >
-              Tiếp tục
-            </Button>
-          ]}
-        >
-          <Spin
-            spinning={isUploading || isUpdating}
-            indicator={<LoadingOutlined className="text-2xl" />}
+      <Modal
+        title="Basic Modal"
+        visible={isModalVisible}
+        onOk={handleSubmitFile}
+        onCancel={handleCancel}
+        footer={[
+          <Button key="back" onClick={handleCancel}>
+            Hủy
+          </Button>,
+          <Button
+            type="primary"
+            loading={isUploading || isUpdating}
+            onClick={handleSubmitFile}
           >
-            <img src={previewSource} alt="bg-preview" className="w-80" />
-          </Spin>
-        </Modal>
-      ) : null}
+            Tiếp tục
+          </Button>
+        ]}
+      >
+        <Spin
+          spinning={isUploading || isUpdating}
+          indicator={<LoadingOutlined className="text-2xl" />}
+          className="text-center"
+        >
+          <img src={previewSource} alt="bg-preview" className="m-auto" />
+        </Spin>
+      </Modal>
     </form>
   )
 }

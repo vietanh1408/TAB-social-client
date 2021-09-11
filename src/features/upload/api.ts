@@ -15,6 +15,19 @@ export const fetchUpload = createAsyncThunk(
   }
 )
 
+export const fetchRemoveUpload = createAsyncThunk(
+  'upload/remove-upload',
+  async ({ data, token }: any, { rejectWithValue }) => {
+    try {
+      const response = await uploadApi.removeUpload(data, token)
+      return response.data
+    } catch (err: any) {
+      showError(err)
+      return rejectWithValue(err.response)
+    }
+  }
+)
+
 const initialState: any = {
   response: null,
   isLoading: false
@@ -25,6 +38,7 @@ export const uploadSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+    // upload
     builder.addCase(fetchUpload.pending, (state, action) => {
       state.isLoading = true
     })
@@ -33,6 +47,18 @@ export const uploadSlice = createSlice({
       state.response = action.payload
     })
     builder.addCase(fetchUpload.rejected, (state, action) => {
+      state.isLoading = false
+    })
+
+    // remove
+    builder.addCase(fetchRemoveUpload.pending, (state, action) => {
+      state.isLoading = true
+    })
+    builder.addCase(fetchRemoveUpload.fulfilled, (state, action) => {
+      state.isLoading = false
+      state.response = null
+    })
+    builder.addCase(fetchRemoveUpload.rejected, (state, action) => {
       state.isLoading = false
     })
   }

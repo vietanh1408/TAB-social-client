@@ -6,5 +6,6 @@ export const navName = {
   ADD_FRIEND: '/add-friends',
   VERIFY_EMAIL: '/verify-email',
   FORGOR_PASSWORD: '/forgot-password',
-  PROFILE: '/profile'
+  PROFILE: '/profile',
+  NOT_FOUND: ''
 }

@@ -6,17 +6,18 @@ type CustomLinkProps = {
   to: string
   activeOnlyWhenExact?: boolean
   children: any
+  className?: string
 }
 
 const CustomLink = (props: CustomLinkProps) => {
-  const { to, activeOnlyWhenExact = true, children } = props
+  const { to, activeOnlyWhenExact = true, children, className } = props
   return (
     <Route
       path={to}
       exact={activeOnlyWhenExact}
       children={({ match }) => (
         <Link
-          className={match ? `w-full h-full active-link` : `w-full h-full`}
+          className={match ? `active-link ${className}` : `${className}`}
           to={to}
         >
           {children}
