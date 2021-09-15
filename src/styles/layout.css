@@ -76,7 +76,7 @@ ul {
 }
 
 .active-link {
-  border-bottom: 5px solid var(--main-color);
+  border-bottom: 3px solid var(--main-color);
   color: var(--main-color);
 }
 

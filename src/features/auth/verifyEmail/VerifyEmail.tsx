@@ -28,7 +28,7 @@ const VerifyEmail = () => {
   }, [isVerify, history])
 
   return (
-    <div className="verify-page h-full w-full absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center bg-gray-100">
+    <div className="verify-page h-full w-full absolute inset-0 flex justify-center items-center bg-gray-100">
       <VerifyForm
         handleSubmitForm={handleSubmitForm}
         title="Xác thực email của bạn"

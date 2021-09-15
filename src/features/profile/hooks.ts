@@ -24,9 +24,9 @@ export const useLoadProfile = () => {
 export const useEditProfile = () => {
   const dispatch: AppDispatch = useDispatch()
   const { profile, isLoading } = useGetProfile()
-  const onEditProfile = (id: any, data: any, token: any) => {
+  const onEditProfile = async (id: any, data: any, token: any) => {
     // @ts-ignore
-    const resultAction = dispatch(fetchEditProfile({ id, data, token }))
+    const resultAction = await dispatch(fetchEditProfile({ id, data, token }))
     const isSuccess = fetchEditProfile.fulfilled.match(resultAction)
     if (isSuccess) {
       toast.success('Cập nhật thành công')

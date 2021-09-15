@@ -19,7 +19,7 @@ declare module 'Models' {
     friendRequests: Array
     blockUsers: Array
     createdAt: Date
-    isVerifiedMail: Boolean
+    isVerifiedMail: boolean
     verifyCode: string
   }
 

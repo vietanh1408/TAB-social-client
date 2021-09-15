@@ -1,12 +1,20 @@
-import { LoadingOutlined } from '@ant-design/icons'
 import { Button, Modal, Spin } from 'antd'
+import LoadingPage from 'components/LoadingPage'
 import { imageType } from 'constants/index'
 import { useGetAuth } from 'features/auth/hooks'
 import { useRef, useState } from 'react'
 import { useGetUpload, useRemoveUpload, useUpload } from './hooks'
 
-const UploadImage = (props: any) => {
-  const { handleSubmit, text, isUpdating } = props
+type UploadImageProps = {
+  handleSubmit(args: any): void
+  text?: any
+  isUpdating?: boolean
+  classBtn?: string
+  title?: string
+}
+
+const UploadImage = (props: UploadImageProps) => {
+  const { handleSubmit, text, isUpdating, classBtn, title } = props
   const [previewSource, setPreviewSource] = useState('')
   const [isModalVisible, setIsModalVisible] = useState(false)
 
@@ -70,30 +78,32 @@ const UploadImage = (props: any) => {
         ref={input}
         className="hidden"
       />
-      <Button ref={btnUpload} onClick={handleSelectFile}>
+      <Button ref={btnUpload} onClick={handleSelectFile} className={classBtn}>
         {text}
       </Button>
       <Modal
-        title="Basic Modal"
+        title={title}
+        maskClosable={false}
         visible={isModalVisible}
+        closable={isUpdating || isUploading ? false : true}
         onOk={handleSubmitFile}
         onCancel={handleCancel}
-        footer={[
-          <Button key="back" onClick={handleCancel}>
-            Hủy
-          </Button>,
-          <Button
-            type="primary"
-            loading={isUploading || isUpdating}
-            onClick={handleSubmitFile}
-          >
-            Tiếp tục
-          </Button>
-        ]}
+        footer={
+          isUpdating || isUploading ? null : (
+            <>
+              <Button key="back" onClick={handleCancel}>
+                Hủy
+              </Button>
+              <Button type="primary" onClick={handleSubmitFile}>
+                Tiếp tục
+              </Button>
+            </>
+          )
+        }
       >
         <Spin
           spinning={isUploading || isUpdating}
-          indicator={<LoadingOutlined className="text-2xl" />}
+          indicator={<LoadingPage />}
           className="text-center"
         >
           <img src={previewSource} alt="bg-preview" className="m-auto" />

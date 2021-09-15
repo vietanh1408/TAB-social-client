@@ -15,8 +15,8 @@
 }
 
 .ant-image-preview-img {
-    margin: 4rem auto;
-    width: 600px;
+    margin: 0 auto;
+    max-width: 50rem;
 }
 
 .ant-image-preview-img-wrapper::before {
