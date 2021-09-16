@@ -2,7 +2,7 @@ import React from 'react'
 import { Flip, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
-const CustomNotification = () => {
+const CustomNotification: React.FC = () => {
   return (
     <ToastContainer
       transition={Flip}
