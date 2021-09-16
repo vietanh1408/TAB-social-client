@@ -1,3 +1,4 @@
+import NotFoundPage from 'components/404Page'
 import BackgroundImage from 'components/BackgroundImage'
 import LoadingPage from 'components/LoadingPage'
 import React from 'react'
@@ -8,6 +9,10 @@ const Profile = () => {
 
   if (isLoading) {
     return <LoadingPage />
+  }
+
+  if (!profile) {
+    return <NotFoundPage />
   }
 
   return (

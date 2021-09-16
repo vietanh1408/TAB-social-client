@@ -7,8 +7,9 @@ import { NavigatorParams } from 'Models'
 import ProtectedRoute from './ProtectedRoute'
 // routes
 import { mainNav } from './routeNav'
+import NotFoundPage from 'components/404Page'
 
-const GenerateRoute = () => {
+const GenerateRoute: React.FC = () => {
   return (
     <Switch>
       {mainNav.map((nav: NavigatorParams, index: any) => {
@@ -23,6 +24,7 @@ const GenerateRoute = () => {
         }
         return <Route key={index} path={nav.path} component={nav.component} />
       })}
+      <Route render={() => <NotFoundPage />} />
     </Switch>
   )
 }

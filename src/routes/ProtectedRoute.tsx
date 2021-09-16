@@ -1,4 +1,5 @@
 // libs
+import NotFoundPage from 'components/404Page'
 import { useGetAuth } from 'features/auth/hooks'
 import React from 'react'
 import {
@@ -27,7 +28,7 @@ const ProtectedRoute = (props: RouteProps & Iprops) => {
   const { token } = useGetAuth()
   const renderFn = (Component?: RouteComponent) => (props: RouteProps) => {
     if (!Component) {
-      return <div>Page Not Found</div>
+      return <NotFoundPage />
     }
     //@ts-ignore
     return token ? <Component {...props} /> : <Redirect to={routes.login} />

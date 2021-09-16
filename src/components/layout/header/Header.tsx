@@ -1,3 +1,4 @@
+import { Affix, Col, Row } from 'antd'
 import React from 'react'
 import HeaderLeft from './HeaderLeft'
 import HeaderNav from './HeaderNav'
@@ -5,15 +6,23 @@ import HeaderRight from './HeaderRight'
 
 const Header = () => {
   return (
-    <header className="sticky inset-0 md:h-20 h-14 bg-white shadow-md z-50">
-      <div className="md:container container mx-auto h-full w-full py-2 md:py-4 px-2 md:px-3 lg:px-4 xl:px-6">
-        <div className="h-full flex justify-around items-center flex-nowrap">
-          <HeaderLeft />
-          <HeaderNav />
-          <HeaderRight />
+    <Affix offsetTop={0}>
+      <header className="md:h-20 h-14 bg-white shadow-md z-50">
+        <div className="h-full w-full py-2 md:py-4 px-2 md:px-3 lg:px-4 xl:px-6">
+          <Row className="w-full h-full">
+            <Col xs={8} md={6}>
+              <HeaderLeft />
+            </Col>
+            <Col xs={8} md={12}>
+              <HeaderNav />
+            </Col>
+            <Col xs={8} md={6}>
+              <HeaderRight />
+            </Col>
+          </Row>
         </div>
-      </div>
-    </header>
+      </header>
+    </Affix>
   )
 }
 
