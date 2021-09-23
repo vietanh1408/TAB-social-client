@@ -9,6 +9,7 @@ import { VerifyEmailInput } from 'Models'
 import { useGetAuth, useVerifyEmail } from '../hooks'
 // components
 import VerifyForm from './Form'
+import AuthPage from '../AuthPage'
 
 const VerifyEmail: React.FC = () => {
   const { isVerify } = useGetAuth()
@@ -28,12 +29,15 @@ const VerifyEmail: React.FC = () => {
   }, [isVerify, history])
 
   return (
-    <div className="verify-page h-full w-full absolute inset-0 flex justify-center items-center bg-gray-100">
+    // <div className="verify-page h-full w-full absolute inset-0 flex justify-center items-center bg-gray-100">
+
+    // </div>
+    <AuthPage>
       <VerifyForm
         handleSubmitForm={handleSubmitForm}
         title="Xác thực email của bạn"
       />
-    </div>
+    </AuthPage>
   )
 }
 

@@ -13,7 +13,7 @@ import GenerateRoute from 'routes/GenerateRoute'
 const AppLayout: React.FC = () => {
   const { token } = useGetAuth()
   return (
-    <>
+    <React.Fragment>
       {token && <Header />}
       <div
         className={`h-full w-full ${
@@ -46,7 +46,7 @@ const AppLayout: React.FC = () => {
       </div>
       {token && <Footer />}
       {token && <SocketClient />}
-    </>
+    </React.Fragment>
   )
 }
 
