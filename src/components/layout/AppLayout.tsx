@@ -1,6 +1,6 @@
 // lbis
-import { Col, Row } from 'antd'
 import React from 'react'
+import { Col, Row } from 'antd'
 // components
 import Footer from './footer/Footer'
 import Header from './header/Header'

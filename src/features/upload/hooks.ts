@@ -5,9 +5,9 @@ import { fetchRemoveUpload, fetchUpload } from './api'
 
 export const useUpload = () => {
   const dispatch: AppDispatch = useDispatch()
-  const onUpload = (data: any, token: any) => {
+  const onUpload = (data: any) => {
     // @ts-ignore
-    const resultUpload = dispatch(fetchUpload({ data, token }))
+    const resultUpload = dispatch(fetchUpload(data))
     if (!fetchUpload.fulfilled.match(resultUpload)) {
       // @ts-ignore
       toast.error(resultUpload.payload?.data?.message)
@@ -19,9 +19,9 @@ export const useUpload = () => {
 
 export const useRemoveUpload = () => {
   const dispatch: AppDispatch = useDispatch()
-  const onRemove = (data: any, token: any) => {
+  const onRemove = (data: any) => {
     // @ts-ignore
-    const resultUpload = dispatch(fetchRemoveUpload({ data, token }))
+    const resultUpload = dispatch(fetchRemoveUpload(data))
     if (!fetchRemoveUpload.fulfilled.match(resultUpload)) {
       // @ts-ignore
       toast.error(resultUpload.payload?.data?.message)

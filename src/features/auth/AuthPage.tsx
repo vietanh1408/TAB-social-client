@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { ReactChild, ReactChildren } from 'react'
 import LoadingPage from 'components/LoadingPage'
 import AuthImage from 'assets/Auth-image.png'
 import { useGetAuth } from './hooks'
 
-const AuthPage = ({ children }: any) => {
+type AuthPageProps = {
+  children: ReactChild | ReactChildren
+}
+
+const AuthPage: React.FC<AuthPageProps> = ({ children }: AuthPageProps) => {
   const { isLoading } = useGetAuth()
 
   return (

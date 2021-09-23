@@ -9,7 +9,7 @@ type CustomLinkProps = {
   className?: string
 }
 
-const CustomLink = (props: CustomLinkProps) => {
+const CustomLink: React.FC<CustomLinkProps> = (props: CustomLinkProps) => {
   const { to, activeOnlyWhenExact = true, children, className } = props
   return (
     <Route

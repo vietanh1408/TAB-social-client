@@ -17,7 +17,7 @@ const schema = yup.object().shape({
   code: yupExtension.codeRequired
 })
 
-const VerifyForm = (props: VerifyEmailProps) => {
+const VerifyForm: React.FC<VerifyEmailProps> = (props: VerifyEmailProps) => {
   const { handleSubmitForm, title } = props
   const formProps = useForm<VerifyEmailInput>({
     defaultValues: {

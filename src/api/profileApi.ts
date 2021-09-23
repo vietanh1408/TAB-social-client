@@ -2,17 +2,17 @@ import { setHeaders } from 'utils/setHeaders'
 import axiosClient from './axiosClient'
 
 const profileApi = {
-  getProfile(id: any, token: any) {
+  getProfile(id: any) {
     const url = `/user/${id}`
-    return axiosClient.get(url, setHeaders(token))
+    return axiosClient.get(url, setHeaders())
   },
-  editProfile(id: any, data: any, token: any) {
+  editProfile(id: any, data: any) {
     const url = `/user/edit/${id}`
-    return axiosClient.put(url, { data }, setHeaders(token))
+    return axiosClient.put(url, { data }, setHeaders())
   },
-  sendFriendRequest(id: string, token: any) {
+  sendFriendRequest(id: string) {
     const url = `/user/send-friend-request`
-    return axiosClient.post(url, { friendId: id }, setHeaders(token))
+    return axiosClient.post(url, { friendId: id }, setHeaders())
   }
 }
 

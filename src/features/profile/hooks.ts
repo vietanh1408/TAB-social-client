@@ -7,7 +7,6 @@ import { useGetAuth } from './../auth/hooks'
 import { fetchEditProfile, fetchProfile, fetchSendFriendRequest } from './api'
 
 export const useLoadProfile = () => {
-  const { token } = useGetAuth()
   const dispatch: AppDispatch = useDispatch()
   const { profile, isLoading } = useSelector(
     (state: RootState) => state.profile
@@ -16,7 +15,7 @@ export const useLoadProfile = () => {
   const { id } = useParams()
   useEffect(() => {
     // @ts-ignore
-    dispatch(fetchProfile({ id, token }))
+    dispatch(fetchProfile(id))
   }, [id])
   return { profile, isLoading }
 }
@@ -24,9 +23,9 @@ export const useLoadProfile = () => {
 export const useEditProfile = () => {
   const dispatch: AppDispatch = useDispatch()
   const { profile, isLoading } = useGetProfile()
-  const onEditProfile = async (id: any, data: any, token: any) => {
+  const onEditProfile = async (id: any, data: any) => {
     // @ts-ignore
-    const resultAction = await dispatch(fetchEditProfile({ id, data, token }))
+    const resultAction = await dispatch(fetchEditProfile({ id, data }))
     const isSuccess = fetchEditProfile.fulfilled.match(resultAction)
     if (isSuccess) {
       toast.success('Cập nhật thành công')
@@ -41,9 +40,9 @@ export const useEditProfile = () => {
 export const useSendFriendRequest = () => {
   const dispatch: AppDispatch = useDispatch()
 
-  const onSendFriendRequest = (id: any, token: any) => {
+  const onSendFriendRequest = (id: any) => {
     // @ts-ignore
-    dispatch(fetchSendFriendRequest(id, token))
+    dispatch(fetchSendFriendRequest(id))
   }
   return [onSendFriendRequest]
 }

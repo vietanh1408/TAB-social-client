@@ -1,6 +1,6 @@
 import React from 'react'
 
-const FriendRequestPage = () => {
+const FriendRequestPage: React.FC = () => {
   return <div>FriendRequestPage</div>
 }
 

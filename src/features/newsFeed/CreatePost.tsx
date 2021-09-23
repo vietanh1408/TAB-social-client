@@ -1,3 +1,6 @@
+// libs
+import React, { useEffect, useRef, useState } from 'react'
+import { ControllerRenderProps, FormProvider, useForm } from 'react-hook-form'
 import {
   CameraOutlined,
   PlusOutlined,
@@ -6,15 +9,15 @@ import {
 } from '@ant-design/icons'
 import { Button, Card, Input, Modal, Space, Spin } from 'antd'
 import Form from 'antd/lib/form/Form'
+// components
 import FormItem from 'components/Form/FormItem'
 import LoadingPage from 'components/LoadingPage'
+import HeaderAvatar from 'components/layout/Avatar'
+// constants
 import { imageType } from 'constants/index'
-import { useGetAuth } from 'features/auth/hooks'
+// others
 import { useGetUpload, useRemoveUpload, useUpload } from 'features/upload/hooks'
 import { CreatePostInput } from 'Models'
-import React, { useEffect, useRef, useState } from 'react'
-import { ControllerRenderProps, FormProvider, useForm } from 'react-hook-form'
-import HeaderAvatar from '../../components/layout/Avatar'
 import { useCreatePost } from './hooks'
 
 const CreatePost: React.FC = () => {
@@ -25,9 +28,7 @@ const CreatePost: React.FC = () => {
   const btnUpload = useRef(null)
   const input = useRef(null)
 
-  const { token } = useGetAuth()
   const { response, isLoading: isUploading } = useGetUpload()
-
   const [onUpload] = useUpload()
   const [onRemove] = useRemoveUpload()
   const [onFetchCreate] = useCreatePost()
@@ -52,12 +53,12 @@ const CreatePost: React.FC = () => {
     setPreviewSource('')
     reset()
     if (response) {
-      onRemove({ public_id: response?.public_id }, token)
+      onRemove({ public_id: response?.public_id })
     }
   }
 
   const onSubmit = (data: CreatePostInput) => {
-    onFetchCreate(data, token)
+    onFetchCreate(data)
     setIsModalVisible(false)
   }
 
@@ -83,9 +84,9 @@ const CreatePost: React.FC = () => {
   }
 
   const uploadImage = async (base46Code: any) => {
-    await onUpload({ data: base46Code }, token)
+    await onUpload({ data: base46Code })
     if (response) {
-      onRemove({ public_id: response?.public_id }, token)
+      onRemove({ public_id: response?.public_id })
     }
   }
 

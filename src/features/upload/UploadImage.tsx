@@ -1,8 +1,7 @@
+import React, { useRef, useState } from 'react'
 import { Button, Modal, Spin } from 'antd'
 import LoadingPage from 'components/LoadingPage'
 import { imageType } from 'constants/index'
-import { useGetAuth } from 'features/auth/hooks'
-import { useRef, useState } from 'react'
 import { useGetUpload, useRemoveUpload, useUpload } from './hooks'
 
 type UploadImageProps = {
@@ -13,7 +12,7 @@ type UploadImageProps = {
   title?: string
 }
 
-const UploadImage = (props: UploadImageProps) => {
+const UploadImage: React.FC<UploadImageProps> = (props: UploadImageProps) => {
   const { handleSubmit, text, isUpdating, classBtn, title } = props
   const [previewSource, setPreviewSource] = useState('')
   const [isModalVisible, setIsModalVisible] = useState(false)
@@ -21,9 +20,7 @@ const UploadImage = (props: UploadImageProps) => {
   const btnUpload = useRef(null)
   const input = useRef(null)
 
-  const { token } = useGetAuth()
   const { response, isLoading: isUploading } = useGetUpload()
-
   const [onUpload] = useUpload()
   const [onRemove] = useRemoveUpload()
 
@@ -56,12 +53,12 @@ const UploadImage = (props: UploadImageProps) => {
   }
 
   const uploadImage = async (base46Code: any) => {
-    await onUpload({ data: base46Code }, token)
+    await onUpload({ data: base46Code })
   }
 
   const handleCancel = () => {
     setIsModalVisible(false)
-    onRemove({ public_id: response?.public_id }, token)
+    onRemove({ public_id: response?.public_id })
   }
 
   const handleSelectFile = () => {

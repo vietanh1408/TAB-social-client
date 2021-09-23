@@ -2,12 +2,23 @@ import { AppDispatch, RootState } from 'app/store'
 import { getOnlineUser } from 'features/onlineUser/api'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { socketAction } from './api'
+// socket.io
+import io from 'socket.io-client'
 
-const SocketClient = () => {
+const SocketClient: React.FC = () => {
   const { auth, socket, onlineUser } = useSelector((state: RootState) => state)
   const dispatch: AppDispatch = useDispatch()
   const { socketActions } = socket
   const { user } = auth
+
+  useEffect((): any => {
+    // @ts-ignore
+    const socket = io(process.env.REACT_APP_SOCKET_URL)
+    dispatch(socketAction(socket))
+    return () => socket.close()
+  }, [dispatch])
+
   // join socket: client ----(user)---> server
   useEffect(() => {
     socketActions?.emit('joinSocket', user)

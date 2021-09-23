@@ -1,9 +1,9 @@
-import { Button, Result } from 'antd'
-import { navName } from 'constants/navName'
 import React from 'react'
 import { useHistory } from 'react-router'
+import { Button, Result } from 'antd'
+import { navName } from 'constants/navName'
 
-const NotFoundPage = () => {
+const NotFoundPage: React.FC = () => {
   const history = useHistory()
 
   const handleGoBack = () => {

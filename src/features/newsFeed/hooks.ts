@@ -20,9 +20,9 @@ export const useGetPost = () => {
 
 export const useCreatePost = () => {
   const dispatch: AppDispatch = useDispatch()
-  const onFetchCreate = async (data: any, token: any) => {
+  const onFetchCreate = async (data: any) => {
     // @ts-ignore
-    const resultAction = await dispatch(fetchCreatePost({ data, token }))
+    const resultAction = await dispatch(fetchCreatePost(data))
     if (fetchCreatePost.fulfilled.match(resultAction)) {
       toast.success('Đăng bài viết thành công')
     } else {

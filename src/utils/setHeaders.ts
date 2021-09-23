@@ -1,4 +1,5 @@
-export const setHeaders = (token: string) => {
+export const setHeaders = () => {
+  const token = localStorage.getItem('accessToken')
   return {
     headers: {
       Authorization: `Bearer ${token}`

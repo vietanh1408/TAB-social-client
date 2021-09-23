@@ -30,7 +30,7 @@ const schema = yup.object().shape({
   password: yupExtension.passwordRequired
 })
 
-const LoginForm = (props: LoginFormProps) => {
+const LoginForm: React.FC<LoginFormProps> = (props: LoginFormProps) => {
   const { handleLoginGoogle, handleSubmitForm, title, text, isLoading } = props
 
   const formProps = useForm<LoginAccount>({

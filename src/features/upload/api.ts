@@ -4,9 +4,9 @@ import { showError } from 'extensions'
 
 export const fetchUpload = createAsyncThunk(
   'upload/uploading',
-  async ({ data, token }: any, { rejectWithValue }) => {
+  async (data: any, { rejectWithValue }) => {
     try {
-      const response = await uploadApi.upload(data, token)
+      const response = await uploadApi.upload(data)
       return response.data
     } catch (err: any) {
       showError(err)
@@ -17,9 +17,9 @@ export const fetchUpload = createAsyncThunk(
 
 export const fetchRemoveUpload = createAsyncThunk(
   'upload/remove-upload',
-  async ({ data, token }: any, { rejectWithValue }) => {
+  async (data: any, { rejectWithValue }) => {
     try {
-      const response = await uploadApi.removeUpload(data, token)
+      const response = await uploadApi.removeUpload(data)
       return response.data
     } catch (err: any) {
       showError(err)

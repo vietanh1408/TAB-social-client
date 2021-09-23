@@ -1,4 +1,4 @@
-import { Card, Divider } from 'antd'
+import { Divider } from 'antd'
 import PostCard from 'components/Post'
 import PostSkeleton from 'components/Post/Skeleton'
 import CreatePost from 'features/newsFeed/CreatePost'
@@ -7,7 +7,6 @@ import { useGetPost } from './hooks'
 
 const NewsFeed: React.FC = () => {
   const { post, isLoading } = useGetPost()
-
   return (
     <div id="news-feed" style={{ height: '2000px' }}>
       <CreatePost />

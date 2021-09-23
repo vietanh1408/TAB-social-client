@@ -42,7 +42,7 @@ const Profile: React.FC = () => {
 
   return (
     <div id="profile_page" style={{ height: '1000px' }}>
-      <BackgroundImage profile={profile} />
+      <BackgroundImage user={user} />
       {isOtherProfile ? (
         <AddFriend
           user={user}

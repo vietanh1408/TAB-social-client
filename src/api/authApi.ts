@@ -16,9 +16,9 @@ const authApi = {
     const url = '/auth/register'
     return axiosClient.post(url, params)
   },
-  verifyEmail(params: VerifyEmailInput, token: string) {
+  verifyEmail(params: VerifyEmailInput) {
     const url = `auth/check-verify`
-    return axiosClient.post(url, params, setHeaders(token))
+    return axiosClient.post(url, params, setHeaders())
   },
   loginGoogle(params: LoginGoogle) {
     const url = `/auth/google-login`

@@ -1,17 +1,18 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { LogoutOutlined, UserOutlined } from '@ant-design/icons'
-import { useGetAuth, useLogout } from 'features/auth/hooks'
+import { useLogout } from 'features/auth/hooks'
 import { navName } from 'constants/navName'
+import { UserState } from 'Models'
 
 type SettingListProps = {
   classList?: any
   onClose?: () => void
+  user: UserState | null
 }
 
-const SettingList = (props: SettingListProps) => {
-  const { classList, onClose } = props
-  const { user } = useGetAuth()
+const SettingList: React.FC<SettingListProps> = (props: SettingListProps) => {
+  const { classList, onClose, user } = props
 
   const [onLogout] = useLogout()
 

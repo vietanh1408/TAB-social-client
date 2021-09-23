@@ -1,11 +1,11 @@
-import { Input } from 'antd'
 import React from 'react'
+import { Input } from 'antd'
 
 type CustomInputProps = {
   placeholder?: string
 }
 
-const CustomInput = (props: CustomInputProps) => {
+const CustomInput: React.FC<CustomInputProps> = (props: CustomInputProps) => {
   const { placeholder } = props
   return <Input placeholder={placeholder} />
 }

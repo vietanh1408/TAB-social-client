@@ -51,10 +51,9 @@ export const useRegister = () => {
 
 export const useVerifyEmail = () => {
   const dispatch: AppDispatch = useDispatch()
-  const { token } = useGetAuth()
   const onVerify = async (data: VerifyEmailInput) => {
     // @ts-ignore
-    const resultAction = await dispatch(fetchVerifyEmail({ data, token }))
+    const resultAction = await dispatch(fetchVerifyEmail(data))
     const isSuccess = fetchVerifyEmail.fulfilled.match(resultAction)
     if (isSuccess) {
       toast.success('Xác thực tài khoản thành công')

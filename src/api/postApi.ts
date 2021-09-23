@@ -4,11 +4,11 @@ import axiosClient from './axiosClient'
 const postApi = {
   get(token: any) {
     const url = `/posts`
-    return axiosClient.get(url, setHeaders(token))
+    return axiosClient.get(url, setHeaders())
   },
-  create(data: any, token: any) {
+  create(data: any) {
     const url = `/posts/create`
-    return axiosClient.post(url, data, setHeaders(token))
+    return axiosClient.post(url, data, setHeaders())
   }
 }
 

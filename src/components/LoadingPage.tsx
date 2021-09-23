@@ -1,6 +1,6 @@
 import React from 'react'
 
-const LoadingPage = () => {
+const LoadingPage: React.FC = () => {
   return (
     <div className="absolute inset-0 bg-transparent z-50 flex justify-center items-center">
       <div className="spinner">

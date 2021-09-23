@@ -29,7 +29,9 @@ const schema = yup.object().shape({
   confirmPassword: yupExtension.confirmPassword
 })
 
-const RegisterForm = (props: RegisterFormProps) => {
+const RegisterForm: React.FC<RegisterFormProps> = (
+  props: RegisterFormProps
+) => {
   const { handleSubmitForm, title, text, isLoading } = props
 
   const formProps = useForm<RegisterAccount>({

@@ -6,14 +6,20 @@ import SettingList from 'components/SettingList'
 // hooks
 import { useGetAuth } from 'features/auth/hooks'
 
-const HeaderAvatar = (props: any) => {
+type HeaderAvatarProp = {
+  hasPopover?: boolean
+}
+
+const HeaderAvatar: React.FC<HeaderAvatarProp> = (props: HeaderAvatarProp) => {
   const { hasPopover = true } = props
   const { user } = useGetAuth()
   return (
     <Popover
       placement={'bottomRight'}
       content={
-        hasPopover ? <SettingList classList="w-40 hidden md:block" /> : null
+        hasPopover ? (
+          <SettingList classList="w-40 hidden md:block" user={user} />
+        ) : null
       }
       trigger="click"
     >

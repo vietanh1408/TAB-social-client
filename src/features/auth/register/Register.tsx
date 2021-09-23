@@ -11,7 +11,7 @@ import { useGetAuth, useRegister } from '../hooks'
 // models
 import { RegisterAccount } from 'Models'
 
-const RegisterPage = () => {
+const RegisterPage: React.FC = () => {
   const history = useHistory()
 
   const [onFetch] = useRegister()

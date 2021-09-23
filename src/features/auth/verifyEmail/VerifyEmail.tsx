@@ -10,7 +10,7 @@ import { useGetAuth, useVerifyEmail } from '../hooks'
 // components
 import VerifyForm from './Form'
 
-const VerifyEmail = () => {
+const VerifyEmail: React.FC = () => {
   const { isVerify } = useGetAuth()
 
   const history = useHistory()

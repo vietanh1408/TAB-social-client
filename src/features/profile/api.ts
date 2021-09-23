@@ -10,9 +10,9 @@ const initialState: ProfileState = {
 
 export const fetchProfile = createAsyncThunk(
   'profile/getProfile',
-  async ({ id, token }: { id: string; token: string }, { rejectWithValue }) => {
+  async (id: string, { rejectWithValue }) => {
     try {
-      const { data: response } = await profileApi.getProfile(id, token)
+      const { data: response } = await profileApi.getProfile(id)
       return response
     } catch (err: any) {
       showError(err)
@@ -23,9 +23,9 @@ export const fetchProfile = createAsyncThunk(
 
 export const fetchEditProfile = createAsyncThunk(
   'profile/editProfile',
-  async ({ id, data, token }: any, { rejectWithValue }) => {
+  async ({ id, data }: any, { rejectWithValue }) => {
     try {
-      const response = await profileApi.editProfile(id, data, token)
+      const response = await profileApi.editProfile(id, data)
       return response.data
     } catch (err: any) {
       showError(err)
@@ -36,9 +36,9 @@ export const fetchEditProfile = createAsyncThunk(
 
 export const fetchSendFriendRequest = createAsyncThunk(
   'profile/sendFriendRequest',
-  async ({ id, token }: any, { rejectWithValue }) => {
+  async ({ id }: any, { rejectWithValue }) => {
     try {
-      const response = await profileApi.sendFriendRequest(id, token)
+      const response = await profileApi.sendFriendRequest(id)
       console.log('response....', response)
       return response.data
     } catch (err: any) {

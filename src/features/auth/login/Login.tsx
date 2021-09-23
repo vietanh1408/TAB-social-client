@@ -11,7 +11,7 @@ import { useGetAuth, useLogin, useLoginWithGoogle } from '../hooks'
 // constants
 import { navName } from 'constants/navName'
 
-const Login = () => {
+const Login: React.FC = () => {
   const history = useHistory()
 
   const [onFetch] = useLogin()

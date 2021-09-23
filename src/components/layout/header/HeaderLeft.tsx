@@ -3,10 +3,12 @@ import { Drawer, Space } from 'antd'
 import Search from 'antd/lib/input/Search'
 import Logo from 'assets/logo.png'
 import SettingList from 'components/SettingList'
+import { useGetAuth } from 'features/auth/hooks'
 import React, { useState } from 'react'
 
 const HeaderLeft: React.FC = () => {
   const [visible, setVisible] = useState(false)
+  const { user } = useGetAuth()
 
   const showDrawer = () => {
     setVisible(true)
@@ -36,7 +38,7 @@ const HeaderLeft: React.FC = () => {
           onClose={onClose}
           visible={visible}
         >
-          <SettingList classList="w-full" onClose={onClose} />
+          <SettingList classList="w-full" onClose={onClose} user={user} />
         </Drawer>
       </div>
     </div>

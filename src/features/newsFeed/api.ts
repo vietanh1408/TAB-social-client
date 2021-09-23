@@ -22,9 +22,9 @@ export const fetchGetAllPost = createAsyncThunk(
 
 export const fetchCreatePost = createAsyncThunk(
   'post/createPost',
-  async ({ data, token }: any, { rejectWithValue }) => {
+  async (data: any, { rejectWithValue }) => {
     try {
-      const response = await postApi.create(data, token)
+      const response = await postApi.create(data)
       return response.data
     } catch (err: any) {
       showError(err)

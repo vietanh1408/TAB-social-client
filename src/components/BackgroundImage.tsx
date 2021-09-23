@@ -1,16 +1,22 @@
 import { CameraOutlined } from '@ant-design/icons'
 import { Avatar, Image } from 'antd'
 import { FALLBACK_IMAGE } from 'constants/index'
-import { useGetAuth } from 'features/auth/hooks'
 import { useEditProfile } from 'features/profile/hooks'
 import { useRemoveUpload } from 'features/upload/hooks'
 import UploadImage from 'features/upload/UploadImage'
+import { UserState } from 'Models'
 
-const BackgroundImage = (props: any) => {
-  const { user, token } = useGetAuth()
+type BackgroundImageProps = {
+  user: UserState | null
+}
+
+const BackgroundImage: React.FC<BackgroundImageProps> = (
+  props: BackgroundImageProps
+) => {
+  const { user } = props
   const { onEditProfile, profile, isLoading } = useEditProfile()
   const [onRemove] = useRemoveUpload()
-  const isOwnProfile = token && profile?._id === user?._id
+  const isOwnProfile = profile?._id === user?._id
 
   const handleEditAvatar = (response: any) => {
     const data = {
@@ -19,10 +25,10 @@ const BackgroundImage = (props: any) => {
     }
     if (response?.success) {
       // edit avatar after upload success
-      onEditProfile(profile?._id, { avatar: data }, token)
+      onEditProfile(profile?._id, { avatar: data })
       // remove old avatar in cloudinary
       if (profile?.avatar?.publicId) {
-        onRemove({ public_id: profile?.avatar?.publicId }, token)
+        onRemove({ public_id: profile?.avatar?.publicId })
       }
     }
   }
@@ -34,10 +40,10 @@ const BackgroundImage = (props: any) => {
     }
     if (response?.success) {
       // edit background after upload success
-      onEditProfile(profile?._id, { background: data }, token)
+      onEditProfile(profile?._id, { background: data })
       // remove old background in cloudinary
       if (profile?.background?.publicId) {
-        onRemove({ public_id: profile?.background?.publicId }, token)
+        onRemove({ public_id: profile?.background?.publicId })
       }
     }
   }

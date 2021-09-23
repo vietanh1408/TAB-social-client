@@ -1,5 +1,4 @@
 // libs
-import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { BrowserRouter as Router } from 'react-router-dom'
@@ -16,7 +15,7 @@ import { persistor, store } from 'app/store'
 ReactDOM.render(
   <Router>
     <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
+      <PersistGate persistor={persistor}>
         <App />
       </PersistGate>
     </Provider>
