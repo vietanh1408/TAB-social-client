@@ -15,17 +15,33 @@ const AppLayout: React.FC = () => {
   return (
     <>
       {token && <Header />}
-      <div className="h-full w-full py-2 md:py-4 px-2 md:px-3 lg:px-4 xl:px-6">
+      <div
+        className={`h-full w-full ${
+          token ? 'py-2 md:py-4 px-2 md:px-3 lg:px-4 xl:px-6' : ''
+        }`}
+      >
         <Row className="w-full h-full">
-          <Col xs={0} md={6} className="h-full">
-            <div className="h-full border-black border-2 fixed">LEFT</div>
-          </Col>
-          <Col xs={24} md={12} className="md:px-4">
+          {token && (
+            <Col xs={0} md={6}>
+              <div className="h-full border-black border-2 fixed  w-1/4">
+                LEFT
+              </div>
+            </Col>
+          )}
+          <Col
+            xs={24}
+            md={token ? 12 : 24}
+            className={`${token ? 'md:px-4' : ''}`}
+          >
             <GenerateRoute />
           </Col>
-          <Col xs={0} md={6}>
-            <div className="h-full border-black border-2 fixed">RIGHT</div>
-          </Col>
+          {token && (
+            <Col xs={0} md={6}>
+              <div className="h-full border-black border-2 fixed  w-1/4">
+                RIGHT
+              </div>
+            </Col>
+          )}
         </Row>
       </div>
       {token && <Footer />}

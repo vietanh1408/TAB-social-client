@@ -1,5 +1,4 @@
 import { AppDispatch, RootState } from 'app/store'
-import { useEditProfile } from 'features/profile/hooks'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { fetchRemoveUpload, fetchUpload } from './api'

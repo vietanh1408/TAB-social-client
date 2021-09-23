@@ -9,6 +9,10 @@ const profileApi = {
   editProfile(id: any, data: any, token: any) {
     const url = `/user/edit/${id}`
     return axiosClient.put(url, { data }, setHeaders(token))
+  },
+  sendFriendRequest(id: string, token: any) {
+    const url = `/user/send-friend-request`
+    return axiosClient.post(url, { friendId: id }, setHeaders(token))
   }
 }
 

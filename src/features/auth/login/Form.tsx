@@ -1,5 +1,7 @@
 // libs
 import React from 'react'
+import FacebookLogin from 'react-facebook-login'
+import GoogleLogin from 'react-google-login'
 import { ControllerRenderProps, FormProvider, useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 import * as yup from 'yup'
@@ -7,18 +9,13 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { Button, Input } from 'antd'
 import Checkbox from 'antd/lib/checkbox/Checkbox'
 import Form from 'antd/lib/form/Form'
-// image
-import facebookIcon from 'assets/facebook-logo 1.png'
-import GoogleIcon from 'assets/google-logo 1.png'
 // components
 import FormItem from 'components/Form/FormItem'
+import { navName } from 'constants/navName'
 // extensions
 import yupExtension from 'extensions/yup'
 // models
 import { LoginAccount, LoginGoogle } from 'Models'
-import { navName } from 'constants/navName'
-import GoogleLogin from 'react-google-login'
-import FacebookLogin from 'react-facebook-login'
 
 type LoginFormProps = {
   handleSubmitForm(args: LoginAccount): void

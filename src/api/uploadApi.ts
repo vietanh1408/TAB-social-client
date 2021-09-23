@@ -2,13 +2,13 @@ import { setHeaders } from 'utils/setHeaders'
 import axiosClient from './axiosClient'
 
 const uploadApi = {
-  upload(params: any, token: any) {
+  upload(data: any, token: any) {
     const url = `/upload`
-    return axiosClient.post(url, params, setHeaders(token))
+    return axiosClient.post(url, data, setHeaders(token))
   },
-  removeUpload(params: any, token: any) {
+  removeUpload(data: any, token: any) {
     const url = `/remove-upload`
-    return axiosClient.patch(url, params, setHeaders(token))
+    return axiosClient.patch(url, data, setHeaders(token))
   }
 }
 

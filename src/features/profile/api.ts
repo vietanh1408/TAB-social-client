@@ -34,6 +34,20 @@ export const fetchEditProfile = createAsyncThunk(
   }
 )
 
+export const fetchSendFriendRequest = createAsyncThunk(
+  'profile/sendFriendRequest',
+  async ({ id, token }: any, { rejectWithValue }) => {
+    try {
+      const response = await profileApi.sendFriendRequest(id, token)
+      console.log('response....', response)
+      return response.data
+    } catch (err: any) {
+      showError(err)
+      return rejectWithValue(err.response)
+    }
+  }
+)
+
 const profileSlice = createSlice({
   name: 'profile',
   initialState,

@@ -22,3 +22,8 @@
 .ant-image-preview-img-wrapper::before {
     height: 20%;
 }
+
+.ant-skeleton-element .ant-skeleton-image {
+    width: 100%;
+    height: 500px;
+}

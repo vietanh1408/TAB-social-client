@@ -49,8 +49,8 @@ const BackgroundImage = (props: any) => {
         src={profile?.background?.url}
         fallback={FALLBACK_IMAGE}
       />
-      <div className="w-full h-full md:container container mx-auto py-2 md:py-10 px-2 md:px-3 lg:px-4 xl:px-6 flex justify-center md:justify-start items-end z-10">
-        <div className="flex flex-col md:flex-row justify-start items-center z-10">
+      <div className="w-full h-full md:container container mx-auto py-2 md:py-10 px-2 md:px-3 lg:px-4 xl:px-6 flex justify-center md:justify-start items-end">
+        <div className="flex flex-col md:flex-row justify-start items-center">
           <div className="relative">
             <Avatar
               src={

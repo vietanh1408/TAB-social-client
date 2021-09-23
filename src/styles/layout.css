@@ -89,6 +89,9 @@ ul {
 }
 
 /* -------HEADER------- */
+.header {
+  z-index: 9999 !important;
+}
 
 .header__left{
   flex: 1;

@@ -23,7 +23,9 @@ interface Iprops {
   isProtected?: boolean
 }
 
-const ProtectedRoute = (props: RouteProps & Iprops) => {
+const ProtectedRoute: React.FC<RouteProps & Iprops> = (
+  props: RouteProps & Iprops
+) => {
   const { component, resource, path, isAuth, isProtected, ...rest } = props
   const { token } = useGetAuth()
   const renderFn = (Component?: RouteComponent) => (props: RouteProps) => {

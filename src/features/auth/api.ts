@@ -80,6 +80,7 @@ const authSlice = createSlice({
       state.token = null
       state.user = null
       state.isVerify = false
+      localStorage.removeItem('accessToken')
     }
   },
   extraReducers: (builder) => {
@@ -92,6 +93,7 @@ const authSlice = createSlice({
         state.isLoading = false
         state.token = action.payload.accessToken
         state.user = action.payload.user
+        localStorage.setItem('accessToken', action.payload.accessToken)
       })
       .addCase(fetchLogin.rejected, (state: AuthState, action: any) => {
         state.isLoading = false
@@ -105,6 +107,7 @@ const authSlice = createSlice({
         state.isLoading = false
         state.token = action.payload.accessToken
         state.user = action.payload.user
+        localStorage.setItem('accessToken', action.payload.accessToken)
       })
       .addCase(fetchRegister.rejected, (state: AuthState, action: any) => {
         state.isLoading = false

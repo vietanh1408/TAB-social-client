@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
 import { useGetAuth } from './../auth/hooks'
-import { fetchEditProfile, fetchProfile } from './api'
+import { fetchEditProfile, fetchProfile, fetchSendFriendRequest } from './api'
 
 export const useLoadProfile = () => {
   const { token } = useGetAuth()
@@ -36,6 +36,16 @@ export const useEditProfile = () => {
   }
 
   return { onEditProfile, profile, isLoading }
+}
+
+export const useSendFriendRequest = () => {
+  const dispatch: AppDispatch = useDispatch()
+
+  const onSendFriendRequest = (id: any, token: any) => {
+    // @ts-ignore
+    dispatch(fetchSendFriendRequest(id, token))
+  }
+  return [onSendFriendRequest]
 }
 
 export const useGetProfile = () => {
