@@ -11,17 +11,18 @@ import SocketClient from 'features/socket/SocketClient'
 import GenerateRoute from 'routes/GenerateRoute'
 
 const AppLayout: React.FC = () => {
-  const { token } = useGetAuth()
+  const { token, user } = useGetAuth()
+  const verifiedUser = token && user?.isVerifiedMail
   return (
     <React.Fragment>
-      {token && <Header />}
+      {verifiedUser && <Header />}
       <div
         className={`h-full w-full ${
-          token ? 'py-2 md:py-4 px-2 md:px-3 lg:px-4 xl:px-6' : ''
+          verifiedUser ? 'py-2 md:py-4 px-2 md:px-3 lg:px-4 xl:px-6' : ''
         }`}
       >
         <Row className="w-full h-full">
-          {token && (
+          {verifiedUser && (
             <Col xs={0} md={6}>
               <div className="h-full border-black border-2 fixed  w-1/4">
                 LEFT
@@ -30,12 +31,12 @@ const AppLayout: React.FC = () => {
           )}
           <Col
             xs={24}
-            md={token ? 12 : 24}
-            className={`${token ? 'md:px-4' : ''}`}
+            md={verifiedUser ? 12 : 24}
+            className={`${verifiedUser ? 'md:px-4' : ''}`}
           >
             <GenerateRoute />
           </Col>
-          {token && (
+          {verifiedUser && (
             <Col xs={0} md={6}>
               <div className="h-full border-black border-2 fixed  w-1/4">
                 RIGHT
@@ -44,7 +45,7 @@ const AppLayout: React.FC = () => {
           )}
         </Row>
       </div>
-      {token && <Footer />}
+      {verifiedUser && <Footer />}
       {token && <SocketClient />}
     </React.Fragment>
   )

@@ -48,7 +48,7 @@ export const fetchVerifyEmail = createAsyncThunk(
   async (data: VerifyEmailInput, { rejectWithValue }) => {
     try {
       const response = await authApi.verifyEmail(data)
-      return response.data.success
+      return response.data
     } catch (err: any) {
       showError(err)
       return rejectWithValue(err.response)
@@ -116,7 +116,8 @@ const authSlice = createSlice({
         state.isVerify = false
       })
       .addCase(fetchVerifyEmail.fulfilled, (state: AuthState, action: any) => {
-        state.isVerify = action.payload
+        state.isVerify = action.payload.success
+        state.user = action.payload.user
       })
       .addCase(fetchVerifyEmail.rejected, (state: AuthState, action: any) => {
         state.isVerify = false
