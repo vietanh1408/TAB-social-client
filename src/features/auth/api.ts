@@ -8,6 +8,7 @@ import {
   RegisterAccount,
   VerifyEmailInput
 } from 'Models'
+import profileApi from 'api/profileApi'
 
 const initialState: AuthState = {
   token: '',
@@ -62,6 +63,32 @@ export const fetchLoginGoogle = createAsyncThunk(
     try {
       const { data: response } = await authApi.loginGoogle(data)
       return response
+    } catch (err: any) {
+      showError(err)
+      return rejectWithValue(err.response)
+    }
+  }
+)
+
+export const fetchSendFriendRequest = createAsyncThunk(
+  'auth/sendFriendRequest',
+  async (id: string, { rejectWithValue }) => {
+    try {
+      const response = await profileApi.sendFriendRequest(id)
+      return response.data
+    } catch (err: any) {
+      showError(err)
+      return rejectWithValue(err.response)
+    }
+  }
+)
+
+export const fetchEditProfile = createAsyncThunk(
+  'profile/editProfile',
+  async ({ id, data }: any, { rejectWithValue }) => {
+    try {
+      const response = await profileApi.editProfile(id, data)
+      return response.data
     } catch (err: any) {
       showError(err)
       return rejectWithValue(err.response)
@@ -136,6 +163,42 @@ const authSlice = createSlice({
         state.isLoading = false
         state.error = action.payload?.data?.message
       })
+
+      // edit profile
+      .addCase(fetchEditProfile.pending, (state, action) => {
+        state.isLoading = true
+      })
+
+      .addCase(fetchEditProfile.fulfilled, (state, { payload }) => {
+        state.user = payload.profile
+        state.isLoading = false
+      })
+
+      .addCase(fetchEditProfile.rejected, (state, { payload }) => {
+        state.isLoading = false
+      })
+
+      // send Friend request
+      .addCase(
+        fetchSendFriendRequest.pending,
+        (state: AuthState, action: any) => {
+          state.isLoading = true
+        }
+      )
+      .addCase(
+        fetchSendFriendRequest.fulfilled,
+        (state: AuthState, action: any) => {
+          state.isLoading = false
+          state.user = action.payload.user
+        }
+      )
+      .addCase(
+        fetchSendFriendRequest.rejected,
+        (state: AuthState, action: any) => {
+          state.isLoading = false
+          state.error = action.payload?.data?.message
+        }
+      )
   }
 })
 

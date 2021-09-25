@@ -12,6 +12,7 @@ const profileApi = {
   },
   sendFriendRequest(id: string) {
     const url = `/user/send-friend-request`
+    console.log('id...........', id)
     return axiosClient.post(url, { friendId: id }, setHeaders())
   }
 }

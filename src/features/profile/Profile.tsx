@@ -4,7 +4,7 @@ import BackgroundImage from 'components/BackgroundImage'
 import LoadingPage from 'components/LoadingPage'
 import { useGetAuth } from 'features/auth/hooks'
 import React from 'react'
-import { useLoadProfile } from './hooks'
+import { useLoadProfile, useSendFriendRequest } from './hooks'
 
 const Profile: React.FC = () => {
   const { profile, isLoading } = useLoadProfile()
@@ -12,8 +12,10 @@ const Profile: React.FC = () => {
   const isOtherProfile = profile?._id !== user?._id
   const id = profile?._id
 
-  const handleAddFriend = () => {
-    console.log('addFriend....', id)
+  const [onSendFriendRequest] = useSendFriendRequest()
+
+  const handleSendFriendRequest = () => {
+    onSendFriendRequest(id)
   }
 
   const handleFollow = () => {
@@ -24,8 +26,8 @@ const Profile: React.FC = () => {
     console.log('cancel friend request....', id)
   }
 
-  const handleCancelFollow = () => {
-    console.log('cancel follow....', id)
+  const handleUnFollow = () => {
+    console.log('unfollow....', id)
   }
 
   const handleUnFriend = () => {
@@ -49,8 +51,8 @@ const Profile: React.FC = () => {
           profile={profile}
           handleFollow={handleFollow}
           handleUnFriend={handleUnFriend}
-          handleAddFriend={handleAddFriend}
-          handleCancelFollow={handleCancelFollow}
+          handleSendFriendRequest={handleSendFriendRequest}
+          handleUnFollow={handleUnFollow}
           handleCancelFriendRequest={handleCancelFriendRequest}
         />
       ) : null}

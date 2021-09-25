@@ -21,33 +21,6 @@ export const fetchProfile = createAsyncThunk(
   }
 )
 
-export const fetchEditProfile = createAsyncThunk(
-  'profile/editProfile',
-  async ({ id, data }: any, { rejectWithValue }) => {
-    try {
-      const response = await profileApi.editProfile(id, data)
-      return response.data
-    } catch (err: any) {
-      showError(err)
-      return rejectWithValue(err.response)
-    }
-  }
-)
-
-export const fetchSendFriendRequest = createAsyncThunk(
-  'profile/sendFriendRequest',
-  async ({ id }: any, { rejectWithValue }) => {
-    try {
-      const response = await profileApi.sendFriendRequest(id)
-      console.log('response....', response)
-      return response.data
-    } catch (err: any) {
-      showError(err)
-      return rejectWithValue(err.response)
-    }
-  }
-)
-
 const profileSlice = createSlice({
   name: 'profile',
   initialState,
@@ -65,20 +38,6 @@ const profileSlice = createSlice({
       })
 
       .addCase(fetchProfile.rejected, (state, { payload }) => {
-        state.isLoading = false
-      })
-
-      // edit profile
-      .addCase(fetchEditProfile.pending, (state, action) => {
-        state.isLoading = true
-      })
-
-      .addCase(fetchEditProfile.fulfilled, (state, { payload }) => {
-        state.profile = payload.profile
-        state.isLoading = false
-      })
-
-      .addCase(fetchEditProfile.rejected, (state, { payload }) => {
         state.isLoading = false
       })
   }

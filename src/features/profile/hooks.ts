@@ -1,10 +1,10 @@
 import { AppDispatch, RootState } from 'app/store'
+import { fetchEditProfile, fetchSendFriendRequest } from 'features/auth/api'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
-import { useGetAuth } from './../auth/hooks'
-import { fetchEditProfile, fetchProfile, fetchSendFriendRequest } from './api'
+import { fetchProfile } from './api'
 
 export const useLoadProfile = () => {
   const dispatch: AppDispatch = useDispatch()
@@ -40,7 +40,7 @@ export const useEditProfile = () => {
 export const useSendFriendRequest = () => {
   const dispatch: AppDispatch = useDispatch()
 
-  const onSendFriendRequest = (id: any) => {
+  const onSendFriendRequest = (id: string | undefined) => {
     // @ts-ignore
     dispatch(fetchSendFriendRequest(id))
   }

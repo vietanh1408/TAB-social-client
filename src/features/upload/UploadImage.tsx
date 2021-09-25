@@ -50,6 +50,7 @@ const UploadImage: React.FC<UploadImageProps> = (props: UploadImageProps) => {
     if (response) {
       handleSubmit(response)
     }
+    setIsModalVisible(false)
   }
 
   const uploadImage = async (base46Code: any) => {

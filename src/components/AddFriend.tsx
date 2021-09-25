@@ -1,16 +1,39 @@
-import React, { useState } from 'react'
 import { Button } from 'antd'
-import { PlusCircleOutlined, UserAddOutlined } from '@ant-design/icons'
 import { ProfileType } from 'Models'
+import React, { useState } from 'react'
 
 type AddFriendProps = {
   user: any
   profile: ProfileType
   handleFollow: () => void
   handleUnFriend: () => void
-  handleAddFriend: () => void
-  handleCancelFollow: () => void
+  handleSendFriendRequest: () => void
+  handleUnFollow: () => void
   handleCancelFriendRequest: () => void
+}
+
+type FollowButtonProps = {
+  isFollowed: boolean
+  handleUnFollow: () => void
+  handleFollow: () => void
+}
+
+const FollowButton: React.FC<FollowButtonProps> = (
+  props: FollowButtonProps
+) => {
+  const { isFollowed, handleUnFollow, handleFollow } = props
+  if (isFollowed) {
+    return (
+      <Button type="primary" className="mr-4" onClick={handleUnFollow}>
+        Đang theo dõi
+      </Button>
+    )
+  }
+  return (
+    <Button className="mr-4" onClick={handleFollow}>
+      Theo dõi
+    </Button>
+  )
 }
 
 const AddFriend: React.FC<AddFriendProps> = (props: AddFriendProps) => {
@@ -19,22 +42,31 @@ const AddFriend: React.FC<AddFriendProps> = (props: AddFriendProps) => {
     profile,
     handleFollow,
     handleUnFriend,
-    handleAddFriend,
-    handleCancelFollow,
+    handleSendFriendRequest,
+    handleUnFollow,
     handleCancelFriendRequest
   } = props
 
-  const friendRequests = user?.friendRequests ?? []
-  const followings = user?.followings ?? []
+  const friends = profile?.friends ?? []
+  const sendFriendRequests = profile?.friendRequests ?? []
+  const friendRequests = profile?.sendFriendRequests ?? []
+  const followings = profile?.followers ?? []
 
-  const alreadySend = friendRequests.some((item: any) => item === profile?._id)
-  const alreadyFollow = followings.some((item: any) => item === profile?._id)
-  const alreadyFriend = user?.friends.some(
-    (friend: any) => friend === profile?._id
+  // check da ket ban
+  const alreadyFriend = friends.some((friend: any) => friend === user?._id)
+  // neu chua ket ban => check send friend request
+  const checkSendFriendRequest = sendFriendRequests.some(
+    (item: any) => item === user?._id
+  )
+  const checkFriendRequest = friendRequests.some(
+    (item: any) => item === user?._id
   )
 
-  const [isSend, setIsSend] = useState(alreadySend)
-  const [isFollowed, setIsFollowed] = useState(alreadyFollow)
+  // check theo doi
+  const checkFollowing = followings.some((item: any) => item === user?._id)
+
+  const [isSend, setIsSend] = useState(checkSendFriendRequest)
+  const [isFollowed, setIsFollowed] = useState(checkFollowing)
   const [isFriend, setIsFriend] = useState(alreadyFriend)
 
   const handleSend = () => {
@@ -45,54 +77,78 @@ const AddFriend: React.FC<AddFriendProps> = (props: AddFriendProps) => {
       if (isSend) {
         handleCancelFriendRequest()
       } else {
-        handleAddFriend()
+        handleSendFriendRequest()
       }
       setIsSend(!isSend)
     }
   }
 
-  const handleFollowRequest = () => {
-    if (isFollowed) {
-      handleCancelFollow()
-    } else {
-      handleFollow()
-    }
+  const onFollow = () => {
+    handleFollow()
+    setIsFollowed(!isFollowed)
+  }
+  const onUnfollow = () => {
+    handleUnFollow()
     setIsFollowed(!isFollowed)
   }
 
-  return (
-    <div className="flex justify-end items-center my-4">
-      <Button
-        onClick={handleFollowRequest}
-        type={`${isFollowed ? 'primary' : 'default'}`}
-        className=" mr-4"
-      >
-        {isFollowed ? (
-          'Hủy theo dõi'
-        ) : (
-          <div className="w-full flex justify-center items-center">
-            <PlusCircleOutlined />
-            Theo dõi
-          </div>
-        )}
-      </Button>
-      <Button
-        onClick={handleSend}
-        type={`${isSend || isFriend ? 'primary' : 'default'}`}
-      >
-        {isFriend ? (
-          'Hủy kết bạn'
-        ) : isSend ? (
-          'Đã gửi lời mời kết bạn'
-        ) : (
-          <div className="w-full flex justify-around items-center">
-            <UserAddOutlined />
-            Kết bạn
-          </div>
-        )}
-      </Button>
-    </div>
-  )
+  // TH1: da ket ban
+  if (isFriend) {
+    return (
+      <div className="flex justify-end items-center my-4">
+        <FollowButton
+          isFollowed={isFollowed}
+          handleFollow={onFollow}
+          handleUnFollow={onUnfollow}
+        />
+        <Button onClick={handleSend} type={'primary'}>
+          Hủy kêt bạn
+        </Button>
+      </div>
+    )
+  }
+
+  // TH2: chua ket ban
+  else {
+    // check trong sendFriendRequest
+    if (isSend) {
+      return (
+        <div className="flex justify-end items-center my-4">
+          <FollowButton
+            isFollowed={isFollowed}
+            handleFollow={onFollow}
+            handleUnFollow={onUnfollow}
+          />
+
+          <Button type={'primary'} onClick={handleSend}>
+            Đã gửi lời mời kết bạn
+          </Button>
+        </div>
+      )
+    }
+    // check trong friendRequests
+    if (checkFriendRequest) {
+      return (
+        <div className="flex justify-end items-center my-4">
+          <Button className="mr-4" type="primary">
+            Chấp nhận
+          </Button>
+          <Button>Hủy</Button>
+        </div>
+      )
+    }
+    return (
+      <div className="flex justify-end items-center my-4">
+        <FollowButton
+          isFollowed={isFollowed}
+          handleFollow={onFollow}
+          handleUnFollow={onUnfollow}
+        />
+
+        <Button onClick={handleSend}>Kết bạn</Button>
+      </div>
+    )
+  }
 }
 
 export default AddFriend
