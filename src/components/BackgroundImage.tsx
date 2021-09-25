@@ -4,10 +4,10 @@ import { FALLBACK_IMAGE } from 'constants/index'
 import { useEditProfile } from 'features/profile/hooks'
 import { useRemoveUpload } from 'features/upload/hooks'
 import UploadImage from 'features/upload/UploadImage'
-import { UserState } from 'Models'
+import { UserType } from 'Models'
 
 type BackgroundImageProps = {
-  user: UserState | null
+  user: UserType | null
 }
 
 const BackgroundImage: React.FC<BackgroundImageProps> = (

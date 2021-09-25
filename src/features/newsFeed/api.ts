@@ -9,9 +9,9 @@ const initialState: any = {
 
 export const fetchGetAllPost = createAsyncThunk(
   'post/getAllPost',
-  async (token: any, { rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
-      const response = await postApi.get(token)
+      const response = await postApi.get()
       return response.data
     } catch (err: any) {
       showError(err)

@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom'
 import { LogoutOutlined, UserOutlined } from '@ant-design/icons'
 import { useLogout } from 'features/user/hooks'
 import { navName } from 'constants/navName'
-import { UserState } from 'Models'
+import { UserType } from 'Models'
 
 type SettingListProps = {
   classList?: any
   onClose?: () => void
-  user: UserState | null
+  user: UserType | null
 }
 
 const SettingList: React.FC<SettingListProps> = (props: SettingListProps) => {

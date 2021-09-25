@@ -5,7 +5,7 @@ import storage from 'redux-persist/lib/storage'
 import { persistReducer } from 'redux-persist'
 
 // reducers
-import authReducer from 'features/user/api'
+import userReducer from 'features/user/api'
 import socketReducer from 'features/socket/api'
 import onlineUserReducer from 'features/onlineUser/api'
 import profileReducer from 'features/profile/api'
@@ -14,14 +14,14 @@ import postReducer from 'features/newsFeed/api'
 
 const history = createBrowserHistory()
 
-const authPersistConfig = {
-  key: 'auth',
+const userPersistConfig = {
+  key: 'user',
   storage,
   whitelist: ['token']
 }
 
 export const rootReducer = {
-  auth: persistReducer(authPersistConfig, authReducer),
+  user: persistReducer(userPersistConfig, userReducer),
 
   router: connectRouter(history),
   socket: socketReducer,

@@ -2,7 +2,7 @@ import { setHeaders } from 'utils/setHeaders'
 import axiosClient from './axiosClient'
 
 const postApi = {
-  get(token: any) {
+  get() {
     const url = `/posts`
     return axiosClient.get(url, setHeaders())
   },

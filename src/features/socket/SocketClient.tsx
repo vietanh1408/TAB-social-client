@@ -7,10 +7,14 @@ import { socketAction } from './api'
 import io from 'socket.io-client'
 
 const SocketClient: React.FC = () => {
-  const { auth, socket, onlineUser } = useSelector((state: RootState) => state)
+  const {
+    user: currentUser,
+    socket,
+    onlineUser
+  } = useSelector((state: RootState) => state)
   const dispatch: AppDispatch = useDispatch()
   const { socketActions } = socket
-  const { user } = auth
+  const { user } = currentUser
 
   useEffect((): any => {
     // @ts-ignore

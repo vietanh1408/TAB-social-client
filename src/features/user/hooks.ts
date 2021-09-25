@@ -87,5 +87,5 @@ export const useLoginWithGoogle = () => {
 }
 
 export const useGetAuth = () => {
-  return useSelector((state: RootState) => state.auth)
+  return useSelector((state: RootState) => state.user)
 }

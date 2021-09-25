@@ -1,16 +1,15 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import userApi from 'api/userApi'
 import { showError } from 'extensions/index'
-import authApi from 'api/authApi'
 import {
-  AuthState,
+  UserState,
   LoginAccount,
   LoginGoogle,
   RegisterAccount,
   VerifyEmailInput
 } from 'Models'
-import profileApi from 'api/profileApi'
 
-const initialState: AuthState = {
+const initialState: UserState = {
   token: '',
   user: null,
   error: null,
@@ -19,10 +18,10 @@ const initialState: AuthState = {
 }
 
 export const fetchLogin = createAsyncThunk(
-  'auth/login',
+  'user/login',
   async (data: LoginAccount, { rejectWithValue }) => {
     try {
-      const { data: response } = await authApi.login(data)
+      const { data: response } = await userApi.login(data)
       return response
     } catch (err: any) {
       showError(err)
@@ -32,10 +31,10 @@ export const fetchLogin = createAsyncThunk(
 )
 
 export const fetchRegister = createAsyncThunk(
-  'auth/register',
+  'user/register',
   async (data: RegisterAccount, { rejectWithValue }) => {
     try {
-      const { data: response } = await authApi.register(data)
+      const { data: response } = await userApi.register(data)
       return response
     } catch (err: any) {
       showError(err)
@@ -45,10 +44,10 @@ export const fetchRegister = createAsyncThunk(
 )
 
 export const fetchVerifyEmail = createAsyncThunk(
-  'auth/verify-email',
+  'user/verify-email',
   async (data: VerifyEmailInput, { rejectWithValue }) => {
     try {
-      const response = await authApi.verifyEmail(data)
+      const response = await userApi.verifyEmail(data)
       return response.data
     } catch (err: any) {
       showError(err)
@@ -58,10 +57,10 @@ export const fetchVerifyEmail = createAsyncThunk(
 )
 
 export const fetchLoginGoogle = createAsyncThunk(
-  'auth/loginGoogle',
+  'user/loginGoogle',
   async (data: LoginGoogle, { rejectWithValue }) => {
     try {
-      const { data: response } = await authApi.loginGoogle(data)
+      const { data: response } = await userApi.loginGoogle(data)
       return response
     } catch (err: any) {
       showError(err)
@@ -70,24 +69,11 @@ export const fetchLoginGoogle = createAsyncThunk(
   }
 )
 
-export const fetchSendFriendRequest = createAsyncThunk(
-  'auth/sendFriendRequest',
-  async (id: string, { rejectWithValue }) => {
-    try {
-      const response = await profileApi.sendFriendRequest(id)
-      return response.data
-    } catch (err: any) {
-      showError(err)
-      return rejectWithValue(err.response)
-    }
-  }
-)
-
 export const fetchEditProfile = createAsyncThunk(
-  'profile/editProfile',
+  'user/editProfile',
   async ({ id, data }: any, { rejectWithValue }) => {
     try {
-      const response = await profileApi.editProfile(id, data)
+      const response = await userApi.editProfile(id, data)
       return response.data
     } catch (err: any) {
       showError(err)
@@ -96,11 +82,37 @@ export const fetchEditProfile = createAsyncThunk(
   }
 )
 
-const authSlice = createSlice({
-  name: 'auth',
+export const fetchSendFriendRequest = createAsyncThunk(
+  'user/sendFriendRequest',
+  async (id: string, { rejectWithValue }) => {
+    try {
+      const response = await userApi.sendFriendRequest(id)
+      return response.data
+    } catch (err: any) {
+      showError(err)
+      return rejectWithValue(err.response)
+    }
+  }
+)
+
+export const fetchAcceptFriendRequest = createAsyncThunk(
+  'user/acceptFriendRequest',
+  async (id: string, { rejectWithValue }) => {
+    try {
+      const response = await userApi.acceptFriendRequest(id)
+      return response.data
+    } catch (err: any) {
+      showError(err)
+      return rejectWithValue(err.response)
+    }
+  }
+)
+
+const userSlice = createSlice({
+  name: 'user',
   initialState,
   reducers: {
-    logout: (state: AuthState) => {
+    logout: (state: UserState) => {
       state.token = null
       state.user = null
       state.isVerify = false
@@ -110,56 +122,56 @@ const authSlice = createSlice({
   extraReducers: (builder) => {
     builder
       // login
-      .addCase(fetchLogin.pending, (state: AuthState, action: any) => {
+      .addCase(fetchLogin.pending, (state: UserState, action: any) => {
         state.isLoading = true
       })
-      .addCase(fetchLogin.fulfilled, (state: AuthState, action: any) => {
+      .addCase(fetchLogin.fulfilled, (state: UserState, action: any) => {
         state.isLoading = false
         state.token = action.payload.accessToken
         state.user = action.payload.user
         localStorage.setItem('accessToken', action.payload.accessToken)
       })
-      .addCase(fetchLogin.rejected, (state: AuthState, action: any) => {
+      .addCase(fetchLogin.rejected, (state: UserState, action: any) => {
         state.isLoading = false
         state.error = action.payload?.data?.message
       })
       // register
-      .addCase(fetchRegister.pending, (state: AuthState, action: any) => {
+      .addCase(fetchRegister.pending, (state: UserState, action: any) => {
         state.isLoading = true
       })
-      .addCase(fetchRegister.fulfilled, (state: AuthState, action: any) => {
+      .addCase(fetchRegister.fulfilled, (state: UserState, action: any) => {
         state.isLoading = false
         state.token = action.payload.accessToken
         state.user = action.payload.user
         localStorage.setItem('accessToken', action.payload.accessToken)
       })
-      .addCase(fetchRegister.rejected, (state: AuthState, action: any) => {
+      .addCase(fetchRegister.rejected, (state: UserState, action: any) => {
         state.isLoading = false
         state.error = action.payload?.data?.message
       })
 
       // verify
-      .addCase(fetchVerifyEmail.pending, (state: AuthState, action: any) => {
+      .addCase(fetchVerifyEmail.pending, (state: UserState, action: any) => {
         state.isVerify = false
       })
-      .addCase(fetchVerifyEmail.fulfilled, (state: AuthState, action: any) => {
+      .addCase(fetchVerifyEmail.fulfilled, (state: UserState, action: any) => {
         state.isVerify = action.payload.success
         state.user = action.payload.user
       })
-      .addCase(fetchVerifyEmail.rejected, (state: AuthState, action: any) => {
+      .addCase(fetchVerifyEmail.rejected, (state: UserState, action: any) => {
         state.isVerify = false
       })
 
       // login with Google
-      .addCase(fetchLoginGoogle.pending, (state: AuthState, action: any) => {
+      .addCase(fetchLoginGoogle.pending, (state: UserState, action: any) => {
         state.isLoading = true
       })
-      .addCase(fetchLoginGoogle.fulfilled, (state: AuthState, action: any) => {
+      .addCase(fetchLoginGoogle.fulfilled, (state: UserState, action: any) => {
         state.isLoading = false
         state.token = action.payload.accessToken
         state.user = action.payload.user
       })
-      .addCase(fetchLoginGoogle.rejected, (state: AuthState, action: any) => {
+      .addCase(fetchLoginGoogle.rejected, (state: UserState, action: any) => {
         state.isLoading = false
         state.error = action.payload?.data?.message
       })
@@ -181,20 +193,42 @@ const authSlice = createSlice({
       // send Friend request
       .addCase(
         fetchSendFriendRequest.pending,
-        (state: AuthState, action: any) => {
+        (state: UserState, action: any) => {
           state.isLoading = true
         }
       )
       .addCase(
         fetchSendFriendRequest.fulfilled,
-        (state: AuthState, action: any) => {
+        (state: UserState, action: any) => {
           state.isLoading = false
           state.user = action.payload.user
         }
       )
       .addCase(
         fetchSendFriendRequest.rejected,
-        (state: AuthState, action: any) => {
+        (state: UserState, action: any) => {
+          state.isLoading = false
+          state.error = action.payload?.data?.message
+        }
+      )
+
+      // accept friend request
+      .addCase(
+        fetchAcceptFriendRequest.pending,
+        (state: UserState, action: any) => {
+          state.isLoading = true
+        }
+      )
+      .addCase(
+        fetchAcceptFriendRequest.fulfilled,
+        (state: UserState, action: any) => {
+          state.isLoading = false
+          state.user = action.payload.user
+        }
+      )
+      .addCase(
+        fetchAcceptFriendRequest.rejected,
+        (state: UserState, action: any) => {
           state.isLoading = false
           state.error = action.payload?.data?.message
         }
@@ -202,6 +236,6 @@ const authSlice = createSlice({
   }
 })
 
-const { reducer } = authSlice
-export const { logout } = authSlice.actions
+const { reducer } = userSlice
+export const { logout } = userSlice.actions
 export default reducer

@@ -6,13 +6,12 @@ import { toast } from 'react-toastify'
 import { fetchCreatePost, fetchGetAllPost } from './api'
 
 export const useGetPost = () => {
-  const { token } = useGetAuth()
   const dispatch: AppDispatch = useDispatch()
   const { post, isLoading } = useSelector((state: RootState) => state.post)
 
   useEffect(() => {
     // @ts-ignore
-    dispatch(fetchGetAllPost(token))
+    dispatch(fetchGetAllPost())
   }, [])
 
   return { post, isLoading }

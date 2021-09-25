@@ -7,7 +7,7 @@ import {
 import { setHeaders } from 'utils/setHeaders'
 import axiosClient from './axiosClient'
 
-const authApi = {
+const userApi = {
   login(params: LoginAccount) {
     const url = '/auth/login'
     return axiosClient.post(url, params)
@@ -23,7 +23,19 @@ const authApi = {
   loginGoogle(params: LoginGoogle) {
     const url = `/auth/google-login`
     return axiosClient.post(url, params)
+  },
+  editProfile(id: any, data: any) {
+    const url = `/user/edit/${id}`
+    return axiosClient.put(url, { data }, setHeaders())
+  },
+  sendFriendRequest(id: string) {
+    const url = `/user/send-friend-request`
+    return axiosClient.post(url, { friendId: id }, setHeaders())
+  },
+  acceptFriendRequest(id: string) {
+    const url = `/user/accept-friend-request`
+    return axiosClient.put(url, { friendId: id }, setHeaders())
   }
 }
 
-export default authApi
+export default userApi

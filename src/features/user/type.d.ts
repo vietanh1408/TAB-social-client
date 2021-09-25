@@ -1,5 +1,5 @@
 declare module 'Models' {
-  export interface UserState {
+  export interface UserType {
     _id: string
     name: string
     email: string
@@ -23,9 +23,9 @@ declare module 'Models' {
     verifyCode: string
   }
 
-  export interface AuthState {
+  export interface UserState {
     token: string | null
-    user: UserState | null
+    user: UserType | null
     error: anym
     isLoading: boolean
     isVerify: boolean

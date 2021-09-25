@@ -5,15 +5,6 @@ const profileApi = {
   getProfile(id: any) {
     const url = `/user/${id}`
     return axiosClient.get(url, setHeaders())
-  },
-  editProfile(id: any, data: any) {
-    const url = `/user/edit/${id}`
-    return axiosClient.put(url, { data }, setHeaders())
-  },
-  sendFriendRequest(id: string) {
-    const url = `/user/send-friend-request`
-    console.log('id...........', id)
-    return axiosClient.post(url, { friendId: id }, setHeaders())
   }
 }
 
