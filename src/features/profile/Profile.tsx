@@ -2,7 +2,7 @@ import NotFoundPage from 'components/404Page'
 import AddFriend from 'components/AddFriend'
 import BackgroundImage from 'components/BackgroundImage'
 import LoadingPage from 'components/LoadingPage'
-import { useGetAuth } from 'features/auth/hooks'
+import { useGetAuth } from 'features/user/hooks'
 import React from 'react'
 import { useLoadProfile, useSendFriendRequest } from './hooks'
 

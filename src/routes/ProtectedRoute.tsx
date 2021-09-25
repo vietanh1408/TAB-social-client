@@ -1,6 +1,6 @@
 // libs
 import NotFoundPage from 'components/404Page'
-import { useGetAuth } from 'features/auth/hooks'
+import { useGetAuth } from 'features/user/hooks'
 import React from 'react'
 import {
   Redirect,

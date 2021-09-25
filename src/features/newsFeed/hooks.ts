@@ -1,4 +1,4 @@
-import { useGetAuth } from './../auth/hooks'
+import { useGetAuth } from '../user/hooks'
 import { AppDispatch, RootState } from 'app/store'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'

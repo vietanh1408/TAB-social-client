@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { LogoutOutlined, UserOutlined } from '@ant-design/icons'
-import { useLogout } from 'features/auth/hooks'
+import { useLogout } from 'features/user/hooks'
 import { navName } from 'constants/navName'
 import { UserState } from 'Models'
 

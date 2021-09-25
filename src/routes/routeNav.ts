@@ -1,4 +1,4 @@
-import { loginNav, loginResource, loginRoutes } from 'features/auth/login/nav'
+import { loginNav, loginResource, loginRoutes } from 'features/user/login/nav'
 import {
   newsFeedMenu,
   newsFeedNav,
@@ -9,12 +9,12 @@ import {
   registerNav,
   registerResource,
   registerRoutes
-} from 'features/auth/register/nav'
+} from 'features/user/register/nav'
 import {
   verifyEmailNav,
   verifyEmailResource,
   verifyEmailRoutes
-} from 'features/auth/verifyEmail/nav'
+} from 'features/user/verifyEmail/nav'
 import {
   profileNav,
   profileResource,

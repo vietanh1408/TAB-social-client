@@ -5,7 +5,7 @@ import { Col, Row } from 'antd'
 import Footer from './footer/Footer'
 import Header from './header/Header'
 // features
-import { useGetAuth } from 'features/auth/hooks'
+import { useGetAuth } from 'features/user/hooks'
 import SocketClient from 'features/socket/SocketClient'
 // routes
 import GenerateRoute from 'routes/GenerateRoute'

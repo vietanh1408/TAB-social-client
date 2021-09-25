@@ -1,5 +1,5 @@
 import { AppDispatch, RootState } from 'app/store'
-import { fetchEditProfile, fetchSendFriendRequest } from 'features/auth/api'
+import { fetchEditProfile, fetchSendFriendRequest } from 'features/user/api'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router'

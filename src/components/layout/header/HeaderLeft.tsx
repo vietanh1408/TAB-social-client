@@ -3,7 +3,7 @@ import { Drawer, Space } from 'antd'
 import Search from 'antd/lib/input/Search'
 import Logo from 'assets/logo.png'
 import SettingList from 'components/SettingList'
-import { useGetAuth } from 'features/auth/hooks'
+import { useGetAuth } from 'features/user/hooks'
 import React, { useState } from 'react'
 
 const HeaderLeft: React.FC = () => {

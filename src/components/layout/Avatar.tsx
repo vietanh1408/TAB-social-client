@@ -4,7 +4,7 @@ import { Avatar, Popover } from 'antd'
 // components
 import SettingList from 'components/SettingList'
 // hooks
-import { useGetAuth } from 'features/auth/hooks'
+import { useGetAuth } from 'features/user/hooks'
 
 type HeaderAvatarProp = {
   hasPopover?: boolean

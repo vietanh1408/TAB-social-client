@@ -5,7 +5,7 @@ import storage from 'redux-persist/lib/storage'
 import { persistReducer } from 'redux-persist'
 
 // reducers
-import authReducer from 'features/auth/api'
+import authReducer from 'features/user/api'
 import socketReducer from 'features/socket/api'
 import onlineUserReducer from 'features/onlineUser/api'
 import profileReducer from 'features/profile/api'
