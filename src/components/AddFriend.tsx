@@ -10,6 +10,7 @@ type AddFriendProps = {
   handleSendFriendRequest: () => void
   handleUnFollow: () => void
   handleCancelFriendRequest: () => void
+  handleAcceptFriendRequest: () => void
 }
 
 type FollowButtonProps = {
@@ -44,7 +45,8 @@ const AddFriend: React.FC<AddFriendProps> = (props: AddFriendProps) => {
     handleUnFriend,
     handleSendFriendRequest,
     handleUnFollow,
-    handleCancelFriendRequest
+    handleCancelFriendRequest,
+    handleAcceptFriendRequest
   } = props
 
   const friends = profile?.friends ?? []
@@ -73,14 +75,23 @@ const AddFriend: React.FC<AddFriendProps> = (props: AddFriendProps) => {
     if (isFriend) {
       handleUnFriend()
       setIsFriend(!isFriend)
+      setIsFollowed(false)
     } else {
       if (isSend) {
         handleCancelFriendRequest()
+        setIsFollowed(false)
       } else {
         handleSendFriendRequest()
+        setIsFollowed(true)
       }
       setIsSend(!isSend)
     }
+  }
+
+  const handleAccept = () => {
+    handleAcceptFriendRequest()
+    setIsFriend(true)
+    setIsFollowed(true)
   }
 
   const onFollow = () => {
@@ -130,7 +141,7 @@ const AddFriend: React.FC<AddFriendProps> = (props: AddFriendProps) => {
     if (checkFriendRequest) {
       return (
         <div className="flex justify-end items-center my-4">
-          <Button className="mr-4" type="primary">
+          <Button className="mr-4" type="primary" onClick={handleAccept}>
             Chấp nhận
           </Button>
           <Button>Hủy</Button>

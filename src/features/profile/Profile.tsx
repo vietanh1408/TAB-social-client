@@ -2,9 +2,14 @@ import NotFoundPage from 'components/404Page'
 import AddFriend from 'components/AddFriend'
 import BackgroundImage from 'components/BackgroundImage'
 import LoadingPage from 'components/LoadingPage'
-import { useGetAuth } from 'features/user/hooks'
+import {
+  useAcceptFriendRequest,
+  useGetAuth,
+  useSendFriendRequest,
+  useUnfriend
+} from 'features/user/hooks'
 import React from 'react'
-import { useLoadProfile, useSendFriendRequest } from './hooks'
+import { useLoadProfile } from './hooks'
 
 const Profile: React.FC = () => {
   const { profile, isLoading } = useLoadProfile()
@@ -13,6 +18,8 @@ const Profile: React.FC = () => {
   const id = profile?._id
 
   const [onSendFriendRequest] = useSendFriendRequest()
+  const [onAccept] = useAcceptFriendRequest()
+  const [onUnfriend] = useUnfriend()
 
   const handleSendFriendRequest = () => {
     onSendFriendRequest(id)
@@ -31,7 +38,11 @@ const Profile: React.FC = () => {
   }
 
   const handleUnFriend = () => {
-    console.log('unfriend.....', id)
+    onUnfriend(id)
+  }
+
+  const handleAcceptFriendRequest = () => {
+    onAccept(id)
   }
 
   if (isLoading) {
@@ -54,9 +65,10 @@ const Profile: React.FC = () => {
           handleSendFriendRequest={handleSendFriendRequest}
           handleUnFollow={handleUnFollow}
           handleCancelFriendRequest={handleCancelFriendRequest}
+          handleAcceptFriendRequest={handleAcceptFriendRequest}
         />
       ) : null}
-      <div className="md:container container mx-auto px-2 md:px-64 py-4 bg-gray-400">
+      <div className="w-full py-4 bg-gray-400">
         <div className="add-friend bg-white"></div>
         Profile
       </div>

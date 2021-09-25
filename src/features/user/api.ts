@@ -108,6 +108,19 @@ export const fetchAcceptFriendRequest = createAsyncThunk(
   }
 )
 
+export const fetchUnfriend = createAsyncThunk(
+  'user/unfriend',
+  async (id: string, { rejectWithValue }) => {
+    try {
+      const response = await userApi.unFriend(id)
+      return response.data
+    } catch (err: any) {
+      showError(err)
+      return rejectWithValue(err.response)
+    }
+  }
+)
+
 const userSlice = createSlice({
   name: 'user',
   initialState,
@@ -233,6 +246,19 @@ const userSlice = createSlice({
           state.error = action.payload?.data?.message
         }
       )
+
+      // unfriend
+      .addCase(fetchUnfriend.pending, (state: UserState, action: any) => {
+        state.isLoading = true
+      })
+      .addCase(fetchUnfriend.fulfilled, (state: UserState, action: any) => {
+        state.isLoading = false
+        state.user = action.payload.user
+      })
+      .addCase(fetchUnfriend.rejected, (state: UserState, action: any) => {
+        state.isLoading = false
+        state.error = action.payload?.data?.message
+      })
   }
 })
 

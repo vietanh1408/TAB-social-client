@@ -1,9 +1,9 @@
 import { CameraOutlined } from '@ant-design/icons'
 import { Avatar, Image } from 'antd'
 import { FALLBACK_IMAGE } from 'constants/index'
-import { useEditProfile } from 'features/profile/hooks'
 import { useRemoveUpload } from 'features/upload/hooks'
 import UploadImage from 'features/upload/UploadImage'
+import { useEditProfile } from 'features/user/hooks'
 import { UserType } from 'Models'
 
 type BackgroundImageProps = {

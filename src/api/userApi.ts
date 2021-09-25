@@ -35,6 +35,10 @@ const userApi = {
   acceptFriendRequest(id: string) {
     const url = `/user/accept-friend-request`
     return axiosClient.put(url, { friendId: id }, setHeaders())
+  },
+  unFriend(id: string) {
+    const url = `/user/unfriend`
+    return axiosClient.put(url, { friendId: id }, setHeaders())
   }
 }
 
