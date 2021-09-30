@@ -55,27 +55,29 @@ const AddFriend: React.FC<AddFriendProps> = (props: AddFriendProps) => {
   const followings = profile?.followers ?? []
 
   // check da ket ban
-  const alreadyFriend = friends.some((friend: any) => friend === user?._id)
+  const alreadyFriend = friends.some((friend: string) => friend === user?._id)
   // neu chua ket ban => check send friend request
   const checkSendFriendRequest = sendFriendRequests.some(
-    (item: any) => item === user?._id
+    (item: string) => item === user?._id
   )
   const checkFriendRequest = friendRequests.some(
-    (item: any) => item === user?._id
+    (item: string) => item === user?._id
   )
 
   // check theo doi
-  const checkFollowing = followings.some((item: any) => item === user?._id)
+  const checkFollowing = followings.some((item: string) => item === user?._id)
 
   const [isSend, setIsSend] = useState(checkSendFriendRequest)
   const [isFollowed, setIsFollowed] = useState(checkFollowing)
   const [isFriend, setIsFriend] = useState(alreadyFriend)
+  const [alreadySend, setAlreadySend] = useState(checkFriendRequest)
 
   const handleSend = () => {
     if (isFriend) {
       handleUnFriend()
-      setIsFriend(!isFriend)
+      setIsFriend(false)
       setIsFollowed(false)
+      setAlreadySend(false)
     } else {
       if (isSend) {
         handleCancelFriendRequest()
@@ -138,13 +140,15 @@ const AddFriend: React.FC<AddFriendProps> = (props: AddFriendProps) => {
       )
     }
     // check trong friendRequests
-    if (checkFriendRequest) {
+    if (alreadySend) {
       return (
         <div className="flex justify-end items-center my-4">
           <Button className="mr-4" type="primary" onClick={handleAccept}>
             Chấp nhận
           </Button>
-          <Button>Hủy</Button>
+          <Button onClick={() => console.log('ko chap nhan ket ban')}>
+            Hủy
+          </Button>
         </div>
       )
     }

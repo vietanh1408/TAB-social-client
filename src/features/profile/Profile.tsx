@@ -22,7 +22,7 @@ const Profile: React.FC = () => {
   const [onUnfriend] = useUnfriend()
 
   const handleSendFriendRequest = () => {
-    onSendFriendRequest(id)
+    onSendFriendRequest(profile?._id, user)
   }
 
   const handleFollow = () => {

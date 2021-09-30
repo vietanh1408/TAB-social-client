@@ -16,16 +16,16 @@ declare module 'Models' {
     avatar: AvatarType | undefined
     background: BackgroundType | undefined
     gender: Number
-    friends: Array
-    followers: Array
-    followings: Array
+    friends: Array[string]
+    followers: Array[string]
+    followings: Array[string]
     description: string
     city: string
     from: string
     relationship: Number
-    sendFriendRequests: Array
-    friendRequests: Array
-    blockUsers: Array
+    sendFriendRequests: Array[string]
+    friendRequests: Array[string]
+    blockUsers: Array[string]
     createdAt: Date
     isVerifiedMail: boolean
     verifyCode: string

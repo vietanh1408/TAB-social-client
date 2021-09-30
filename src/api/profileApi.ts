@@ -2,7 +2,7 @@ import { setHeaders } from 'utils/setHeaders'
 import axiosClient from './axiosClient'
 
 const profileApi = {
-  getProfile(id: any) {
+  getProfile(id: string) {
     const url = `/user/${id}`
     return axiosClient.get(url, setHeaders())
   }

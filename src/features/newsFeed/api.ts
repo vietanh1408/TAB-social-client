@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import postApi from 'api/postApi'
 import { showError } from 'extensions'
+import { CreatePostInput } from 'Models'
 
 const initialState: any = {
   post: [],
@@ -22,7 +23,7 @@ export const fetchGetAllPost = createAsyncThunk(
 
 export const fetchCreatePost = createAsyncThunk(
   'post/createPost',
-  async (data: any, { rejectWithValue }) => {
+  async (data: CreatePostInput, { rejectWithValue }) => {
     try {
       const response = await postApi.create(data)
       return response.data

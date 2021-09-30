@@ -1,3 +1,4 @@
+import { fetchCreateNotification } from './../notification/api'
 // libs
 import { toast } from 'react-toastify'
 import { useDispatch, useSelector } from 'react-redux'
@@ -94,7 +95,7 @@ export const useLoginWithGoogle = () => {
 export const useEditProfile = () => {
   const dispatch: AppDispatch = useDispatch()
   const { profile, isLoading } = useGetProfile()
-  const onEditProfile = async (id: any, data: any) => {
+  const onEditProfile = async (id: string | undefined, data: any) => {
     // @ts-ignore
     const resultAction = await dispatch(fetchEditProfile({ id, data }))
     const isSuccess = fetchEditProfile.fulfilled.match(resultAction)
@@ -111,9 +112,24 @@ export const useEditProfile = () => {
 export const useSendFriendRequest = () => {
   const dispatch: AppDispatch = useDispatch()
 
-  const onSendFriendRequest = (id: string | undefined) => {
+  const { socketActions } = useSelector((state: RootState) => state.socket)
+
+  const onSendFriendRequest = async (
+    profileId: string | undefined,
+    user: any
+  ) => {
+    const msg = {
+      text: 'Đã gửi lời mời kết bạn',
+      receivers: profileId,
+      url: `/profile/${user?._id}`,
+      content: ''
+    }
     // @ts-ignore
-    dispatch(fetchSendFriendRequest(id))
+    const resultAction = await dispatch(fetchSendFriendRequest(profileId))
+    if (fetchSendFriendRequest.fulfilled.match(resultAction)) {
+      // @ts-ignore
+      dispatch(fetchCreateNotification({ msg, user, socketActions }))
+    }
   }
   return [onSendFriendRequest]
 }

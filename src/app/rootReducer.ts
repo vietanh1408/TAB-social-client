@@ -11,6 +11,7 @@ import onlineUserReducer from 'features/onlineUser/api'
 import profileReducer from 'features/profile/api'
 import uploadReducer from 'features/upload/api'
 import postReducer from 'features/newsFeed/api'
+import notificationReducer from 'features/notification/api'
 
 const history = createBrowserHistory()
 
@@ -28,5 +29,6 @@ export const rootReducer = {
   onlineUser: onlineUserReducer,
   profile: profileReducer,
   upload: uploadReducer,
-  post: postReducer
+  post: postReducer,
+  notification: notificationReducer
 }

@@ -1,12 +1,14 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import uploadApi from 'api/uploadApi'
 import { showError } from 'extensions'
+import { DataRemoveUpload, DataUpload, ResponseState } from 'Models'
 
 export const fetchUpload = createAsyncThunk(
   'upload/uploading',
-  async (data: any, { rejectWithValue }) => {
+  async (data: DataUpload, { rejectWithValue }) => {
     try {
       const response = await uploadApi.upload(data)
+      console.log('response....', response.data)
       return response.data
     } catch (err: any) {
       showError(err)
@@ -17,7 +19,7 @@ export const fetchUpload = createAsyncThunk(
 
 export const fetchRemoveUpload = createAsyncThunk(
   'upload/remove-upload',
-  async (data: any, { rejectWithValue }) => {
+  async (data: DataRemoveUpload, { rejectWithValue }) => {
     try {
       const response = await uploadApi.removeUpload(data)
       return response.data
@@ -28,7 +30,7 @@ export const fetchRemoveUpload = createAsyncThunk(
   }
 )
 
-const initialState: any = {
+const initialState: ResponseState = {
   response: null,
   isLoading: false
 }

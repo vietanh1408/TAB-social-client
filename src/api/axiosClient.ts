@@ -3,7 +3,8 @@ import axios from 'axios'
 const axiosClient = axios.create({
   baseURL: process.env.REACT_APP_API_URL || 'http://localhost:9001/api/',
   headers: {
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${localStorage.getItem('accessToken')}`
   },
   paramsSerializer: (params) => queryString.stringify(params)
 })

@@ -1,3 +1,4 @@
+import { CreatePostInput } from 'Models'
 import { setHeaders } from 'utils/setHeaders'
 import axiosClient from './axiosClient'
 
@@ -6,7 +7,7 @@ const postApi = {
     const url = `/posts`
     return axiosClient.get(url, setHeaders())
   },
-  create(data: any) {
+  create(data: CreatePostInput) {
     const url = `/posts/create`
     return axiosClient.post(url, data, setHeaders())
   }

@@ -24,7 +24,7 @@ const userApi = {
     const url = `/auth/google-login`
     return axiosClient.post(url, params)
   },
-  editProfile(id: any, data: any) {
+  editProfile(id: string, data: any) {
     const url = `/user/edit/${id}`
     return axiosClient.put(url, { data }, setHeaders())
   },

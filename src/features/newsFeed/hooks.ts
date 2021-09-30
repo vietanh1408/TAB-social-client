@@ -1,5 +1,5 @@
-import { useGetAuth } from '../user/hooks'
 import { AppDispatch, RootState } from 'app/store'
+import { CreatePostInput } from 'Models'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
@@ -19,7 +19,7 @@ export const useGetPost = () => {
 
 export const useCreatePost = () => {
   const dispatch: AppDispatch = useDispatch()
-  const onFetchCreate = async (data: any) => {
+  const onFetchCreate = async (data: CreatePostInput) => {
     // @ts-ignore
     const resultAction = await dispatch(fetchCreatePost(data))
     if (fetchCreatePost.fulfilled.match(resultAction)) {
