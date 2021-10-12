@@ -16,6 +16,7 @@ declare module 'Models' {
   }
 
   export interface PostType {
+    _id: string
     comments: Array
     likes: Array
     description: string | undefined

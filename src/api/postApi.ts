@@ -10,6 +10,14 @@ const postApi = {
   create(data: CreatePostInput) {
     const url = `/posts/create`
     return axiosClient.post(url, data, setHeaders())
+  },
+  like(id: string) {
+    const url = `/posts/like`
+    return axiosClient.post(url, { postId: id }, setHeaders())
+  },
+  unlike(id: string) {
+    const url = `/posts/dislike`
+    return axiosClient.post(url, { postId: id }, setHeaders())
   }
 }
 

@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { EllipsisOutlined, LikeFilled } from '@ant-design/icons'
 import { getTimeDuration } from 'extensions/dateTime'
 import { PostType } from 'Models'
 import { useGetAuth } from 'features/user/hooks'
 import { Button, Popover } from 'antd'
+import { useLikePost, useUnlikePost } from 'features/newsFeed/hooks'
 
 type PostCardProps = {
   detail: PostType
@@ -12,14 +13,24 @@ type PostCardProps = {
 
 const PostCard: React.FC<PostCardProps> = ({ detail }) => {
   const { user } = useGetAuth()
-  const commentQuantity = detail?.comments.length
-  const likeQuantity = detail?.likes.length
-  const time = getTimeDuration(detail?.createdAt)
-
+  const checkLiked = detail?.likes.some((id: string) => id === user?._id)
   const isOwnPost = user?._id === detail?.user?._id
 
-  const onLike = () => {
-    console.log('like post ...')
+  const [onLikePost] = useLikePost()
+  const [onUnlikePost] = useUnlikePost()
+  const [isLiked, setIsLiked] = useState(checkLiked)
+
+  const handleToggleLike = () => {
+    if (detail?._id) {
+      if (isLiked) {
+        // unlike
+        onUnlikePost(detail?._id)
+      } else {
+        // like
+        onLikePost(detail)
+      }
+    }
+    setIsLiked(!isLiked)
   }
 
   return (
@@ -38,7 +49,7 @@ const PostCard: React.FC<PostCardProps> = ({ detail }) => {
               <Link to={`/profile/${detail?.user?._id}`}>
                 <strong>{detail?.user?.name}</strong>
               </Link>
-              <div className="small">{time}</div>
+              <div className="small">{getTimeDuration(detail?.createdAt)}</div>
             </div>
           </div>
           {isOwnPost && (
@@ -67,14 +78,19 @@ const PostCard: React.FC<PostCardProps> = ({ detail }) => {
       <div className="card-footer flex justify-between items-center py-4">
         <div className="flex justify-start items-center text-lg">
           <LikeFilled />
-          <strong className="mr-1">{likeQuantity}</strong> Lượt thích
+          <strong className="mr-1">{detail?.likes.length}</strong> Lượt thích
         </div>
         <div className="inline-block text-lg">
-          <strong>{commentQuantity}</strong> Bình luận
+          <strong>{detail?.comments.length}</strong> Bình luận
         </div>
       </div>
       <div className="flex justify-between items-center">
-        <Button onClick={onLike}>Like</Button>
+        <Button
+          type={isLiked ? 'primary' : 'default'}
+          onClick={handleToggleLike}
+        >
+          Like
+        </Button>
       </div>
     </div>
   )

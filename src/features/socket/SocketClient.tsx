@@ -41,6 +41,11 @@ const SocketClient: React.FC = () => {
     return () => socketActions?.off('ownUserOnline')
   }, [socket, dispatch, onlineUser])
 
+  // // like post
+  // useEffect(() => {
+
+  // }, [socket, dispatch])
+
   // send friend request ==> send notification
   // useEffect(() => {
   //   socket.socketActions('sendFriendRequest', (newRequest) => {

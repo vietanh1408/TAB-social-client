@@ -34,6 +34,33 @@ export const fetchCreatePost = createAsyncThunk(
   }
 )
 
+export const fetchLikePost = createAsyncThunk(
+  'post/like',
+  async (id: string, { rejectWithValue }) => {
+    try {
+      const response = await postApi.like(id)
+      return response.data
+    } catch (err: any) {
+      showError(err)
+      return rejectWithValue(err.response)
+    }
+  }
+)
+
+export const fetchUnLikePost = createAsyncThunk(
+  'post/unlike',
+  async (id: string, { rejectWithValue }) => {
+    try {
+      const response = await postApi.unlike(id)
+      console.log('data....', response.data)
+      return response.data
+    } catch (err: any) {
+      showError(err)
+      return rejectWithValue(err.response)
+    }
+  }
+)
+
 const postSlice = createSlice({
   name: 'post',
   initialState,

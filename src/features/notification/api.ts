@@ -1,5 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import notificationApi from 'api/notificationApi'
 import { showError } from 'extensions'
+import { NotificationType } from 'Models'
 
 const initialState: any = {
   notification: null,
@@ -8,9 +10,10 @@ const initialState: any = {
 
 export const fetchCreateNotification = createAsyncThunk(
   'notification/create',
-  async ({ msg, user, socketActions }: any, { rejectWithValue }) => {
+  async (data: NotificationType, { rejectWithValue }) => {
     try {
-      console.log('msg...', msg, 'user...', user, 'socket...', socketActions)
+      const response = await notificationApi.create(data)
+      return response
     } catch (err: any) {
       showError(err)
       return rejectWithValue(err.response)
