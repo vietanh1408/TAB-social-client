@@ -73,7 +73,7 @@ const BackgroundImage: React.FC<BackgroundImageProps> = (
                     <Image src={user?.avatar?.url} fallback={FALLBACK_IMAGE} />
                   }
                   size={150}
-                  className="cursor-pointer"
+                  className="cursor-pointer content-center"
                 />
                 <div className="absolute bottom-0 right-0">
                   <UploadImage

@@ -47,17 +47,20 @@ export const useLikePost = () => {
     const resultAction = await dispatch(fetchLikePost(post?._id))
     if (fetchLikePost.fulfilled.match(resultAction)) {
       // like post thanh cong => ban socket + ban notification cho chu post
-      socketActions?.emit('likePost', user?.user)
-      await dispatch(
+      const notification = {
+        text: `${user?.user?.name} đã thích bài viết của bạn`,
+        user: user?.user?._id,
+        image: post?.image,
+        url: `${process.env.REACT_APP_URL}/post/${post?._id}`,
+        receivers: post?.user._id
+      }
+      const result = await dispatch(
         // @ts-ignore
-        fetchCreateNotification({
-          text: `${user?.user?.name} đã thích bài viết của bạn`,
-          user: user?.user?._id,
-          image: post?.image,
-          url: `${process.env.REACT_APP_URL}/post/${post?._id}`,
-          receivers: post?.user._id
-        })
+        fetchCreateNotification(notification)
       )
+      if (fetchCreateNotification.fulfilled.match(result)) {
+        socketActions?.emit('likePost', notification)
+      }
     }
   }
 

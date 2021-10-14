@@ -38,10 +38,10 @@ const PostCard: React.FC<PostCardProps> = ({ detail }) => {
       <div className="card-body">
         <div className="flex justify-between items-center">
           <div className="flex justify-start items-center">
-            <Link to={`/profile/${detail?.user?._id}`}>
+            <Link to={`/profile/${detail?.user?._id}`} className="w-10">
               <img
                 src={detail?.user?.avatar?.url}
-                className="block ui-w-40 rounded-full"
+                className="block w-10 h-10 rounded-full object-cover"
                 alt="avatar"
               />
             </Link>

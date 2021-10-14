@@ -27,3 +27,7 @@
     width: 100%;
     height: 500px;
 }
+
+.ant-popover-content {
+    width: 400px;
+}

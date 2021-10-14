@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { socketAction } from './api'
 // socket.io
 import io from 'socket.io-client'
+import { getNotification } from 'features/notification/api'
 
 const SocketClient: React.FC = () => {
   const {
@@ -52,6 +53,15 @@ const SocketClient: React.FC = () => {
   //     // dispatch()
   //   })
   // })
+
+  // nhan thong bao like post
+  useEffect(() => {
+    socketActions?.on('sendNotificationLikePost', (notification: any) => {
+      // @ts-ignore
+      dispatch(getNotification(notification))
+    })
+    return () => socketActions?.off('sendNotificationLikePost')
+  }, [socket, dispatch])
 
   return <div></div>
 }
