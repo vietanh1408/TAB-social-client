@@ -1,10 +1,10 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import notificationApi from 'api/notificationApi'
 import { showError } from 'extensions'
-import { NotificationType } from 'Models'
+import { NotificationState, NotificationType } from 'Models'
 
-const initialState: any = {
-  notificationCount: null,
+const initialState: NotificationState = {
+  notificationCount: 0,
   notification: [],
   isLoading: false
 }
@@ -39,22 +39,27 @@ const notificationSlice = createSlice({
   name: 'notification',
   initialState,
   reducers: {
-    getNotification: (state, action: PayloadAction<any>) => {
+    getNotification: (
+      state: NotificationState,
+      action: PayloadAction<NotificationType>
+    ) => {
       // check trung thong bao
-      const isDuplicateNotification = state.notification.some(
-        (item: any) => item?.text === action.payload.text
-      )
-      if (!isDuplicateNotification) {
-        state.notification.unshift(action.payload)
-        state.notificationCount++
-      }
+      // const isDuplicateNotification = state.notification.some(
+      //   (item: any) => item?.text === action.payload.text
+      // )
+      // if (!isDuplicateNotification) {
+      //   state.notification.unshift(action.payload)
+      //   state.notificationCount++
+      // }
+      state.notification.unshift(action.payload)
+      state.notificationCount++
     }
   },
   extraReducers: (builder) => {
     builder
       .addCase(
         fetchGetNotification.pending,
-        (state, action: PayloadAction<any>) => {
+        (state: NotificationState, action: PayloadAction<any>) => {
           state.isLoading = true
           state.notificationCount = 0
         }
@@ -62,14 +67,14 @@ const notificationSlice = createSlice({
 
       .addCase(
         fetchGetNotification.rejected,
-        (state, action: PayloadAction<any>) => {
+        (state: NotificationState, action: PayloadAction<any>) => {
           state.isLoading = false
         }
       )
 
       .addCase(
         fetchGetNotification.fulfilled,
-        (state, action: PayloadAction<any>) => {
+        (state: NotificationState, action: PayloadAction<any>) => {
           state.isLoading = false
           state.notification = action.payload.notifications
           state.notificationCount = action.payload.notificationCount

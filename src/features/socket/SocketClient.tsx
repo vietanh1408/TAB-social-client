@@ -1,11 +1,17 @@
-import { AppDispatch, RootState } from 'app/store'
-import { getOnlineUser } from 'features/onlineUser/api'
-import { useEffect } from 'react'
+// libs
 import { useDispatch, useSelector } from 'react-redux'
+import React, { useEffect, useRef } from 'react'
+// interface
+import { AppDispatch, RootState } from 'app/store'
+// api
+import { getOnlineUser } from 'features/onlineUser/api'
 import { socketAction } from './api'
+import { getNotification } from 'features/notification/api'
 // socket.io
 import io from 'socket.io-client'
-import { getNotification } from 'features/notification/api'
+// @ts-ignore
+import notificationSound from 'assets/swiftly-610.mp3'
+import { NotificationType } from 'Models'
 
 const SocketClient: React.FC = () => {
   const {
@@ -16,6 +22,11 @@ const SocketClient: React.FC = () => {
   const dispatch: AppDispatch = useDispatch()
   const { socketActions } = socket
   const { user } = currentUser
+  const audioRef = useRef<any>()
+
+  const playNotificationSound = () => {
+    audioRef.current.play()
+  }
 
   useEffect((): any => {
     // @ts-ignore
@@ -33,6 +44,7 @@ const SocketClient: React.FC = () => {
   useEffect(() => {
     socketActions?.emit('userOnline', user)
   }, [socketActions, user])
+
   // client <---(online followings)---- server
   useEffect(() => {
     socketActions?.on('ownUserOnline', (data: any) => {
@@ -44,23 +56,48 @@ const SocketClient: React.FC = () => {
 
   // nhan thong bao loi moi ket ban
   useEffect(() => {
-    socketActions?.on('receiveFriendRequest', (notification: any) => {
-      // @ts-ignore
-      dispatch(getNotification(notification))
-    })
+    socketActions?.on(
+      'receiveFriendRequest',
+      (notification: NotificationType) => {
+        // @ts-ignore
+        dispatch(getNotification(notification))
+        playNotificationSound()
+      }
+    )
     return () => socketActions?.off('receiveFriendRequest')
   }, [socketActions, dispatch])
 
   // nhan thong bao like post
   useEffect(() => {
-    socketActions?.on('sendNotificationLikePost', (notification: any) => {
-      // @ts-ignore
-      dispatch(getNotification(notification))
-    })
+    socketActions?.on(
+      'sendNotificationLikePost',
+      (notification: NotificationType) => {
+        // @ts-ignore
+        dispatch(getNotification(notification))
+        playNotificationSound()
+      }
+    )
     return () => socketActions?.off('sendNotificationLikePost')
   }, [socketActions, dispatch])
 
-  return <div></div>
+  // nhan thong bao comment post
+  useEffect(() => {
+    socketActions?.on(
+      'sendNotificationCommentPost',
+      (notification: NotificationType) => {
+        // @ts-ignore
+        dispatch(getNotification(notification))
+        playNotificationSound()
+      }
+    )
+    return () => socketActions?.off('sendNotificationCommentPost')
+  }, [socketActions, dispatch])
+
+  return (
+    <audio className="hidden" controls ref={audioRef}>
+      <source src={notificationSound} type="audio/mp3" />
+    </audio>
+  )
 }
 
 export default SocketClient

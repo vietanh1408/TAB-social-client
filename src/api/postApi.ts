@@ -1,4 +1,4 @@
-import { CreatePostInput } from 'Models'
+import { CommentPost, CreatePostInput } from 'Models'
 import { setHeaders } from 'utils/setHeaders'
 import axiosClient from './axiosClient'
 
@@ -22,6 +22,10 @@ const postApi = {
   delete(id: string) {
     const url = `/posts/delete/${id}`
     return axiosClient.delete(url, setHeaders())
+  },
+  comment(data: CommentPost) {
+    const url = `/posts/comment`
+    return axiosClient.post(url, data, setHeaders())
   }
 }
 

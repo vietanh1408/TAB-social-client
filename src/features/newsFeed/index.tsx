@@ -13,7 +13,7 @@ const NewsFeed: React.FC = () => {
       <Divider />
       {isLoading && <PostSkeleton length={1} />}
       {post.map((item: any, index: any) => {
-        return <PostCard detail={item} key={index} />
+        return <PostCard post={item} key={index} />
       })}
     </div>
   )

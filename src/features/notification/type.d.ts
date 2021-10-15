@@ -6,4 +6,10 @@ declare module 'Models' {
     image?: ImageType
     receivers: string
   }
+
+  export interface NotificationState {
+    notificationCount: number
+    notification: any[]
+    isLoading: boolean
+  }
 }

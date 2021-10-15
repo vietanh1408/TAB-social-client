@@ -8,7 +8,6 @@ export const fetchUpload = createAsyncThunk(
   async (data: DataUpload, { rejectWithValue }) => {
     try {
       const response = await uploadApi.upload(data)
-      console.log('response....', response.data)
       return response.data
     } catch (err: any) {
       showError(err)

@@ -9,6 +9,7 @@ import { CREATE_POST_SUCCESS, DELETE_POST_SUCCESS } from 'constants/message'
 // api
 import { fetchCreateNotification } from 'features/notification/api'
 import {
+  fetchCommentPost,
   fetchCreatePost,
   fetchDeletePost,
   fetchGetAllPost,
@@ -16,7 +17,7 @@ import {
   fetchUnLikePost
 } from './api'
 // models
-import { CreatePostInput, PostType } from 'Models'
+import { CommentPost, CreatePostInput, PostType } from 'Models'
 
 export const useGetPost = () => {
   const dispatch: AppDispatch = useDispatch()
@@ -94,4 +95,31 @@ export const useDeletePost = () => {
     }
   }
   return [onDeletePost]
+}
+
+export const useCommentPost = () => {
+  const dispatch: AppDispatch = useDispatch()
+  const { user } = useSelector((state: RootState) => state.user)
+  const { socketActions } = useSelector((state: RootState) => state.socket)
+  const onCommentPost = async (data: CommentPost) => {
+    // @ts-ignore
+    const resultAction = await dispatch(fetchCommentPost(data))
+    if (fetchCommentPost.fulfilled.match(resultAction)) {
+      // gui thong bao
+      const notification = {
+        text: `${user?.name} đã bình luận bài viết của bạn`,
+        user: user?._id,
+        image: data.post?.image,
+        url: `${process.env.REACT_APP_URL}/post/${data.postId}`,
+        receivers: data.post?.user._id
+      }
+      // @ts-ignore
+      const result = await dispatch(fetchCreateNotification(notification))
+      if (fetchCreateNotification.fulfilled.match(result)) {
+        // gui thong bao socket
+        socketActions?.emit('commentPost', notification)
+      }
+    }
+  }
+  return [onCommentPost]
 }

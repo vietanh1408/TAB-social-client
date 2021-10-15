@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import postApi from 'api/postApi'
 import { showError } from 'extensions'
-import { CreatePostInput } from 'Models'
+import { CommentPost, CreatePostInput } from 'Models'
 
 const initialState: any = {
   post: [],
@@ -65,6 +65,20 @@ export const fetchDeletePost = createAsyncThunk(
   async (postId: string, { rejectWithValue }) => {
     try {
       const response = await postApi.delete(postId)
+      return response.data
+    } catch (err: any) {
+      showError(err)
+      return rejectWithValue(err.response)
+    }
+  }
+)
+
+export const fetchCommentPost = createAsyncThunk(
+  'post/comment',
+  async (data: CommentPost, { rejectWithValue }) => {
+    try {
+      const response = await postApi.comment(data)
+      console.log('response...', response.data)
       return response.data
     } catch (err: any) {
       showError(err)

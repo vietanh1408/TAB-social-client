@@ -17,11 +17,18 @@ declare module 'Models' {
 
   export interface PostType {
     _id: string
-    comments: Array
-    likes: Array
-    description: string | undefined
-    image: ImageType | undefined
+    comments: string[]
+    likes: string[]
+    description: string
+    image: ImageType
     user: UserPostType
     createdAt: Date
+  }
+
+  export interface CommentPost {
+    post?: PostType
+    postId: string
+    authorId?: string
+    comment: string
   }
 }

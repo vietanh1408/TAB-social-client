@@ -1,24 +1,33 @@
-import { yupResolver } from '@hookform/resolvers/yup'
-import { Avatar, Button, Comment, Form, Input, List } from 'antd'
-import FormItem from 'components/Form/FormItem'
-import { UserType } from 'Models'
+// libs
 import React from 'react'
 import { ControllerRenderProps, FormProvider, useForm } from 'react-hook-form'
 import * as yup from 'yup'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { Avatar, Button, Comment, Form, Input, List } from 'antd'
+// components
+import FormItem from 'components/Form/FormItem'
+// extensions
+import yupExtension from 'extensions/yup'
+// models
+import { CommentPost, PostType, UserType } from 'Models'
 
 const { TextArea } = Input
 
 interface CommentBoxProps {
+  post: PostType
   user?: UserType | null
-  comments: any
+  comments: any[]
+  handleComment: (args: CommentPost) => void
 }
 
-const schema = yup.object().shape({})
+const schema = yup.object().shape({
+  comment: yupExtension.stringRequired
+})
 
 const CommentBox: React.FC<CommentBoxProps> = (props: CommentBoxProps) => {
-  const { user, comments = [] } = props
+  const { user, comments = [], handleComment, post } = props
 
-  const formProps = useForm<any>({
+  const formProps = useForm<CommentPost>({
     defaultValues: {
       comment: undefined
     },
@@ -27,8 +36,8 @@ const CommentBox: React.FC<CommentBoxProps> = (props: CommentBoxProps) => {
 
   const { handleSubmit } = formProps
 
-  const onSubmit = (data: any) => {
-    console.log('data.....', data)
+  const onSubmit = (data: CommentPost) => {
+    handleComment({ ...data, postId: post._id, authorId: user?._id })
   }
 
   return (
@@ -71,7 +80,7 @@ const CommentBox: React.FC<CommentBoxProps> = (props: CommentBoxProps) => {
                 onClick={handleSubmit(onSubmit)}
                 type="primary"
               >
-                Add Comment
+                Bình luận
               </Button>
             </Form>
           </FormProvider>
