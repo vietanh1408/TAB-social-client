@@ -70,7 +70,11 @@ const BackgroundImage: React.FC<BackgroundImageProps> = (
               <>
                 <Avatar
                   src={
-                    <Image src={user?.avatar?.url} fallback={FALLBACK_IMAGE} />
+                    <Image
+                      src={user?.avatar?.url}
+                      fallback={FALLBACK_IMAGE}
+                      className="object-cover h-full"
+                    />
                   }
                   size={150}
                   className="cursor-pointer content-center"
@@ -88,7 +92,11 @@ const BackgroundImage: React.FC<BackgroundImageProps> = (
             ) : (
               <Avatar
                 src={
-                  <Image src={profile?.avatar?.url} fallback={FALLBACK_IMAGE} />
+                  <Image
+                    src={profile?.avatar?.url}
+                    fallback={FALLBACK_IMAGE}
+                    className="object-cover h-full"
+                  />
                 }
                 size={150}
                 className="cursor-pointer"

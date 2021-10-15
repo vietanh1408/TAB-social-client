@@ -42,17 +42,14 @@ const SocketClient: React.FC = () => {
     return () => socketActions?.off('ownUserOnline')
   }, [socket, dispatch, onlineUser])
 
-  // // like post
-  // useEffect(() => {
-
-  // }, [socket, dispatch])
-
-  // send friend request ==> send notification
-  // useEffect(() => {
-  //   socket.socketActions('sendFriendRequest', (newRequest) => {
-  //     // dispatch()
-  //   })
-  // })
+  // nhan thong bao loi moi ket ban
+  useEffect(() => {
+    socketActions?.on('receiveFriendRequest', (notification: any) => {
+      // @ts-ignore
+      dispatch(getNotification(notification))
+    })
+    return () => socketActions?.off('receiveFriendRequest')
+  }, [socket, dispatch])
 
   // nhan thong bao like post
   useEffect(() => {

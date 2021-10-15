@@ -40,9 +40,14 @@ const notificationSlice = createSlice({
   initialState,
   reducers: {
     getNotification: (state, action: PayloadAction<any>) => {
-      console.log('action.....', action.payload)
-      state.notificationCount++
-      state.notification.push(action.payload)
+      // check trung thong bao
+      const isDuplicateNotification = state.notification.some(
+        (item: any) => item?.text === action.payload.text
+      )
+      if (!isDuplicateNotification) {
+        state.notification.unshift(action.payload)
+        state.notificationCount++
+      }
     }
   },
   extraReducers: (builder) => {

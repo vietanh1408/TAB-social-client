@@ -25,8 +25,13 @@ const HeaderRight: React.FC = () => {
           <Popover
             placement="bottomRight"
             title={'Thông báo'}
-            content={<NotificationList notificationList={notification} />}
-            trigger="hover"
+            content={
+              <NotificationList
+                notificationList={notification}
+                classList="w-80 hidden md:block"
+              />
+            }
+            trigger="click"
           >
             <Badge count={notificationCount ?? 0}>
               <BellOutlined className="text-xl cursor-pointer" />

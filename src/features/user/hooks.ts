@@ -113,22 +113,25 @@ export const useSendFriendRequest = () => {
   const dispatch: AppDispatch = useDispatch()
 
   const { socketActions } = useSelector((state: RootState) => state.socket)
+  const { user } = useSelector((state: RootState) => state.user)
 
-  const onSendFriendRequest = async (
-    profileId: string | undefined,
-    user: any
-  ) => {
-    const msg = {
-      text: 'Đã gửi lời mời kết bạn',
-      receivers: profileId,
-      url: `/profile/${user?._id}`,
-      content: ''
+  const onSendFriendRequest = async (profile: any) => {
+    const notification = {
+      text: `${user?.name} đã gửi lời mời kết bạn`,
+      user: user?._id,
+      url: `${process.env.REACT_APP_URL}/profile/${user?._id}`,
+      receivers: profile?._id
     }
     // @ts-ignore
-    const resultAction = await dispatch(fetchSendFriendRequest(profileId))
+    const resultAction = await dispatch(fetchSendFriendRequest(profile?._id))
+    // gui loi moi ket ban => gui thong bao den nguoi nhan
     if (fetchSendFriendRequest.fulfilled.match(resultAction)) {
       // @ts-ignore
-      dispatch(fetchCreateNotification({ msg, user, socketActions }))
+      const result = await dispatch(fetchCreateNotification(notification))
+      if (fetchCreateNotification.fulfilled.match(result)) {
+        // gui thong bao socket
+        socketActions?.emit('sendFriendRequest', notification)
+      }
     }
   }
   return [onSendFriendRequest]

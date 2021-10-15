@@ -1,11 +1,16 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { EllipsisOutlined, LikeFilled } from '@ant-design/icons'
+import {
+  CommentOutlined,
+  EllipsisOutlined,
+  LikeFilled
+} from '@ant-design/icons'
 import { getTimeDuration } from 'extensions/dateTime'
 import { PostType } from 'Models'
 import { useGetAuth } from 'features/user/hooks'
-import { Button, Popover } from 'antd'
+import { Button, Image, Popover } from 'antd'
 import { useLikePost, useUnlikePost } from 'features/newsFeed/hooks'
+import CommentBox from './CommentBox'
 
 type PostCardProps = {
   detail: PostType
@@ -18,7 +23,8 @@ const PostCard: React.FC<PostCardProps> = ({ detail }) => {
 
   const [onLikePost] = useLikePost()
   const [onUnlikePost] = useUnlikePost()
-  const [isLiked, setIsLiked] = useState(checkLiked)
+  const [isLiked, setIsLiked] = useState<boolean>(checkLiked)
+  const [openCmt, setOpenCmt] = useState<boolean>(false)
 
   const handleToggleLike = () => {
     if (detail?._id) {
@@ -31,6 +37,10 @@ const PostCard: React.FC<PostCardProps> = ({ detail }) => {
       }
     }
     setIsLiked(!isLiked)
+  }
+
+  const handleOpenCmt = () => {
+    setOpenCmt(!openCmt)
   }
 
   return (
@@ -75,23 +85,29 @@ const PostCard: React.FC<PostCardProps> = ({ detail }) => {
           </div>
         ) : null}
       </div>
-      <div className="card-footer flex justify-between items-center py-4">
-        <div className="flex justify-start items-center text-lg">
-          <LikeFilled />
-          <strong className="mr-1">{detail?.likes.length}</strong> Lượt thích
+      <div className="card-footer flex justify-start items-center py-4">
+        <div className="flex justify-start items-center text-lg mr-4">
+          <i className="fas fa-thumbs-up mr-2" />
+          {detail?.likes.length}
         </div>
-        <div className="inline-block text-lg">
-          <strong>{detail?.comments.length}</strong> Bình luận
+        <div className="flex justify-around items-center text-lg">
+          <CommentOutlined className="mr-2" />
+          <span>{detail?.comments.length}</span>
         </div>
       </div>
-      <div className="flex justify-between items-center">
-        <Button
-          type={isLiked ? 'primary' : 'default'}
-          onClick={handleToggleLike}
-        >
-          Like
+      <div className="flex justify-around items-center">
+        <Button className="border-none" onClick={handleToggleLike}>
+          {isLiked ? (
+            <i className="far fa-thumbs-up text-2xl text-blue-600" />
+          ) : (
+            <i className="far fa-thumbs-up text-2xl" />
+          )}
+        </Button>
+        <Button className="border-none" onClick={handleOpenCmt}>
+          <CommentOutlined className="text-2xl" />
         </Button>
       </div>
+      {openCmt && <CommentBox user={user} comments={[]} />}
     </div>
   )
 }
