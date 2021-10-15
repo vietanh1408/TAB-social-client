@@ -103,7 +103,7 @@ const CreatePost: React.FC = () => {
       }
       setValue('image', image)
     }
-  }, [response])
+  }, [response, setValue])
 
   return (
     <div className="w-full">

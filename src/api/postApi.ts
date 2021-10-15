@@ -18,6 +18,10 @@ const postApi = {
   unlike(id: string) {
     const url = `/posts/dislike`
     return axiosClient.post(url, { postId: id }, setHeaders())
+  },
+  delete(id: string) {
+    const url = `/posts/delete/${id}`
+    return axiosClient.delete(url, setHeaders())
   }
 }
 

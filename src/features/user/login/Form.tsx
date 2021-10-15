@@ -136,7 +136,7 @@ const LoginForm: React.FC<LoginFormProps> = (props: LoginFormProps) => {
                   <p className="text-xs xl:text-base">Ghi nhớ tài khoản</p>
                 </Checkbox>
                 <Link
-                  to={navName.FORGOR_PASSWORD}
+                  to={navName.FORGOT_PASSWORD}
                   className="custom__link text-xs xl:text-base"
                 >
                   Quên mật khẩu ?

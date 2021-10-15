@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import uploadApi from 'api/uploadApi'
 import { showError } from 'extensions'
 import { DataRemoveUpload, DataUpload, ResponseState } from 'Models'
@@ -41,28 +41,46 @@ export const uploadSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     // upload
-    builder.addCase(fetchUpload.pending, (state, action) => {
-      state.isLoading = true
-    })
-    builder.addCase(fetchUpload.fulfilled, (state, action) => {
-      state.isLoading = false
-      state.response = action.payload
-    })
-    builder.addCase(fetchUpload.rejected, (state, action) => {
-      state.isLoading = false
-    })
+    builder.addCase(
+      fetchUpload.pending,
+      (state, action: PayloadAction<any>) => {
+        state.isLoading = true
+      }
+    )
+    builder.addCase(
+      fetchUpload.fulfilled,
+      (state, action: PayloadAction<any>) => {
+        state.isLoading = false
+        state.response = action.payload
+      }
+    )
+    builder.addCase(
+      fetchUpload.rejected,
+      (state, action: PayloadAction<any>) => {
+        state.isLoading = false
+      }
+    )
 
     // remove
-    builder.addCase(fetchRemoveUpload.pending, (state, action) => {
-      state.isLoading = true
-    })
-    builder.addCase(fetchRemoveUpload.fulfilled, (state, action) => {
-      state.isLoading = false
-      state.response = null
-    })
-    builder.addCase(fetchRemoveUpload.rejected, (state, action) => {
-      state.isLoading = false
-    })
+    builder.addCase(
+      fetchRemoveUpload.pending,
+      (state, action: PayloadAction<any>) => {
+        state.isLoading = true
+      }
+    )
+    builder.addCase(
+      fetchRemoveUpload.fulfilled,
+      (state, action: PayloadAction<any>) => {
+        state.isLoading = false
+        state.response = null
+      }
+    )
+    builder.addCase(
+      fetchRemoveUpload.rejected,
+      (state, action: PayloadAction<any>) => {
+        state.isLoading = false
+      }
+    )
   }
 })
 const { reducer } = uploadSlice

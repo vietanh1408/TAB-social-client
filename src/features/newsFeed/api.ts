@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import postApi from 'api/postApi'
 import { showError } from 'extensions'
 import { CreatePostInput } from 'Models'
@@ -52,7 +52,19 @@ export const fetchUnLikePost = createAsyncThunk(
   async (id: string, { rejectWithValue }) => {
     try {
       const response = await postApi.unlike(id)
-      console.log('data....', response.data)
+      return response.data
+    } catch (err: any) {
+      showError(err)
+      return rejectWithValue(err.response)
+    }
+  }
+)
+
+export const fetchDeletePost = createAsyncThunk(
+  'post/unlike',
+  async (postId: string, { rejectWithValue }) => {
+    try {
+      const response = await postApi.delete(postId)
       return response.data
     } catch (err: any) {
       showError(err)
@@ -69,32 +81,54 @@ const postSlice = createSlice({
     builder
 
       // get post
-      .addCase(fetchGetAllPost.pending, (state, action) => {
+      .addCase(fetchGetAllPost.pending, (state, action: PayloadAction<any>) => {
         state.isLoading = true
       })
 
-      .addCase(fetchGetAllPost.fulfilled, (state, action) => {
-        state.isLoading = false
-        state.post = action.payload.posts
-      })
+      .addCase(
+        fetchGetAllPost.fulfilled,
+        (state, action: PayloadAction<any>) => {
+          state.isLoading = false
+          state.post = action.payload.posts
+        }
+      )
 
-      .addCase(fetchGetAllPost.rejected, (state, action) => {
-        state.isLoading = false
-      })
+      .addCase(
+        fetchGetAllPost.rejected,
+        (state, action: PayloadAction<any>) => {
+          state.isLoading = false
+        }
+      )
 
       // create post
-      .addCase(fetchCreatePost.pending, (state, action) => {
+      .addCase(fetchCreatePost.pending, (state, action: PayloadAction<any>) => {
         state.isLoading = true
       })
 
-      .addCase(fetchCreatePost.fulfilled, (state, action) => {
-        state.isLoading = false
-        state.post = [action.payload.post, ...state.post]
-      })
+      .addCase(
+        fetchCreatePost.fulfilled,
+        (state, action: PayloadAction<any>) => {
+          state.isLoading = false
+          state.post = [action.payload.post, ...state.post]
+        }
+      )
 
-      .addCase(fetchCreatePost.rejected, (state, action) => {
-        state.isLoading = false
-      })
+      .addCase(
+        fetchCreatePost.rejected,
+        (state, action: PayloadAction<any>) => {
+          state.isLoading = false
+        }
+      )
+
+      // delete post
+      .addCase(
+        fetchDeletePost.fulfilled,
+        (state: any, action: PayloadAction<any>) => {
+          state.post = state.post.filter((item: any) => {
+            return item._id !== action.payload.postId
+          })
+        }
+      )
   }
 })
 

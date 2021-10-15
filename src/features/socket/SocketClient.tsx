@@ -27,7 +27,7 @@ const SocketClient: React.FC = () => {
   // join socket: client ----(user)---> server
   useEffect(() => {
     socketActions?.emit('joinSocket', user)
-  }, [socket, user])
+  }, [socketActions, user])
 
   // get user online: client ----(user)----> server
   useEffect(() => {
@@ -40,7 +40,7 @@ const SocketClient: React.FC = () => {
       dispatch(getOnlineUser(data))
     })
     return () => socketActions?.off('ownUserOnline')
-  }, [socket, dispatch, onlineUser])
+  }, [socketActions, dispatch, onlineUser])
 
   // nhan thong bao loi moi ket ban
   useEffect(() => {
@@ -49,7 +49,7 @@ const SocketClient: React.FC = () => {
       dispatch(getNotification(notification))
     })
     return () => socketActions?.off('receiveFriendRequest')
-  }, [socket, dispatch])
+  }, [socketActions, dispatch])
 
   // nhan thong bao like post
   useEffect(() => {
@@ -58,7 +58,7 @@ const SocketClient: React.FC = () => {
       dispatch(getNotification(notification))
     })
     return () => socketActions?.off('sendNotificationLikePost')
-  }, [socket, dispatch])
+  }, [socketActions, dispatch])
 
   return <div></div>
 }

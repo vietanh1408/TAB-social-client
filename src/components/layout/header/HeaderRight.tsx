@@ -16,7 +16,7 @@ const HeaderRight: React.FC = () => {
   useEffect(() => {
     // @ts-ignore
     dispatch(fetchGetNotification())
-  }, [])
+  }, [dispatch])
 
   return (
     <div className="header__right h-full">

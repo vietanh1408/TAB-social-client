@@ -9,7 +9,11 @@ import { getTimeDuration } from 'extensions/dateTime'
 import { PostType } from 'Models'
 import { useGetAuth } from 'features/user/hooks'
 import { Button, Image, Popover } from 'antd'
-import { useLikePost, useUnlikePost } from 'features/newsFeed/hooks'
+import {
+  useDeletePost,
+  useLikePost,
+  useUnlikePost
+} from 'features/newsFeed/hooks'
 import CommentBox from './CommentBox'
 
 type PostCardProps = {
@@ -23,6 +27,7 @@ const PostCard: React.FC<PostCardProps> = ({ detail }) => {
 
   const [onLikePost] = useLikePost()
   const [onUnlikePost] = useUnlikePost()
+  const [onDeletePost] = useDeletePost()
   const [isLiked, setIsLiked] = useState<boolean>(checkLiked)
   const [openCmt, setOpenCmt] = useState<boolean>(false)
 
@@ -41,6 +46,10 @@ const PostCard: React.FC<PostCardProps> = ({ detail }) => {
 
   const handleOpenCmt = () => {
     setOpenCmt(!openCmt)
+  }
+
+  const handleDeletePost = () => {
+    onDeletePost(detail?._id)
   }
 
   return (
@@ -69,7 +78,9 @@ const PostCard: React.FC<PostCardProps> = ({ detail }) => {
               content={() => {
                 return (
                   <ul>
-                    <li>Setting</li>
+                    <li className="cursor-pointer" onClick={handleDeletePost}>
+                      Xóa bài viết
+                    </li>
                   </ul>
                 )
               }}

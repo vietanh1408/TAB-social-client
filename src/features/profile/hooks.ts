@@ -14,7 +14,7 @@ export const useLoadProfile = () => {
   useEffect(() => {
     // @ts-ignore
     dispatch(fetchProfile(id))
-  }, [id])
+  }, [id, dispatch])
   return { profile, isLoading }
 }
 

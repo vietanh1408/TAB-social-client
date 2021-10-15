@@ -1,4 +1,3 @@
-import { fetchCreateNotification } from './../notification/api'
 // libs
 import { toast } from 'react-toastify'
 import { useDispatch, useSelector } from 'react-redux'
@@ -22,7 +21,17 @@ import {
   fetchVerifyEmail,
   logout
 } from './api'
+import { fetchCreateNotification } from './../notification/api'
+// hooks
 import { useGetProfile } from 'features/profile/hooks'
+// constants
+import {
+  LOGIN_SUCCESS,
+  LOGOUT_SUCCESS,
+  SEND_VERIFY_CODE_SUCCESS,
+  UPDATE_SUCCESS,
+  VERIFY_CODE_SUCCESS
+} from 'constants/message'
 
 export const useLogin = () => {
   const dispatch: AppDispatch = useDispatch()
@@ -30,7 +39,7 @@ export const useLogin = () => {
     // @ts-ignore
     const resultAction = await dispatch(fetchLogin(data))
     if (fetchLogin.fulfilled.match(resultAction)) {
-      toast.success('Đăng nhập thành công')
+      toast.success(LOGIN_SUCCESS)
     } else {
       toast.error(resultAction.payload?.data?.message)
     }
@@ -45,9 +54,7 @@ export const useRegister = () => {
     const resultAction = await dispatch(fetchRegister(data))
     const isSuccess = fetchRegister.fulfilled.match(resultAction)
     if (isSuccess) {
-      toast.success(
-        'Mã xác thực đã được gửi vào email của bạn. Vui lòng kiểm tra email và nhập mã'
-      )
+      toast.success(SEND_VERIFY_CODE_SUCCESS)
     } else {
       toast.error(resultAction.payload?.data?.message)
     }
@@ -62,7 +69,7 @@ export const useVerifyEmail = () => {
     const resultAction = await dispatch(fetchVerifyEmail(data))
     const isSuccess = fetchVerifyEmail.fulfilled.match(resultAction)
     if (isSuccess) {
-      toast.success('Xác thực tài khoản thành công')
+      toast.success(VERIFY_CODE_SUCCESS)
     } else {
       toast.error(resultAction.payload?.data?.message)
     }
@@ -72,12 +79,10 @@ export const useVerifyEmail = () => {
 
 export const useLogout = () => {
   const dispatch: AppDispatch = useDispatch()
-
   const onLogout = () => {
     dispatch(logout())
-    toast.success('Vui lòng đăng nhập để tiếp tục')
+    toast.success(LOGOUT_SUCCESS)
   }
-
   return [onLogout]
 }
 
@@ -100,7 +105,7 @@ export const useEditProfile = () => {
     const resultAction = await dispatch(fetchEditProfile({ id, data }))
     const isSuccess = fetchEditProfile.fulfilled.match(resultAction)
     if (isSuccess) {
-      toast.success('Cập nhật thành công')
+      toast.success(UPDATE_SUCCESS)
     } else {
       toast.error(resultAction.payload?.data?.message)
     }
@@ -139,23 +144,19 @@ export const useSendFriendRequest = () => {
 
 export const useAcceptFriendRequest = () => {
   const dispatch: AppDispatch = useDispatch()
-
   const onAccept = (id: string | undefined) => {
     // @ts-ignore
     dispatch(fetchAcceptFriendRequest(id))
   }
-
   return [onAccept]
 }
 
 export const useUnfriend = () => {
   const dispatch: AppDispatch = useDispatch()
-
   const onUnfriend = (id: string | undefined) => {
     // @ts-ignore
     dispatch(fetchUnfriend(id))
   }
-
   return [onUnfriend]
 }
 

@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { SocketType } from 'Models'
 
 const initialState: SocketType = {
@@ -9,8 +9,8 @@ const socketSlice = createSlice({
   name: 'socket',
   initialState,
   reducers: {
-    socketAction: (state: SocketType, { payload }) => {
-      state.socketActions = payload
+    socketAction: (state: SocketType, action: PayloadAction<any>) => {
+      state.socketActions = action.payload
     }
   }
 })

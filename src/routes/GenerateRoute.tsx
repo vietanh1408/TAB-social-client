@@ -5,14 +5,14 @@ import { Route, Switch } from 'react-router-dom'
 import { NavigatorParams } from 'Models'
 // components
 import ProtectedRoute from './ProtectedRoute'
+import NotFoundPage from 'components/404Page'
 // routes
 import { mainNav } from './routeNav'
-import NotFoundPage from 'components/404Page'
 
 const GenerateRoute: React.FC = () => {
   return (
     <Switch>
-      {mainNav.map((nav: NavigatorParams, index: any) => {
+      {mainNav.map((nav: NavigatorParams, index: number) => {
         if (nav?.isProtected) {
           return (
             <ProtectedRoute

@@ -1,6 +1,4 @@
 // libs
-import NotFoundPage from 'components/404Page'
-import { useGetAuth } from 'features/user/hooks'
 import React from 'react'
 import {
   Redirect,
@@ -10,6 +8,10 @@ import {
 } from 'react-router-dom'
 // routes
 import { routes } from './routeNav'
+// components
+import NotFoundPage from 'components/404Page'
+// hooks
+import { useGetAuth } from 'features/user/hooks'
 
 type RouteComponent =
   | React.FunctionComponent<RouteComponentProps<any>>
@@ -35,7 +37,6 @@ const ProtectedRoute: React.FC<RouteProps & Iprops> = (
     //@ts-ignore
     return token ? <Component {...props} /> : <Redirect to={routes.login} />
   }
-
   return <Route {...rest} render={renderFn(component)} />
 }
 

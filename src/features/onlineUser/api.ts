@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { OnlineUserType } from 'Models'
 
 const initialState: OnlineUserType = {
@@ -14,14 +14,14 @@ const onlineUserSlice = createSlice({
   name: 'onlineUser',
   initialState,
   reducers: {
-    getOnlineUser: (state, action) => {
+    getOnlineUser: (state: OnlineUserType, action: PayloadAction<any>) => {
       state.onlineUsers = action.payload
     }
   },
   extraReducers: (builder) => {
     builder.addCase(
       fetchGetOnlineUser.fulfilled,
-      (state: OnlineUserType, action) => {
+      (state: OnlineUserType, action: PayloadAction<any>) => {
         state.onlineUsers = action.payload
       }
     )

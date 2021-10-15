@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import profileApi from 'api/profileApi'
 import { showError } from 'extensions'
 import { ProfileState } from 'Models'
@@ -28,18 +28,27 @@ const profileSlice = createSlice({
   extraReducers: (builder) => {
     builder
       // get profile
-      .addCase(fetchProfile.pending, (state, action) => {
-        state.isLoading = true
-      })
+      .addCase(
+        fetchProfile.pending,
+        (state: ProfileState, action: PayloadAction<any>) => {
+          state.isLoading = true
+        }
+      )
 
-      .addCase(fetchProfile.fulfilled, (state, { payload }) => {
-        state.profile = payload.profile
-        state.isLoading = false
-      })
+      .addCase(
+        fetchProfile.fulfilled,
+        (state: ProfileState, action: PayloadAction<any>) => {
+          state.profile = action.payload.profile
+          state.isLoading = false
+        }
+      )
 
-      .addCase(fetchProfile.rejected, (state, { payload }) => {
-        state.isLoading = false
-      })
+      .addCase(
+        fetchProfile.rejected,
+        (state: ProfileState, action: PayloadAction<any>) => {
+          state.isLoading = false
+        }
+      )
   }
 })
 
