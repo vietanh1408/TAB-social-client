@@ -26,6 +26,10 @@ const postApi = {
   comment(data: CommentPost) {
     const url = `/posts/comment`
     return axiosClient.post(url, data, setHeaders())
+  },
+  getComment(id: string) {
+    const url = `/posts/comments/${id}`
+    return axiosClient.get(url, setHeaders())
   }
 }
 

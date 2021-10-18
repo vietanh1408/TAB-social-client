@@ -17,7 +17,8 @@ declare module 'Models' {
 
   export interface PostType {
     _id: string
-    comments: string[]
+    comments: any[]
+    commentLength: number
     likes: string[]
     description: string
     image: ImageType

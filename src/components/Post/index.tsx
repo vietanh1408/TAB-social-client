@@ -109,7 +109,7 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
         </div>
         <div className="flex justify-around items-center text-lg">
           <CommentOutlined className="mr-2" />
-          <span>{post?.comments.length}</span>
+          <span>{post?.commentLength}</span>
         </div>
       </div>
       <div className="flex justify-around items-center">
@@ -125,12 +125,7 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
         </Button>
       </div>
       {openCmt && (
-        <CommentBox
-          post={post}
-          user={user}
-          comments={[]}
-          handleComment={handleCommentPost}
-        />
+        <CommentBox post={post} user={user} handleComment={handleCommentPost} />
       )}
     </div>
   )

@@ -1,22 +1,24 @@
 // libs
-import React from 'react'
+import React, { useState } from 'react'
 import { ControllerRenderProps, FormProvider, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Avatar, Button, Comment, Form, Input, List } from 'antd'
+import { Avatar, Button, Comment, Form, Input, List, Spin } from 'antd'
 // components
 import FormItem from 'components/Form/FormItem'
 // extensions
 import yupExtension from 'extensions/yup'
 // models
 import { CommentPost, PostType, UserType } from 'Models'
+import { useGetCommentByPostId } from 'features/newsFeed/hooks'
+import { getTimeDuration } from 'extensions/dateTime'
+import CommentList from './CommentList'
 
 const { TextArea } = Input
 
 interface CommentBoxProps {
   post: PostType
   user?: UserType | null
-  comments: any[]
   handleComment: (args: CommentPost) => void
 }
 
@@ -25,7 +27,13 @@ const schema = yup.object().shape({
 })
 
 const CommentBox: React.FC<CommentBoxProps> = (props: CommentBoxProps) => {
-  const { user, comments = [], handleComment, post } = props
+  const { user, handleComment, post } = props
+
+  const [comments, isLoadingComment] = useGetCommentByPostId(post._id) ?? []
+
+  const [commentList, setCommentList] = useState(
+    comments ? [...comments] : post?.comments
+  )
 
   const formProps = useForm<CommentPost>({
     defaultValues: {
@@ -34,24 +42,26 @@ const CommentBox: React.FC<CommentBoxProps> = (props: CommentBoxProps) => {
     resolver: yupResolver(schema)
   })
 
-  const { handleSubmit } = formProps
+  const { handleSubmit, reset } = formProps
 
   const onSubmit = (data: CommentPost) => {
     handleComment({ ...data, postId: post._id, authorId: user?._id })
+    reset()
+    // setCommentList((prev: any) => prev.unshift({ ...data, user }))
   }
 
   return (
-    <React.Fragment>
-      {comments.length > 0 && (
+    <Spin spinning={isLoadingComment}>
+      {comments && comments.length > 0 ? (
         <List
-          dataSource={comments}
-          header={`${comments.length} ${
-            comments.length > 1 ? 'replies' : 'reply'
-          }`}
           itemLayout="horizontal"
-          renderItem={(props: any) => <Comment {...props} />}
+          dataSource={comments}
+          className="p-4"
+          renderItem={(item: any) => (
+            <CommentList key={item?.id} comment={item} />
+          )}
         />
-      )}
+      ) : null}
       <Comment
         avatar={<Avatar src={user?.avatar?.url} alt={user?.name} />}
         content={
@@ -86,7 +96,7 @@ const CommentBox: React.FC<CommentBoxProps> = (props: CommentBoxProps) => {
           </FormProvider>
         }
       />
-    </React.Fragment>
+    </Spin>
   )
 }
 

@@ -13,6 +13,7 @@ import {
   fetchCreatePost,
   fetchDeletePost,
   fetchGetAllPost,
+  fetchGetCommentByPostId,
   fetchLikePost,
   fetchUnLikePost
 } from './api'
@@ -122,4 +123,21 @@ export const useCommentPost = () => {
     }
   }
   return [onCommentPost]
+}
+
+export const useGetCommentByPostId = (id: string) => {
+  const dispatch: AppDispatch = useDispatch()
+
+  const { post, isLoadingComment } = useSelector(
+    (state: RootState) => state.post
+  )
+
+  const { comments = [] } = post.find((item: any) => item._id === id)
+
+  useEffect(() => {
+    // @ts-ignore
+    dispatch(fetchGetCommentByPostId(id))
+  }, [id])
+
+  return [comments, isLoadingComment]
 }
