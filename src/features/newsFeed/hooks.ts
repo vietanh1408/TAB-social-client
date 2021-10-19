@@ -1,5 +1,5 @@
 // libs
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 // interface
@@ -18,14 +18,18 @@ import {
   fetchUnLikePost
 } from './api'
 // models
-import { CommentPost, CreatePostInput, PostType } from 'Models'
+import { CommentPost, CreatePostInput, Pagination, PostType } from 'Models'
 
 export const useGetPost = () => {
-  const dispatch: AppDispatch = useDispatch()
+  const dispatch = useDispatch()
+  const [pageSize, setPageSize] = useState<number>(5)
+  const [pageIndex, setPageIndex] = useState<number>(1)
+
+  const pagination = { pageSize, pageIndex }
+
   const { post, isLoading } = useSelector((state: RootState) => state.post)
   useEffect(() => {
-    // @ts-ignore
-    dispatch(fetchGetAllPost())
+    dispatch(fetchGetAllPost(pagination))
   }, [dispatch])
   return { post, isLoading }
 }
@@ -125,19 +129,21 @@ export const useCommentPost = () => {
   return [onCommentPost]
 }
 
-export const useGetCommentByPostId = (id: string) => {
+export const useGetCommentByPostId = (id: string, pagination: Pagination) => {
   const dispatch: AppDispatch = useDispatch()
 
   const { post, isLoadingComment } = useSelector(
     (state: RootState) => state.post
   )
 
+  const { pageIndex, pageSize } = pagination ?? {}
+
   const { comments = [] } = post.find((item: any) => item._id === id)
 
   useEffect(() => {
     // @ts-ignore
-    dispatch(fetchGetCommentByPostId(id))
-  }, [id])
+    dispatch(fetchGetCommentByPostId({ id, pagination }))
+  }, [id, pageIndex, pageSize])
 
   return [comments, isLoadingComment]
 }

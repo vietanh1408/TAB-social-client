@@ -6,13 +6,15 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { Avatar, Button, Comment, Form, Input, List, Spin } from 'antd'
 // components
 import FormItem from 'components/Form/FormItem'
+import CommentList from './CommentList'
 // extensions
 import yupExtension from 'extensions/yup'
 // models
 import { CommentPost, PostType, UserType } from 'Models'
+// hooks
 import { useGetCommentByPostId } from 'features/newsFeed/hooks'
-import { getTimeDuration } from 'extensions/dateTime'
-import CommentList from './CommentList'
+// constants
+import { DEFAULT_COMMENT_LENGTH, DEFAULT_PAGE_INDEX } from 'constants/index'
 
 const { TextArea } = Input
 
@@ -29,12 +31,13 @@ const schema = yup.object().shape({
 const CommentBox: React.FC<CommentBoxProps> = (props: CommentBoxProps) => {
   const { user, handleComment, post } = props
 
-  const [comments, isLoadingComment] = useGetCommentByPostId(post._id) ?? []
+  const [pageSize, setPageSize] = useState<number>(3)
+  const [pageIndex, setPageIndex] = useState<number>(1)
 
-  const [commentList, setCommentList] = useState(
-    comments ? [...comments] : post?.comments
-  )
+  const [comments, isLoadingComment] =
+    useGetCommentByPostId(post._id, { pageSize, pageIndex }) ?? []
 
+  const isShowLoadMoreComment = post?.commentLength > comments.length
   const formProps = useForm<CommentPost>({
     defaultValues: {
       comment: undefined
@@ -47,18 +50,35 @@ const CommentBox: React.FC<CommentBoxProps> = (props: CommentBoxProps) => {
   const onSubmit = (data: CommentPost) => {
     handleComment({ ...data, postId: post._id, authorId: user?._id })
     reset()
-    // setCommentList((prev: any) => prev.unshift({ ...data, user }))
+  }
+
+  const handleLoadMoreComment = () => {
+    // setPageSize((prev) => prev + DEFAULT_COMMENT_LENGTH)
+    setPageIndex((prev) => prev + DEFAULT_PAGE_INDEX)
   }
 
   return (
     <Spin spinning={isLoadingComment}>
+      {isShowLoadMoreComment && (
+        <Button
+          className="text-blue-800"
+          type="text"
+          onClick={handleLoadMoreComment}
+        >
+          Xem thêm bình luận...
+        </Button>
+      )}
       {comments && comments.length > 0 ? (
         <List
           itemLayout="horizontal"
           dataSource={comments}
           className="p-4"
           renderItem={(item: any) => (
-            <CommentList key={item?.id} comment={item} />
+            <CommentList
+              key={item?.id}
+              comment={item}
+              commentLength={post?.commentLength}
+            />
           )}
         />
       ) : null}

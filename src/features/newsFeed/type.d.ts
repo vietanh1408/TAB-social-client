@@ -32,4 +32,9 @@ declare module 'Models' {
     authorId?: string
     comment: string
   }
+
+  export interface Pagination {
+    pageIndex?: number
+    pageSize?: number
+  }
 }

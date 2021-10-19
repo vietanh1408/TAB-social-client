@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import postApi from 'api/postApi'
 import { showError } from 'extensions'
-import { CommentPost, CreatePostInput } from 'Models'
+import { CommentPost, CreatePostInput, Pagination } from 'Models'
 
 const initialState: any = {
   post: [],
@@ -11,9 +11,9 @@ const initialState: any = {
 
 export const fetchGetAllPost = createAsyncThunk(
   'post/getAllPost',
-  async (_, { rejectWithValue }) => {
+  async (pagination: Pagination | undefined, { rejectWithValue }) => {
     try {
-      const response = await postApi.get()
+      const response = await postApi.get(pagination)
       return response.data
     } catch (err: any) {
       showError(err)
@@ -89,9 +89,12 @@ export const fetchCommentPost = createAsyncThunk(
 
 export const fetchGetCommentByPostId = createAsyncThunk(
   'post/getCommentByPostId',
-  async (id: string, { rejectWithValue }) => {
+  async (
+    { id, pagination }: { id: string; pagination: Pagination },
+    { rejectWithValue }
+  ) => {
     try {
-      const response = await postApi.getComment(id)
+      const response = await postApi.getComment(id, pagination)
       return response.data
     } catch (err: any) {
       showError(err)
@@ -116,7 +119,11 @@ const postSlice = createSlice({
         fetchGetAllPost.fulfilled,
         (state, action: PayloadAction<any>) => {
           state.isLoading = false
-          state.post = action.payload.posts
+          if (state.post && state.post.length > 0) {
+            state.post = state.post.concat(action.payload.posts)
+          } else {
+            state.post = action.payload.posts
+          }
         }
       )
 
@@ -204,7 +211,16 @@ const postSlice = createSlice({
             (item: any) => item._id === action.payload.postId
           )
           if (currentPost) {
-            currentPost.comments = action.payload.comments
+            if (
+              Array.isArray(currentPost?.comments) &&
+              currentPost?.comments?.length > 0
+            ) {
+              currentPost.comments = currentPost.comments.concat(
+                action.payload.comments
+              )
+            } else {
+              currentPost.comments = action.payload.comments
+            }
           }
         }
       )

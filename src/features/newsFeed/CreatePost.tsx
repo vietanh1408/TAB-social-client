@@ -60,6 +60,7 @@ const CreatePost: React.FC = () => {
   const onSubmit = (data: CreatePostInput) => {
     onFetchCreate(data)
     setIsModalVisible(false)
+    reset()
   }
 
   const getBase64 = (file: any) => {
