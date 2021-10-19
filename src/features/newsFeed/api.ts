@@ -6,7 +6,8 @@ import { CommentPost, CreatePostInput, Pagination } from 'Models'
 const initialState: any = {
   post: [],
   isLoading: false,
-  isLoadingComment: false
+  isLoadingComment: false,
+  postLength: 0
 }
 
 export const fetchGetAllPost = createAsyncThunk(
@@ -119,6 +120,7 @@ const postSlice = createSlice({
         fetchGetAllPost.fulfilled,
         (state, action: PayloadAction<any>) => {
           state.isLoading = false
+          state.postLength = action.payload.postLength
           if (state.post && state.post.length > 0) {
             state.post = state.post.concat(action.payload.posts)
           } else {
@@ -143,6 +145,7 @@ const postSlice = createSlice({
         fetchCreatePost.fulfilled,
         (state, action: PayloadAction<any>) => {
           state.isLoading = false
+          state.postLength = state.postLength + 1
           state.post = [action.payload.post, ...state.post]
         }
       )
