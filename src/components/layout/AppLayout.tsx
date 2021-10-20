@@ -9,6 +9,7 @@ import { useGetAuth } from 'features/user/hooks'
 import SocketClient from 'features/socket/SocketClient'
 // routes
 import GenerateRoute from 'routes/GenerateRoute'
+import OnlineList from 'components/OnlineList'
 
 const AppLayout: React.FC = () => {
   const { token, user } = useGetAuth()
@@ -44,7 +45,7 @@ const AppLayout: React.FC = () => {
           {verifiedUser && (
             <Col xs={0} md={6}>
               <div className="h-full border-black border-2 fixed  w-1/4">
-                RIGHT
+                <OnlineList />
               </div>
             </Col>
           )}

@@ -19,18 +19,31 @@ import {
 } from './api'
 // models
 import { CommentPost, CreatePostInput, Pagination, PostType } from 'Models'
+import { DEFAULT_PAGE_SIZE } from 'constants/index'
 
 export const useGetPost = () => {
   const dispatch = useDispatch()
-  const [pageSize, setPageSize] = useState<number>(5)
   const [pageIndex, setPageIndex] = useState<number>(1)
 
-  const pagination = { pageSize, pageIndex }
+  const { post, isLoading, postLength } = useSelector(
+    (state: RootState) => state.post
+  )
 
-  const { post, isLoading } = useSelector((state: RootState) => state.post)
+  window.addEventListener('scroll', () => {
+    const { scrollTop, scrollHeight, clientHeight } = document.documentElement
+    if (clientHeight + scrollTop >= scrollHeight - 5) {
+      if (post?.length !== postLength) {
+        setPageIndex((prev) => prev + 1)
+      }
+    }
+  })
+
   useEffect(() => {
-    dispatch(fetchGetAllPost(pagination))
-  }, [dispatch])
+    if (post?.length !== postLength) {
+      dispatch(fetchGetAllPost({ pageIndex, pageSize: DEFAULT_PAGE_SIZE }))
+    }
+  }, [dispatch, pageIndex])
+
   return { post, isLoading }
 }
 

@@ -4,7 +4,7 @@ import React, { useEffect, useRef } from 'react'
 // interface
 import { AppDispatch, RootState } from 'app/store'
 // api
-import { getOnlineUser } from 'features/onlineUser/api'
+import { addToOnlineList, getOnlineUser } from 'features/onlineUser/api'
 import { socketAction } from './api'
 import { getNotification } from 'features/notification/api'
 // socket.io
@@ -19,7 +19,7 @@ const SocketClient: React.FC = () => {
     socket,
     onlineUser
   } = useSelector((state: RootState) => state)
-  const dispatch: AppDispatch = useDispatch()
+  const dispatch = useDispatch()
   const { socketActions } = socket
   const { user } = currentUser
   const audioRef = useRef<any>()
@@ -46,13 +46,21 @@ const SocketClient: React.FC = () => {
   }, [socketActions, user])
 
   // client <---(online followings)---- server
+  // useEffect(() => {
+  //   socketActions?.on('ownUserOnline', (data: any) => {
+  //     // @ts-ignore
+  //     dispatch(getOnlineUser(data))
+  //   })
+  //   return () => socketActions?.off('ownUserOnline')
+  // }, [socketActions, dispatch, onlineUser])
+
+  // lang nghe su kien lay user online tu server
   useEffect(() => {
-    socketActions?.on('ownUserOnline', (data: any) => {
-      // @ts-ignore
-      dispatch(getOnlineUser(data))
+    socketActions?.on('checkUserOnlineToClient', (userOnlines: any) => {
+      dispatch(addToOnlineList(userOnlines))
     })
-    return () => socketActions?.off('ownUserOnline')
-  }, [socketActions, dispatch, onlineUser])
+    return () => socketActions?.off('checkUserOnlineToClient')
+  }, [socketActions])
 
   // nhan thong bao loi moi ket ban
   useEffect(() => {

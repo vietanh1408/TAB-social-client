@@ -7,7 +7,7 @@ const initialState: any = {
   post: [],
   isLoading: false,
   isLoadingComment: false,
-  postLength: 0
+  postLength: null
 }
 
 export const fetchGetAllPost = createAsyncThunk(
