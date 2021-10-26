@@ -53,7 +53,6 @@ const CommentBox: React.FC<CommentBoxProps> = (props: CommentBoxProps) => {
   }
 
   const handleLoadMoreComment = () => {
-    // setPageSize((prev) => prev + DEFAULT_COMMENT_LENGTH)
     setPageIndex((prev) => prev + DEFAULT_PAGE_INDEX)
   }
 

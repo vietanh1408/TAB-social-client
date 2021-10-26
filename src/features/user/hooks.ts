@@ -12,6 +12,7 @@ import {
 // api
 import {
   fetchAcceptFriendRequest,
+  fetchCancelSendFriendRequest,
   fetchEditProfile,
   fetchLogin,
   fetchLoginGoogle,
@@ -140,6 +141,15 @@ export const useSendFriendRequest = () => {
     }
   }
   return [onSendFriendRequest]
+}
+
+export const useCancelSendFriendRequest = () => {
+  const dispatch = useDispatch()
+
+  const onCancelSendFriendRequest = async (id: string | undefined) => {
+    await dispatch(fetchCancelSendFriendRequest(id))
+  }
+  return [onCancelSendFriendRequest]
 }
 
 export const useAcceptFriendRequest = () => {

@@ -4,6 +4,7 @@ import BackgroundImage from 'components/BackgroundImage'
 import LoadingPage from 'components/LoadingPage'
 import {
   useAcceptFriendRequest,
+  useCancelSendFriendRequest,
   useGetAuth,
   useSendFriendRequest,
   useUnfriend
@@ -18,6 +19,7 @@ const Profile: React.FC = () => {
   const id = profile?._id
 
   const [onSendFriendRequest] = useSendFriendRequest()
+  const [onCancelSendFriendRequest] = useCancelSendFriendRequest()
   const [onAccept] = useAcceptFriendRequest()
   const [onUnfriend] = useUnfriend()
 
@@ -30,7 +32,7 @@ const Profile: React.FC = () => {
   }
 
   const handleCancelFriendRequest = () => {
-    console.log('cancel friend request....', id)
+    onCancelSendFriendRequest(id)
   }
 
   const handleUnFollow = () => {

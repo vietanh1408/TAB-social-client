@@ -14,7 +14,7 @@ const CommentList: React.FC<any> = (props: any) => {
             <span className="ml-2">{getTimeDuration(comment?.createdAt)}</span>
           </div>
         }
-        description={comment?.content}
+        description={<p className="text-gray-800">{comment?.content}</p>}
       />
     </List.Item>
   )

@@ -32,15 +32,18 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
   const [onCommentPost] = useCommentPost()
   const [isLiked, setIsLiked] = useState<boolean>(checkLiked)
   const [openCmt, setOpenCmt] = useState<boolean>(false)
+  const [likeNumb, setLikeNumb] = useState<number>(post?.likes.length ?? 0)
 
   const handleToggleLike = () => {
     if (post?._id) {
       if (isLiked) {
         // unlike
         onUnlikePost(post?._id)
+        setLikeNumb((prev) => prev - 1)
       } else {
         // like
         onLikePost(post)
+        setLikeNumb((prev) => prev + 1)
       }
     }
     setIsLiked(!isLiked)
@@ -105,7 +108,7 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
       <div className="card-footer flex justify-start items-center py-4">
         <div className="flex justify-start items-center text-lg mr-4">
           <i className="fas fa-thumbs-up mr-2" />
-          {post?.likes.length}
+          {likeNumb}
         </div>
         <div className="flex justify-around items-center text-lg">
           <CommentOutlined className="mr-2" />

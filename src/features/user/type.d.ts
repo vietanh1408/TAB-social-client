@@ -26,7 +26,7 @@ declare module 'Models' {
   export interface UserState {
     token: string | null
     user: UserType | null
-    error: anym
+    error: any
     isLoading: boolean
     isVerify: boolean
   }

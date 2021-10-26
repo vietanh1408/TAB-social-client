@@ -95,6 +95,19 @@ export const fetchSendFriendRequest = createAsyncThunk(
   }
 )
 
+export const fetchCancelSendFriendRequest = createAsyncThunk(
+  'user/cancelSendFriendRequest',
+  async (id: string | undefined, { rejectWithValue }) => {
+    try {
+      const response = await userApi.cancelSendFriendRequest(id)
+      return response.data
+    } catch (err: any) {
+      showError(err)
+      return rejectWithValue(err.response)
+    }
+  }
+)
+
 export const fetchAcceptFriendRequest = createAsyncThunk(
   'user/acceptFriendRequest',
   async (id: string, { rejectWithValue }) => {
@@ -134,13 +147,8 @@ const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+
       // login
-      .addCase(
-        fetchLogin.pending,
-        (state: UserState, action: PayloadAction<any>) => {
-          state.isLoading = true
-        }
-      )
       .addCase(
         fetchLogin.fulfilled,
         (state: UserState, action: PayloadAction<any>) => {
@@ -150,20 +158,8 @@ const userSlice = createSlice({
           localStorage.setItem('accessToken', action.payload.accessToken)
         }
       )
-      .addCase(
-        fetchLogin.rejected,
-        (state: UserState, action: PayloadAction<any>) => {
-          state.isLoading = false
-          state.error = action.payload?.data?.message
-        }
-      )
+
       // register
-      .addCase(
-        fetchRegister.pending,
-        (state: UserState, action: PayloadAction<any>) => {
-          state.isLoading = true
-        }
-      )
       .addCase(
         fetchRegister.fulfilled,
         (state: UserState, action: PayloadAction<any>) => {
@@ -173,21 +169,8 @@ const userSlice = createSlice({
           localStorage.setItem('accessToken', action.payload.accessToken)
         }
       )
-      .addCase(
-        fetchRegister.rejected,
-        (state: UserState, action: PayloadAction<any>) => {
-          state.isLoading = false
-          state.error = action.payload?.data?.message
-        }
-      )
 
       // verify
-      .addCase(
-        fetchVerifyEmail.pending,
-        (state: UserState, action: PayloadAction<any>) => {
-          state.isVerify = false
-        }
-      )
       .addCase(
         fetchVerifyEmail.fulfilled,
         (state: UserState, action: PayloadAction<any>) => {
@@ -195,20 +178,8 @@ const userSlice = createSlice({
           state.user = action.payload.user
         }
       )
-      .addCase(
-        fetchVerifyEmail.rejected,
-        (state: UserState, action: PayloadAction<any>) => {
-          state.isVerify = false
-        }
-      )
 
       // login with Google
-      .addCase(
-        fetchLoginGoogle.pending,
-        (state: UserState, action: PayloadAction<any>) => {
-          state.isLoading = true
-        }
-      )
       .addCase(
         fetchLoginGoogle.fulfilled,
         (state: UserState, action: PayloadAction<any>) => {
@@ -217,22 +188,8 @@ const userSlice = createSlice({
           state.user = action.payload.user
         }
       )
-      .addCase(
-        fetchLoginGoogle.rejected,
-        (state: UserState, action: PayloadAction<any>) => {
-          state.isLoading = false
-          state.error = action.payload?.data?.message
-        }
-      )
 
       // edit profile
-      .addCase(
-        fetchEditProfile.pending,
-        (state, action: PayloadAction<any>) => {
-          state.isLoading = true
-        }
-      )
-
       .addCase(
         fetchEditProfile.fulfilled,
         (state, action: PayloadAction<any>) => {
@@ -241,20 +198,7 @@ const userSlice = createSlice({
         }
       )
 
-      .addCase(
-        fetchEditProfile.rejected,
-        (state, action: PayloadAction<any>) => {
-          state.isLoading = false
-        }
-      )
-
       // send Friend request
-      .addCase(
-        fetchSendFriendRequest.pending,
-        (state: UserState, action: PayloadAction<any>) => {
-          state.isLoading = true
-        }
-      )
       .addCase(
         fetchSendFriendRequest.fulfilled,
         (state: UserState, action: PayloadAction<any>) => {
@@ -262,21 +206,17 @@ const userSlice = createSlice({
           state.user = action.payload.user
         }
       )
+
+      // cancel send Friend request
       .addCase(
-        fetchSendFriendRequest.rejected,
+        fetchCancelSendFriendRequest.fulfilled,
         (state: UserState, action: PayloadAction<any>) => {
           state.isLoading = false
-          state.error = action.payload?.data?.message
+          state.user = action.payload.user
         }
       )
 
       // accept friend request
-      .addCase(
-        fetchAcceptFriendRequest.pending,
-        (state: UserState, action: PayloadAction<any>) => {
-          state.isLoading = true
-        }
-      )
       .addCase(
         fetchAcceptFriendRequest.fulfilled,
         (state: UserState, action: PayloadAction<any>) => {
@@ -284,21 +224,7 @@ const userSlice = createSlice({
           state.user = action.payload.user
         }
       )
-      .addCase(
-        fetchAcceptFriendRequest.rejected,
-        (state: UserState, action: PayloadAction<any>) => {
-          state.isLoading = false
-          state.error = action.payload?.data?.message
-        }
-      )
-
       // unfriend
-      .addCase(
-        fetchUnfriend.pending,
-        (state: UserState, action: PayloadAction<any>) => {
-          state.isLoading = true
-        }
-      )
       .addCase(
         fetchUnfriend.fulfilled,
         (state: UserState, action: PayloadAction<any>) => {
@@ -306,9 +232,18 @@ const userSlice = createSlice({
           state.user = action.payload.user
         }
       )
-      .addCase(
-        fetchUnfriend.rejected,
-        (state: UserState, action: PayloadAction<any>) => {
+
+      .addMatcher(
+        (action) =>
+          action.type.startsWith('user') && action.type.endsWith('pending'),
+        (state: UserState) => {
+          state.isLoading = true
+        }
+      )
+      .addMatcher(
+        (action) =>
+          action.type.startsWith('user') && action.type.endsWith('rejected'),
+        (state: UserState, action) => {
           state.isLoading = false
           state.error = action.payload?.data?.message
         }
