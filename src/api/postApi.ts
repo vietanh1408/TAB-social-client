@@ -14,7 +14,7 @@ const postApi = {
     return axiosClient.get(url, setHeaders())
   },
   create(data: CreatePostInput) {
-    const url = `/posts/create`
+    const url = `/posts`
     return axiosClient.post(url, data, setHeaders())
   },
   like(id: string) {
@@ -26,7 +26,7 @@ const postApi = {
     return axiosClient.post(url, { postId: id }, setHeaders())
   },
   delete(id: string) {
-    const url = `/posts/delete/${id}`
+    const url = `/posts/${id}`
     return axiosClient.delete(url, setHeaders())
   },
   comment(data: CommentPost) {

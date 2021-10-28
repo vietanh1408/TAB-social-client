@@ -25,7 +25,7 @@ const userApi = {
     return axiosClient.post(url, params)
   },
   editProfile(id: string, data: any) {
-    const url = `/user/edit/${id}`
+    const url = `/user/${id}`
     return axiosClient.put(url, { data }, setHeaders())
   },
   sendFriendRequest(id: string) {

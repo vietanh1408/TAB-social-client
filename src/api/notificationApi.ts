@@ -8,7 +8,7 @@ const notificationApi = {
     return axiosClient.get(url, setHeaders())
   },
   create(data: NotificationType) {
-    const url = `/notification/notify`
+    const url = `/notification`
     return axiosClient.post(url, data, setHeaders())
   }
 }
