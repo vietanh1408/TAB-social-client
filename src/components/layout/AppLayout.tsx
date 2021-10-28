@@ -14,11 +14,7 @@ import OnlineList from 'features/onlineUser/OnlineList'
 const AppLayout: React.FC = () => {
   const { token, user } = useGetAuth()
   const verifiedUser = token && user?.isVerifiedMail
-  console.log(
-    '%cChào mừng bạn đến với TAB-SOCIAL%c!',
-    'color: #1ab374; font-weight: bold; font-size: 2rem; text-shadow: 0 0 5px rgba(0,0,0,0.2);',
-    'color: #ff7b5f; font-weight: bold; font-size: 2rem; text-shadow: 0 0 5px rgba(0,0,0,0.2);'
-  )
+
   return (
     <React.Fragment>
       {verifiedUser && <Header />}

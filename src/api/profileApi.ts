@@ -3,7 +3,7 @@ import axiosClient from './axiosClient'
 
 const profileApi = {
   getProfile(id: string) {
-    const url = `/user/${id}`
+    const url = `/users/${id}`
     return axiosClient.get(url, setHeaders())
   }
 }

@@ -25,23 +25,23 @@ const userApi = {
     return axiosClient.post(url, params)
   },
   editProfile(id: string, data: any) {
-    const url = `/user/${id}`
+    const url = `/users/${id}`
     return axiosClient.put(url, { data }, setHeaders())
   },
   sendFriendRequest(id: string) {
-    const url = `/user/send-friend-request`
+    const url = `/users/send-friend-request`
     return axiosClient.post(url, { friendId: id }, setHeaders())
   },
   cancelSendFriendRequest(id: string | undefined) {
-    const url = `/user/cancel-send-friend-request`
+    const url = `/users/cancel-send-friend-request`
     return axiosClient.post(url, { friendId: id }, setHeaders())
   },
   acceptFriendRequest(id: string) {
-    const url = `/user/accept-friend-request`
+    const url = `/users/accept-friend-request`
     return axiosClient.put(url, { friendId: id }, setHeaders())
   },
   unFriend(id: string) {
-    const url = `/user/unfriend`
+    const url = `/users/unfriend`
     return axiosClient.put(url, { friendId: id }, setHeaders())
   }
 }

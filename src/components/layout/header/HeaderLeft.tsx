@@ -17,9 +17,7 @@ const HeaderLeft: React.FC = () => {
     setVisible(false)
   }
 
-  const handleSearch = (value: any) => {
-    console.log('value...', value)
-  }
+  const handleSearch = (value: string) => {}
 
   return (
     <div className="header__left h-full flex items-center">

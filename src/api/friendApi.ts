@@ -3,7 +3,7 @@ import axiosClient from './axiosClient'
 
 const friendApi = {
   getAllFriend() {
-    const url = `/friend`
+    const url = `/friends`
     return axiosClient.get(url, setHeaders())
   }
 }
