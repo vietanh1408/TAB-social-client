@@ -1,11 +1,15 @@
-import { BellOutlined } from '@ant-design/icons'
-import { Badge, Popover } from 'antd'
-import { AppDispatch, RootState } from 'app/store'
-import NotificationList from 'components/NotificationList'
-import { fetchGetNotification } from 'features/notification/api'
+// libs
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { Badge, Popover } from 'antd'
+import { BellOutlined } from '@ant-design/icons'
+// app
+import { AppDispatch, RootState } from 'app/store'
+// components
 import Avatar from '../Avatar'
+import NotificationList from 'features/notification/NotificationList'
+// api
+import { fetchGetNotification } from 'features/notification/api'
 
 const HeaderRight: React.FC = () => {
   const { notificationCount, notification } = useSelector(

@@ -2,16 +2,17 @@
 import { useDispatch, useSelector } from 'react-redux'
 import React, { useEffect, useRef } from 'react'
 // interface
-import { AppDispatch, RootState } from 'app/store'
+import { RootState } from 'app/store'
 // api
-import { addToOnlineList, getOnlineUser } from 'features/onlineUser/api'
 import { socketAction } from './api'
+import { addToOnlineList, getOnlineUser } from 'features/onlineUser/api'
 import { getNotification } from 'features/notification/api'
 // socket.io
 import io from 'socket.io-client'
+import { NotificationType } from 'Models'
+// models
 // @ts-ignore
 import notificationSound from 'assets/swiftly-610.mp3'
-import { NotificationType } from 'Models'
 
 const SocketClient: React.FC = () => {
   const {
@@ -35,26 +36,28 @@ const SocketClient: React.FC = () => {
     return () => socket.close()
   }, [dispatch])
 
-  // join socket: client ----(user)---> server
   useEffect(() => {
     socketActions?.emit('joinSocket', user)
   }, [socketActions, user])
 
-  // get user online: client ----(user)----> server
   useEffect(() => {
-    socketActions?.emit('userOnline', user)
+    const currentUser = {
+      _id: user?._id,
+      name: user?.name,
+      avatar: user?.avatar,
+      followings: user?.followings,
+      followers: user?.followers
+    }
+    socketActions?.emit('userOnline', currentUser)
   }, [socketActions, user])
 
-  // client <---(online followings)---- server
-  // useEffect(() => {
-  //   socketActions?.on('ownUserOnline', (data: any) => {
-  //     // @ts-ignore
-  //     dispatch(getOnlineUser(data))
-  //   })
-  //   return () => socketActions?.off('ownUserOnline')
-  // }, [socketActions, dispatch, onlineUser])
+  useEffect(() => {
+    socketActions?.on('ownUserOnline', (data: any) => {
+      dispatch(getOnlineUser(data))
+    })
+    return () => socketActions?.off('ownUserOnline')
+  }, [socketActions, dispatch, onlineUser])
 
-  // lang nghe su kien lay user online tu server
   useEffect(() => {
     socketActions?.on('checkUserOnlineToClient', (userOnlines: any) => {
       dispatch(addToOnlineList(userOnlines))
@@ -67,7 +70,6 @@ const SocketClient: React.FC = () => {
     socketActions?.on(
       'receiveFriendRequest',
       (notification: NotificationType) => {
-        // @ts-ignore
         dispatch(getNotification(notification))
         playNotificationSound()
       }
@@ -80,7 +82,6 @@ const SocketClient: React.FC = () => {
     socketActions?.on(
       'sendNotificationLikePost',
       (notification: NotificationType) => {
-        // @ts-ignore
         dispatch(getNotification(notification))
         playNotificationSound()
       }
@@ -93,7 +94,6 @@ const SocketClient: React.FC = () => {
     socketActions?.on(
       'sendNotificationCommentPost',
       (notification: NotificationType) => {
-        // @ts-ignore
         dispatch(getNotification(notification))
         playNotificationSound()
       }

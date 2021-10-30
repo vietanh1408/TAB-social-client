@@ -13,7 +13,12 @@ const onlineUserSlice = createSlice({
       state.onlineUsers = action.payload
     },
     addToOnlineList: (state: any, action: PayloadAction<any>) => {
-      state.onlineUsers.push(action.payload)
+      const checkUserExist = state.onlineUsers.some(
+        (user: any) => user._id === action.payload._id
+      )
+      if (!checkUserExist) {
+        state.onlineUsers.push(action.payload)
+      }
     }
   }
 })

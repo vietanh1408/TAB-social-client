@@ -1,12 +1,16 @@
-import { yupResolver } from '@hookform/resolvers/yup'
-import { Button, Input } from 'antd'
-import Form from 'antd/lib/form/Form'
-import FormItem from 'components/Form/FormItem'
-import yupExtension from 'extensions/yup'
-import { VerifyEmailInput } from 'Models'
+// libs
 import React from 'react'
 import { ControllerRenderProps, FormProvider, useForm } from 'react-hook-form'
 import * as yup from 'yup'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { Button, Input } from 'antd'
+import Form from 'antd/lib/form/Form'
+// components
+import FormItem from 'components/Form/FormItem'
+// extensions
+import yupExtension from 'extensions/yup'
+// models
+import { VerifyEmailInput } from 'Models'
 
 type VerifyEmailProps = {
   handleSubmitForm(args: VerifyEmailInput): void

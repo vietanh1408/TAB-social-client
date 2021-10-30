@@ -1,5 +1,5 @@
 import React from 'react'
-import { Avatar, List, notification } from 'antd'
+import { Avatar, List } from 'antd'
 
 interface NotificationListProps {
   notificationList: any
