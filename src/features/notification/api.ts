@@ -35,6 +35,20 @@ export const fetchGetNotification = createAsyncThunk(
   }
 )
 
+export const fetchReadNotification = createAsyncThunk(
+  'notification/read',
+  async (id: string, { rejectWithValue }) => {
+    try {
+      const response = await notificationApi.read(id)
+      console.log('response....', response.data)
+      return response.data
+    } catch (err: any) {
+      showError(err)
+      return rejectWithValue(err.response)
+    }
+  }
+)
+
 const notificationSlice = createSlice({
   name: 'notification',
   initialState,
@@ -43,14 +57,6 @@ const notificationSlice = createSlice({
       state: NotificationState,
       action: PayloadAction<NotificationType>
     ) => {
-      // check trung thong bao
-      // const isDuplicateNotification = state.notification.some(
-      //   (item: any) => item?.text === action.payload.text
-      // )
-      // if (!isDuplicateNotification) {
-      //   state.notification.unshift(action.payload)
-      //   state.notificationCount++
-      // }
       state.notification.unshift(action.payload)
       state.notificationCount++
     }
@@ -77,6 +83,20 @@ const notificationSlice = createSlice({
         (state: NotificationState, action: PayloadAction<any>) => {
           state.isLoading = false
           state.notification = action.payload.notifications
+          state.notificationCount = action.payload.notificationCount
+        }
+      )
+
+      .addCase(
+        fetchReadNotification.fulfilled,
+        (state: NotificationState, action: PayloadAction<any>) => {
+          // const readNotification = state.notification.find((item: any) => item._id === action.payload.notification._id)
+          state.notification = state.notification.map((item: any) => {
+            if (item._id === action.payload.notification._id) {
+              item = action.payload.notification
+            }
+            return item
+          })
           state.notificationCount = action.payload.notificationCount
         }
       )

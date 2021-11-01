@@ -48,7 +48,7 @@ const CommentBox: React.FC<CommentBoxProps> = (props: CommentBoxProps) => {
   const { handleSubmit, reset } = formProps
 
   const onSubmit = (data: CommentPost) => {
-    handleComment({ ...data, postId: post._id, authorId: user?._id })
+    handleComment({ ...data, postId: post._id, authorId: post?.user?._id })
     reset()
   }
 
@@ -58,15 +58,6 @@ const CommentBox: React.FC<CommentBoxProps> = (props: CommentBoxProps) => {
 
   return (
     <Spin spinning={isLoadingComment}>
-      {isShowLoadMoreComment && (
-        <Button
-          className="text-blue-800"
-          type="text"
-          onClick={handleLoadMoreComment}
-        >
-          Xem thêm bình luận...
-        </Button>
-      )}
       {comments && comments.length > 0 ? (
         <List
           itemLayout="horizontal"
@@ -81,6 +72,15 @@ const CommentBox: React.FC<CommentBoxProps> = (props: CommentBoxProps) => {
           )}
         />
       ) : null}
+      {isShowLoadMoreComment && (
+        <Button
+          className="text-blue-800"
+          type="text"
+          onClick={handleLoadMoreComment}
+        >
+          Xem thêm bình luận...
+        </Button>
+      )}
       <Comment
         avatar={<Avatar src={user?.avatar?.url} alt={user?.name} />}
         content={

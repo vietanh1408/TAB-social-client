@@ -124,9 +124,10 @@ export const useSendFriendRequest = () => {
   const onSendFriendRequest = async (profile: any) => {
     const notification = {
       text: `${user?.name} đã gửi lời mời kết bạn`,
-      user: user?._id,
+      sender: user,
       url: `${process.env.REACT_APP_URL}/profile/${user?._id}`,
-      receivers: profile?._id
+      receivers: profile?._id,
+      isRead: false
     }
     // @ts-ignore
     const resultAction = await dispatch(fetchSendFriendRequest(profile?._id))
@@ -135,8 +136,9 @@ export const useSendFriendRequest = () => {
       // @ts-ignore
       const result = await dispatch(fetchCreateNotification(notification))
       if (fetchCreateNotification.fulfilled.match(result)) {
+        const newNotification = result?.payload?.data?.notification
         // gui thong bao socket
-        socketActions?.emit('sendFriendRequest', notification)
+        socketActions?.emit('sendFriendRequest', newNotification)
       }
     }
   }

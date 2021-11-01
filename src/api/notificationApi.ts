@@ -10,6 +10,10 @@ const notificationApi = {
   create(data: NotificationType) {
     const url = `/notifications`
     return axiosClient.post(url, data, setHeaders())
+  },
+  read(id: string) {
+    const url = `/notifications/${id}`
+    return axiosClient.patch(url, { isRead: true }, setHeaders())
   }
 }
 

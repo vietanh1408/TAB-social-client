@@ -74,17 +74,19 @@ export const useLikePost = () => {
       // like post thanh cong => ban socket + ban notification cho chu post
       const notification = {
         text: `${user?.user?.name} đã thích bài viết của bạn`,
-        user: user?.user?._id,
+        sender: user?.user,
         image: post?.image,
         url: `${process.env.REACT_APP_URL}/post/${post?._id}`,
-        receivers: post?.user._id
+        receivers: post?.user._id,
+        isRead: false
       }
       const result = await dispatch(
         // @ts-ignore
         fetchCreateNotification(notification)
       )
       if (fetchCreateNotification.fulfilled.match(result)) {
-        socketActions?.emit('likePost', notification)
+        const newNotification = result?.payload?.data?.notification
+        socketActions?.emit('likePost', newNotification)
       }
     }
   }
@@ -126,16 +128,18 @@ export const useCommentPost = () => {
       // gui thong bao
       const notification = {
         text: `${user?.name} đã bình luận bài viết của bạn`,
-        user: user?._id,
+        sender: user,
         image: data.post?.image,
         url: `${process.env.REACT_APP_URL}/post/${data.postId}`,
-        receivers: data.post?.user._id
+        receivers: data.post?.user._id,
+        isRead: false
       }
       // @ts-ignore
       const result = await dispatch(fetchCreateNotification(notification))
       if (fetchCreateNotification.fulfilled.match(result)) {
+        const newNotification = result?.payload?.data?.notification
         // gui thong bao socket
-        socketActions?.emit('commentPost', notification)
+        socketActions?.emit('commentPost', newNotification)
       }
     }
   }

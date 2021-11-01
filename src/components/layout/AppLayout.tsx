@@ -26,9 +26,7 @@ const AppLayout: React.FC = () => {
         <Row className="w-full h-full">
           {verifiedUser && (
             <Col xs={0} md={6}>
-              <div className="h-full border-black border-2 fixed  w-1/4">
-                LEFT
-              </div>
+              <div className="h-full fixed  w-1/4">LEFT</div>
             </Col>
           )}
           <Col
