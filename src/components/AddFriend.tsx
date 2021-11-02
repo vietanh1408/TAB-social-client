@@ -1,6 +1,6 @@
+import React, { useState } from 'react'
 import { Button } from 'antd'
 import { ProfileType } from 'Models'
-import React, { useState } from 'react'
 
 type AddFriendProps = {
   user: any
