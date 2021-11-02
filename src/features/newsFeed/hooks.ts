@@ -5,20 +5,30 @@ import { toast } from 'react-toastify'
 // interface
 import { AppDispatch, RootState } from 'app/store'
 // constants
-import { CREATE_POST_SUCCESS, DELETE_POST_SUCCESS } from 'constants/message'
+import {
+  CREATE_POST_SUCCESS,
+  DELETE_POST_SUCCESS,
+  UPDATE_SUCCESS
+} from 'constants/message'
 // api
 import { fetchCreateNotification } from 'features/notification/api'
 import {
   fetchCommentPost,
   fetchCreatePost,
   fetchDeletePost,
+  fetchEditPost,
   fetchGetAllPost,
   fetchGetCommentByPostId,
   fetchLikePost,
   fetchUnLikePost
 } from './api'
 // models
-import { CommentPost, CreatePostInput, Pagination, PostType } from 'Models'
+import {
+  CommentPost,
+  CreateOrEditPostInput,
+  Pagination,
+  PostType
+} from 'Models'
 import { DEFAULT_PAGE_SIZE } from 'constants/index'
 
 export const useGetPost = () => {
@@ -49,7 +59,7 @@ export const useGetPost = () => {
 
 export const useCreatePost = () => {
   const dispatch: AppDispatch = useDispatch()
-  const onFetchCreate = async (data: CreatePostInput) => {
+  const onFetchCreate = async (data: CreateOrEditPostInput) => {
     // @ts-ignore
     const resultAction = await dispatch(fetchCreatePost(data))
     if (fetchCreatePost.fulfilled.match(resultAction)) {
@@ -59,6 +69,20 @@ export const useCreatePost = () => {
     }
   }
   return [onFetchCreate]
+}
+
+export const useEditPost = () => {
+  const dispatch: AppDispatch = useDispatch()
+  const onEditPost = async (data: CreateOrEditPostInput) => {
+    // @ts-ignore
+    const resultAction = await dispatch(fetchEditPost(data))
+    if (fetchEditPost.fulfilled.match(resultAction)) {
+      toast.success(UPDATE_SUCCESS)
+    } else {
+      toast.error(resultAction.payload?.data?.message)
+    }
+  }
+  return [onEditPost]
 }
 
 export const useLikePost = () => {
@@ -147,7 +171,7 @@ export const useCommentPost = () => {
 }
 
 export const useGetCommentByPostId = (id: string, pagination: Pagination) => {
-  const dispatch: AppDispatch = useDispatch()
+  const dispatch = useDispatch()
 
   const { post, isLoadingComment } = useSelector(
     (state: RootState) => state.post
@@ -158,7 +182,6 @@ export const useGetCommentByPostId = (id: string, pagination: Pagination) => {
   const { comments = [] } = post.find((item: any) => item._id === id)
 
   useEffect(() => {
-    // @ts-ignore
     dispatch(fetchGetCommentByPostId({ id, pagination }))
   }, [id, pageIndex, pageSize])
 

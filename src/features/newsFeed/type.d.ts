@@ -4,7 +4,8 @@ declare module 'Models' {
     url: string
   }
 
-  export interface CreatePostInput {
+  export interface CreateOrEditPostInput {
+    id?: string
     description: string
     image?: ImageType
   }

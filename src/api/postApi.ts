@@ -1,4 +1,4 @@
-import { CommentPost, CreatePostInput, Pagination } from 'Models'
+import { CommentPost, CreateOrEditPostInput, Pagination } from 'Models'
 import { setHeaders } from 'utils/setHeaders'
 import axiosClient from './axiosClient'
 
@@ -13,9 +13,13 @@ const postApi = {
     }
     return axiosClient.get(url, setHeaders())
   },
-  create(data: CreatePostInput) {
+  create(data: CreateOrEditPostInput) {
     const url = `/posts`
     return axiosClient.post(url, data, setHeaders())
+  },
+  edit(data: CreateOrEditPostInput) {
+    const url = `/posts/${data?.id}`
+    return axiosClient.patch(url, data, setHeaders())
   },
   like(id: string) {
     const url = `/posts/like`

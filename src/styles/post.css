@@ -1,3 +1,4 @@
+@import url('./layout.css');
 .posts-content{
     margin-top:20px;    
 }
@@ -41,4 +42,12 @@
 }
 .default-style .ui-bordered {
     border: 1px solid rgba(24,28,33,0.06);
+}
+
+.post-setting {
+    cursor: pointer;
+    padding: 1rem 1.5rem;
+}
+.post-setting:hover {
+    background-color: var(--text-color-4);
 }

@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import postApi from 'api/postApi'
 import { showError } from 'extensions'
-import { CommentPost, CreatePostInput, Pagination } from 'Models'
+import { CommentPost, CreateOrEditPostInput, Pagination } from 'Models'
 
 const initialState: any = {
   post: [],
@@ -25,9 +25,22 @@ export const fetchGetAllPost = createAsyncThunk(
 
 export const fetchCreatePost = createAsyncThunk(
   'post/createPost',
-  async (data: CreatePostInput, { rejectWithValue }) => {
+  async (data: CreateOrEditPostInput, { rejectWithValue }) => {
     try {
       const response = await postApi.create(data)
+      return response.data
+    } catch (err: any) {
+      showError(err)
+      return rejectWithValue(err.response)
+    }
+  }
+)
+
+export const fetchEditPost = createAsyncThunk(
+  'post/editPost',
+  async (data: CreateOrEditPostInput, { rejectWithValue }) => {
+    try {
+      const response = await postApi.edit(data)
       return response.data
     } catch (err: any) {
       showError(err)
@@ -156,6 +169,16 @@ const postSlice = createSlice({
           state.isLoading = false
         }
       )
+
+      .addCase(fetchEditPost.fulfilled, (state, action: PayloadAction<any>) => {
+        state.post = state.post.map((item: any) => {
+          if (item._id == action.payload.post._id) {
+            return (item = action.payload.post)
+          } else {
+            return item
+          }
+        })
+      })
 
       // delete post
       .addCase(
