@@ -1,5 +1,7 @@
+// libs
 import React, { useState } from 'react'
 import { Button } from 'antd'
+// models
 import { ProfileType } from 'Models'
 
 type AddFriendProps = {
