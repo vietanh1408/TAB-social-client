@@ -7,7 +7,7 @@
     height: auto;
 }
 .default-style .ui-bordered {
-    border: 1px solid rgba(24,28,33,0.06);
+    border: 1px solid var(--background-color);
 }
 .ui-bg-cover {
     background-color: transparent;
@@ -28,10 +28,10 @@
     flex-shrink: 1;
 }
 .bg-dark {
-    background-color: rgba(24,28,33,0.9) !important;
+    background-color: var(--background-color) !important;
 }
 .card-footer, .card hr {
-    border-color: rgba(24,28,33,0.06);
+    border-color: var(--background-color);
 }
 .ui-rect-content {
     position: absolute !important;
@@ -41,7 +41,7 @@
     left: 0 !important;
 }
 .default-style .ui-bordered {
-    border: 1px solid rgba(24,28,33,0.06);
+    border: 1px solid var(--background-color);
 }
 
 .post-setting {

@@ -1,26 +1,48 @@
 // libs
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Badge, Popover } from 'antd'
+import { Badge, Popover, Switch } from 'antd'
 import { BellOutlined } from '@ant-design/icons'
 // app
-import { AppDispatch, RootState } from 'app/store'
+import { RootState } from 'app/store'
 // components
 import Avatar from '../Avatar'
 import NotificationList from 'features/notification/NotificationList'
 // api
 import { fetchGetNotification } from 'features/notification/api'
+import { BooleanType } from 'constants/enum'
 
 const HeaderRight: React.FC = () => {
   const { notificationCount, notification } = useSelector(
     (state: RootState) => state.notification
   )
-  const dispatch: AppDispatch = useDispatch()
+
+  const dispatch = useDispatch()
+
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(
+    localStorage.getItem('darkMode') === BooleanType.True
+  )
+
+  const handleToggleDarkMode = (checked: boolean) => {
+    setIsDarkMode(!isDarkMode)
+    localStorage.setItem(
+      'darkMode',
+      checked ? BooleanType.True : BooleanType.False
+    )
+  }
 
   useEffect(() => {
-    // @ts-ignore
     dispatch(fetchGetNotification())
   }, [dispatch])
+
+  useEffect(() => {
+    document
+      .getElementsByTagName('html')[0]
+      .setAttribute(
+        'data-theme',
+        localStorage.getItem('darkMode') === BooleanType.True ? 'dark' : 'light'
+      )
+  }, [isDarkMode])
 
   return (
     <div className="header__right h-full">
@@ -41,6 +63,14 @@ const HeaderRight: React.FC = () => {
               <BellOutlined className="text-xl cursor-pointer" />
             </Badge>
           </Popover>
+        </li>
+        <li className="ml-6">
+          <Switch
+            checked={isDarkMode}
+            onChange={handleToggleDarkMode}
+            autoFocus
+            className="border-0 "
+          />
         </li>
         <li className="ml-6">
           <Avatar />
