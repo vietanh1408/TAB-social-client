@@ -16,6 +16,49 @@
   --min-width-desktop: 1024px;
 }
 
+
+/* -----DARK MODE---- */
+html[data-theme="dark"] {
+  --color: rgb(250, 250, 250);
+  --background-color: rgb(36,37,38);
+
+  --main-color: #20b9fc;
+  --link-color: #fb6b30;
+  --text-color-1: rgb(250, 250, 250);
+  --text-color-2: rgb(250, 250, 250);
+  --text-color-3: rgb(250, 250, 250);
+  --text-color-4: rgb(250, 250, 250);
+  --main-white: #ffffff;
+  --main-black: #000000;
+  --background-default: #18191a;
+
+  --max-width-mobile: 767px;
+  --min-width-tablet: 768px;
+  --max-width-tablet: 1023px;
+  --min-width-desktop: 1024px;
+}
+
+html[data-theme="light"] {
+  --color: rgb(36,37,38);
+  --background-color: rgb(250, 250, 250);
+
+  --main-color: #20b9fc;
+  --link-color: #fb6b30;
+  --text-color-1: #5b5959;
+  --text-color-2: #716161;
+  --text-color-3: #6a5e50;
+  --text-color-4: #c4c4c4;
+  --main-white: #ffffff;
+  --main-black: #000000;
+  --background-color: #f3f5f7;
+  --background-default: #18191a;
+
+  --max-width-mobile: 767px;
+  --min-width-tablet: 768px;
+  --max-width-tablet: 1023px;
+  --min-width-desktop: 1024px;
+}
+
 *,
 *::before,
 *::after {
@@ -29,12 +72,14 @@ html {
 
 body {
   margin: 0;
-  font-family: Arial, Helvetica, sans-serif
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--background-color);
 }
 
 #root{
   width: 100%;
   height: 100%;
+  background-color: var(--background-color);
 }
 
 blockquote,
@@ -48,9 +93,12 @@ h5,
 h6,
 hr,
 figure,
+strong,
+div,
 p,
 pre {
   margin: 0;
+  color: var(--color) !important;
 }
 
 p {
@@ -61,6 +109,8 @@ p {
 button {
   background-image: none;
   background-color: transparent;
+  color: var(--color) !important;
+  background-color: var(--background-color) !important; 
 }
 
 button {
@@ -73,6 +123,7 @@ ul {
   list-style: none;
   margin: 0;
   padding: 0;
+  color: var(--color) !important;
 }
 
 .active-link {
@@ -89,8 +140,13 @@ ul {
 }
 
 /* -------HEADER------- */
+header{
+  background-color: var(--background-color) !important;
+
+}
 .header {
   z-index: 9999 !important;
+  color: var(--color);
 }
 
 .header__left{
@@ -118,6 +174,7 @@ ul {
 
 
 /* -----FOOTER----- */
+
 
 
 

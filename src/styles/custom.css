@@ -28,6 +28,10 @@
     height: 500px;
 }
 
+.ant-card {
+    background-color: var(--background-color);
+}
+
 /* .ant-popover-content {
     width: 400px;
 } */
