@@ -97,6 +97,8 @@ strong,
 div,
 p,
 a,
+li,
+input, 
 pre {
   margin: 0;
   color: var(--color) !important;
@@ -124,6 +126,7 @@ ul {
   list-style: none;
   margin: 0;
   padding: 0;
+  background-color: var(--background-color) !important; 
   color: var(--color) !important;
 }
 

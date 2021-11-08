@@ -1,4 +1,4 @@
-import { List, Pagination } from 'antd'
+import { List, Pagination, Typography } from 'antd'
 import LoadingPage from 'components/LoadingPage'
 import { useSearchParams, useUpdateSearch } from 'hook/useSearchParams'
 import React from 'react'
@@ -19,6 +19,7 @@ const FriendRequestPage: React.FC = () => {
   }
   return (
     <React.Fragment>
+      <Typography.Title level={3}>Lời mời kết bạn</Typography.Title>
       <List
         itemLayout="horizontal"
         dataSource={requests}

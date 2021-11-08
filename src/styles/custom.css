@@ -32,6 +32,10 @@
     background-color: var(--background-color);
 }
 
+.ant-modal-body {
+    background-color: var(--background-color);
+}
+
 /* .ant-popover-content {
     width: 400px;
 } */
