@@ -4,7 +4,9 @@ import { useEffect, useState } from 'react'
 import { useHistory } from 'react-router'
 
 export const useSearchParams = (search: string) => {
-  const [searchParams, setSearchParams] = useState(queryString.parse(search))
+  const [searchParams, setSearchParams] = useState<any>(
+    queryString.parse(search)
+  )
 
   useEffect(() => {
     setSearchParams(queryString.parse(search))

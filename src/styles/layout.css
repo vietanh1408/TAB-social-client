@@ -96,6 +96,7 @@ figure,
 strong,
 div,
 p,
+a,
 pre {
   margin: 0;
   color: var(--color) !important;

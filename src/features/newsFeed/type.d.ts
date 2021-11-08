@@ -35,7 +35,7 @@ declare module 'Models' {
   }
 
   export interface Pagination {
-    pageIndex?: number
-    pageSize?: number
+    pageIndex?: number | string
+    pageSize?: number | string
   }
 }
