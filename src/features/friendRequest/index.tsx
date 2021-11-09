@@ -1,5 +1,9 @@
 import { List, Pagination, Typography } from 'antd'
 import LoadingPage from 'components/LoadingPage'
+import {
+  useAcceptFriendRequest,
+  useCancelFriendRequest
+} from 'features/user/hooks'
 import { useSearchParams, useUpdateSearch } from 'hook/useSearchParams'
 import React from 'react'
 import { useLocation } from 'react-router'
@@ -11,9 +15,20 @@ const FriendRequestPage: React.FC = () => {
   const searchParams = useSearchParams(search)
 
   const { handleChangePageSize } = useUpdateSearch(pathname, search)
+  const [onAccept] = useAcceptFriendRequest()
+  const [onCancel] = useCancelFriendRequest()
 
   const { requests, isLoadingRequests, totalRequests } =
     useGetRequests(searchParams)
+
+  const handleAcceptFriendRequest = (id: any) => {
+    onAccept(id)
+  }
+
+  const handleCancelFriendRequest = (id: any) => {
+    onCancel(id)
+  }
+
   if (isLoadingRequests) {
     return <LoadingPage />
   }
@@ -28,6 +43,8 @@ const FriendRequestPage: React.FC = () => {
             key={item?._id}
             request={item}
             isLoading={isLoadingRequests}
+            handleAcceptFriendRequest={handleAcceptFriendRequest}
+            handleCancelFriendRequest={handleCancelFriendRequest}
           />
         )}
       />

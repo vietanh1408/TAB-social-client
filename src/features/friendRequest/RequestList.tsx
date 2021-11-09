@@ -3,16 +3,32 @@ import { List, Button, Skeleton, Avatar } from 'antd'
 import { Link } from 'react-router-dom'
 
 const RequestList: React.FC<any> = (props: any) => {
-  const { isLoading, request } = props
+  const {
+    isLoading,
+    request,
+    handleAcceptFriendRequest,
+    handleCancelFriendRequest
+  } = props
 
-  const handleAccept = () => {}
+  const handleAccept = (id: any) => {
+    handleAcceptFriendRequest(id)
+  }
+
+  const handleCancel = (id: any) => {
+    handleCancelFriendRequest(id)
+  }
+
   return (
     <List.Item
       actions={[
-        <Button className="mr-4" type="primary" onClick={handleAccept}>
+        <Button
+          className="mr-4"
+          type="primary"
+          onClick={() => handleAccept(request?._id)}
+        >
           Chấp nhận
         </Button>,
-        <Button onClick={() => console.log('ko chap nhan ket ban')}>Hủy</Button>
+        <Button onClick={() => handleCancel(request?._id)}>Hủy</Button>
       ]}
     >
       <Skeleton avatar title={false} loading={isLoading} active>
