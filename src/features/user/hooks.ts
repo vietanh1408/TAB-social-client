@@ -12,6 +12,7 @@ import {
 // api
 import {
   fetchAcceptFriendRequest,
+  fetchCancelFriendRequest,
   fetchCancelSendFriendRequest,
   fetchEditProfile,
   fetchLogin,
@@ -161,6 +162,15 @@ export const useAcceptFriendRequest = () => {
     dispatch(fetchAcceptFriendRequest(id))
   }
   return [onAccept]
+}
+
+export const useCancelFriendRequest = () => {
+  const dispatch: AppDispatch = useDispatch()
+  const onCancel = (id: string | undefined) => {
+    // @ts-ignore
+    dispatch(fetchCancelFriendRequest(id))
+  }
+  return [onCancel]
 }
 
 export const useUnfriend = () => {

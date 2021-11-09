@@ -39,6 +39,10 @@
     border: 2px solid var(--text-color-2);
 }
 
+.profile_name {
+    color: var(--main-white) !important;
+}
+
 
 /* -----MOBILE----- */
 @media only screen and (max-width: 767px) {

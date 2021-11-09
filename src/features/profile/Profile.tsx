@@ -4,6 +4,7 @@ import BackgroundImage from 'components/BackgroundImage'
 import LoadingPage from 'components/LoadingPage'
 import {
   useAcceptFriendRequest,
+  useCancelFriendRequest,
   useCancelSendFriendRequest,
   useGetAuth,
   useSendFriendRequest,
@@ -18,10 +19,11 @@ const Profile: React.FC = () => {
   const isOtherProfile = profile?._id !== user?._id
   const id = profile?._id
 
+  const [onUnfriend] = useUnfriend()
   const [onSendFriendRequest] = useSendFriendRequest()
   const [onCancelSendFriendRequest] = useCancelSendFriendRequest()
   const [onAccept] = useAcceptFriendRequest()
-  const [onUnfriend] = useUnfriend()
+  const [onCancel] = useCancelFriendRequest()
 
   const handleSendFriendRequest = () => {
     onSendFriendRequest(profile)
@@ -31,7 +33,7 @@ const Profile: React.FC = () => {
     console.log('following....', id)
   }
 
-  const handleCancelFriendRequest = () => {
+  const handleCancelSendFriendRequest = () => {
     onCancelSendFriendRequest(id)
   }
 
@@ -45,6 +47,10 @@ const Profile: React.FC = () => {
 
   const handleAcceptFriendRequest = () => {
     onAccept(id)
+  }
+
+  const handleCancelFriendRequest = () => {
+    onCancel(id)
   }
 
   if (isLoading) {
@@ -62,12 +68,13 @@ const Profile: React.FC = () => {
         <AddFriend
           user={user}
           profile={profile}
-          handleFollow={handleFollow}
           handleUnFriend={handleUnFriend}
-          handleSendFriendRequest={handleSendFriendRequest}
+          handleFollow={handleFollow}
           handleUnFollow={handleUnFollow}
-          handleCancelFriendRequest={handleCancelFriendRequest}
+          handleSendFriendRequest={handleSendFriendRequest}
+          handleCancelSendFriendRequest={handleCancelSendFriendRequest}
           handleAcceptFriendRequest={handleAcceptFriendRequest}
+          handleCancelFriendRequest={handleCancelFriendRequest}
         />
       ) : null}
       <div className="w-full py-4 bg-gray-400">

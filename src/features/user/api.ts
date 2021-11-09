@@ -121,6 +121,19 @@ export const fetchAcceptFriendRequest = createAsyncThunk(
   }
 )
 
+export const fetchCancelFriendRequest = createAsyncThunk(
+  'user/cancelFriendRequest',
+  async (id: string, { rejectWithValue }) => {
+    try {
+      const response = await userApi.cancelFriendRequest(id)
+      return response.data
+    } catch (err: any) {
+      showError(err)
+      return rejectWithValue(err.response)
+    }
+  }
+)
+
 export const fetchUnfriend = createAsyncThunk(
   'user/unfriend',
   async (id: string, { rejectWithValue }) => {
@@ -224,6 +237,16 @@ const userSlice = createSlice({
           state.user = action.payload.user
         }
       )
+
+      // cancel friend request
+      .addCase(
+        fetchCancelFriendRequest.fulfilled,
+        (state: UserState, action: PayloadAction<any>) => {
+          state.isLoading = false
+          state.user = action.payload.user
+        }
+      )
+
       // unfriend
       .addCase(
         fetchUnfriend.fulfilled,

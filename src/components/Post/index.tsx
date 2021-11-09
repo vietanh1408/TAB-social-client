@@ -134,14 +134,14 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
           </div>
         </div>
         <div className="flex justify-around items-center">
-          <Button className="border-none" onClick={handleToggleLike}>
+          <Button className="border-none custom-btn" onClick={handleToggleLike}>
             {isLiked ? (
               <i className="far fa-thumbs-up text-2xl text-blue-600" />
             ) : (
               <i className="far fa-thumbs-up text-2xl" />
             )}
           </Button>
-          <Button className="border-none" onClick={handleOpenCmt}>
+          <Button className="border-none custom-btn" onClick={handleOpenCmt}>
             <CommentOutlined className="text-2xl" />
           </Button>
         </div>

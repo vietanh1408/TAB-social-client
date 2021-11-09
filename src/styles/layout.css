@@ -112,13 +112,17 @@ p {
 button {
   background-image: none;
   background-color: transparent;
-  color: var(--color) !important;
-  background-color: var(--background-color) !important; 
+  
 }
 
 button {
   outline: 1px dotted;
   outline: 5px auto -webkit-focus-ring-color;
+}
+
+.custom-btn {
+  color: var(--color) !important;
+  background-color: var(--background-color) !important; 
 }
 
 ol,

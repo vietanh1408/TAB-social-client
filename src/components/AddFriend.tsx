@@ -7,12 +7,13 @@ import { ProfileType } from 'Models'
 type AddFriendProps = {
   user: any
   profile: ProfileType
-  handleFollow: () => void
   handleUnFriend: () => void
-  handleSendFriendRequest: () => void
+  handleFollow: () => void
   handleUnFollow: () => void
-  handleCancelFriendRequest: () => void
+  handleSendFriendRequest: () => void
+  handleCancelSendFriendRequest: () => void
   handleAcceptFriendRequest: () => void
+  handleCancelFriendRequest: () => void
 }
 
 type FollowButtonProps = {
@@ -43,12 +44,13 @@ const AddFriend: React.FC<AddFriendProps> = (props: AddFriendProps) => {
   const {
     user,
     profile,
-    handleFollow,
     handleUnFriend,
-    handleSendFriendRequest,
+    handleFollow,
     handleUnFollow,
-    handleCancelFriendRequest,
-    handleAcceptFriendRequest
+    handleSendFriendRequest,
+    handleCancelSendFriendRequest,
+    handleAcceptFriendRequest,
+    handleCancelFriendRequest
   } = props
 
   const friends = profile?.friends ?? []
@@ -82,7 +84,7 @@ const AddFriend: React.FC<AddFriendProps> = (props: AddFriendProps) => {
       setAlreadySend(false)
     } else {
       if (isSend) {
-        handleCancelFriendRequest()
+        handleCancelSendFriendRequest()
         setIsFollowed(false)
       } else {
         handleSendFriendRequest()
@@ -96,6 +98,11 @@ const AddFriend: React.FC<AddFriendProps> = (props: AddFriendProps) => {
     handleAcceptFriendRequest()
     setIsFriend(true)
     setIsFollowed(true)
+  }
+
+  const handleCancel = () => {
+    handleCancelFriendRequest()
+    setAlreadySend(false)
   }
 
   const onFollow = () => {
@@ -148,9 +155,7 @@ const AddFriend: React.FC<AddFriendProps> = (props: AddFriendProps) => {
           <Button className="mr-4" type="primary" onClick={handleAccept}>
             Chấp nhận
           </Button>
-          <Button onClick={() => console.log('ko chap nhan ket ban')}>
-            Hủy
-          </Button>
+          <Button onClick={handleCancel}>Hủy</Button>
         </div>
       )
     }

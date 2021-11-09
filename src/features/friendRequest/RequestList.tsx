@@ -4,8 +4,17 @@ import { Link } from 'react-router-dom'
 
 const RequestList: React.FC<any> = (props: any) => {
   const { isLoading, request } = props
+
+  const handleAccept = () => {}
   return (
-    <List.Item actions={[]}>
+    <List.Item
+      actions={[
+        <Button className="mr-4" type="primary" onClick={handleAccept}>
+          Chấp nhận
+        </Button>,
+        <Button onClick={() => console.log('ko chap nhan ket ban')}>Hủy</Button>
+      ]}
+    >
       <Skeleton avatar title={false} loading={isLoading} active>
         <List.Item.Meta
           avatar={<Avatar src={request?.avatar?.url} size="large" />}
