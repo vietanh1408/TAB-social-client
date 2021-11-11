@@ -31,6 +31,7 @@ export const fetchGetRequests = createAsyncThunk(
       const response = await friendApi.getRequests(pagination)
       return response.data
     } catch (err: any) {
+      showError(err)
       return rejectWithValue(err.response)
     }
   }

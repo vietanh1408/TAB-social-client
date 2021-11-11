@@ -13,6 +13,7 @@ import uploadReducer from 'features/upload/api'
 import postReducer from 'features/newsFeed/api'
 import notificationReducer from 'features/notification/api'
 import friendReducer from 'features/friend/api'
+import chatReducer from 'features/chat/api'
 
 const history = createBrowserHistory()
 
@@ -32,5 +33,6 @@ export const rootReducer = {
   upload: uploadReducer,
   post: postReducer,
   notification: notificationReducer,
-  friend: friendReducer
+  friend: friendReducer,
+  chat: chatReducer
 }

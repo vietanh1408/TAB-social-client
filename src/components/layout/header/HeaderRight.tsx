@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Badge, Popover, Switch } from 'antd'
-import { BellOutlined } from '@ant-design/icons'
+import { BellOutlined, MessageOutlined } from '@ant-design/icons'
 // app
 import { RootState } from 'app/store'
 // components
@@ -11,6 +11,8 @@ import NotificationList from 'features/notification/NotificationList'
 // api
 import { fetchGetNotification } from 'features/notification/api'
 import { BooleanType } from 'constants/enum'
+import { Link } from 'react-router-dom'
+import { navName } from 'constants/navName'
 
 const HeaderRight: React.FC = () => {
   const { notificationCount, notification } = useSelector(
@@ -60,9 +62,16 @@ const HeaderRight: React.FC = () => {
             trigger="click"
           >
             <Badge count={notificationCount ?? 0}>
-              <BellOutlined className="text-xl cursor-pointer" />
+              <BellOutlined className="header__nav-icon" />
             </Badge>
           </Popover>
+        </li>
+        <li className="ml-6">
+          <Link to={navName.CHAT}>
+            <Badge count={notificationCount ?? 0}>
+              <MessageOutlined className="header__nav-icon" />
+            </Badge>
+          </Link>
         </li>
         <li className="ml-6">
           <Switch

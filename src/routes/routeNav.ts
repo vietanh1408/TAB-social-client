@@ -32,6 +32,7 @@ import {
   friendRequestResource,
   friendRequestRoutes
 } from 'features/friendRequest/nav'
+import { chatNav, chatResource, chatRoutes } from 'features/chat/nav'
 
 export const mainNav = [
   ...loginNav,
@@ -41,6 +42,7 @@ export const mainNav = [
   ...profileNav,
   ...friendNav,
   ...friendRequestNav,
+  ...chatNav,
 
   ...newsFeedNav
 ]
@@ -53,6 +55,7 @@ export const routes = {
   ...profileRoutes,
   ...friendRoutes,
   ...friendRequestRoutes,
+  ...chatRoutes,
 
   ...newsFeedRoutes
 }
@@ -65,6 +68,7 @@ export const resources = {
   ...profileResource,
   ...friendResource,
   ...friendRequestResource,
+  ...chatResource,
 
   ...newsFeedResource
 }

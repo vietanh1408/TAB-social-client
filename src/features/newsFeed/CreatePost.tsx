@@ -28,7 +28,7 @@ const CreatePost: React.FC = () => {
           <div className="w-full flex justify-start items-center">
             <HeaderAvatar hasPopover={false} />
             <Button
-              className="hover:border-0 rounded-3xl text-left ml-3"
+              className="custom-btn hover:border-0 rounded-3xl text-left ml-3"
               size="middle"
               onClick={() => setIsVisible(true)}
             >
