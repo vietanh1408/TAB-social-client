@@ -1,7 +1,8 @@
 import { CloseOutlined } from '@ant-design/icons'
 import React from 'react'
 
-const ChatBox: React.FC = () => {
+const ChatBox: React.FC<any> = (props: any) => {
+  const { setIsOpenChatBox, friend } = props
   const user = {
     _id: 2
   }
@@ -140,20 +141,20 @@ const ChatBox: React.FC = () => {
       <section className="chatbox">
         <div className="chat-name">
           <div className="flex">
-            <img
-              className="user-img"
-              src="//gravatar.com/avatar/00034587632094500000000000000000?d=retro"
-            />
-            <p>USER 01</p>
+            <img className="user-img" src={friend?.avatar?.url} />
+            <p>{friend?.name}</p>
           </div>
-          <CloseOutlined className="mr-2 cursor-pointer" />
+          <CloseOutlined
+            className="mr-2 cursor-pointer"
+            onClick={() => setIsOpenChatBox(false)}
+          />
         </div>
         <section className="chat-window">
           {fakeData.map((item: any, index) => {
             const isYourMessage = item.from._id === user._id
             if (isYourMessage) {
               return (
-                <div className="flex">
+                <div className="flex" key={index}>
                   <article className="msg-container msg-self" id="msg-0">
                     <div className="msg-box">
                       <div className="flr">
@@ -182,7 +183,7 @@ const ChatBox: React.FC = () => {
             }
 
             return (
-              <div className="flex">
+              <div className="flex" key={index}>
                 <img
                   className="user-img"
                   id="user-0"
@@ -211,7 +212,7 @@ const ChatBox: React.FC = () => {
           })}
         </section>
         <form className="chat-input">
-          <input type="text" placeholder="Type a message" />
+          <input type="text" placeholder="Nhập tin nhắn" />
           <button>
             <svg style={{ width: '24px', height: '24px' }} viewBox="0 0 24 24">
               <path

@@ -1,20 +1,13 @@
 import { Avatar, Badge, List } from 'antd'
-import ChatBox from 'components/Chat/ChatBox'
-import React, { useState } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 
-const FriendItem: React.FC<any> = ({ item }) => {
-  const [isOpenChatBox, setIsOpenChatBox] = useState<boolean>(false)
-
-  const handleOpenChatBox = (id: string) => {
-    setIsOpenChatBox(!isOpenChatBox)
-  }
-
+const FriendItem: React.FC<any> = ({ item, setChatBox }) => {
   return (
     <React.Fragment>
       <List.Item
         className="p-2 border-b-2 border-black"
-        onClick={() => handleOpenChatBox(item._id)}
+        onClick={() => setChatBox(item)}
       >
         <List.Item.Meta
           avatar={
@@ -30,7 +23,6 @@ const FriendItem: React.FC<any> = ({ item }) => {
           description="Đang hoạt động"
         />
       </List.Item>
-      {isOpenChatBox && <ChatBox />}
     </React.Fragment>
   )
 }
