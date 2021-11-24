@@ -1,3 +1,4 @@
+import { CreateMessage } from 'Models'
 import { setHeaders } from 'utils/setHeaders'
 import axiosClient from './axiosClient'
 
@@ -6,11 +7,14 @@ const chatApi = {
     const url = `/chats`
     return axiosClient.get(url, setHeaders())
   },
-  getConversation(roomId: string) {
-    const url = `/chats/${roomId}`
+  getConversation(roomId?: string) {
+    let url = `/chats/`
+    if (roomId) {
+      url += `?roomId=${roomId}`
+    }
     return axiosClient.get(url, setHeaders())
   },
-  createMessage(data: any) {
+  createMessage(data: CreateMessage) {
     const url = `/chats`
     return axiosClient.post(url, data, setHeaders())
   }

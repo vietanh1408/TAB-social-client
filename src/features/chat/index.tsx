@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { Col, Row } from 'antd'
 // components
 import LoadingPage from 'components/LoadingPage'
-import ChatBox from './ChatBox'
+import ChatBoxList from './ChatBoxList'
 import ChatList from './ChatList'
 // hooks
 import { useGetAllConversations, useGetConversationByRoomId } from './hooks'
@@ -28,7 +28,7 @@ const ChatPage: React.FC = () => {
         />
       </Col>
       <Col xs={12} md={14} lg={14}>
-        <ChatBox />
+        <ChatBoxList />
       </Col>
     </Row>
   )
