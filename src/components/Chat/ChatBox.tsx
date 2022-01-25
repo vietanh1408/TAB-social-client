@@ -1,13 +1,32 @@
 import { CloseOutlined } from '@ant-design/icons'
+import { AvatarType, UserType } from 'Models'
 import React from 'react'
 
-const ChatBox: React.FC<any> = (props: any) => {
+type ChatBox = {
+  setIsOpenChatBox: (params: boolean) => void
+  friend: UserType | null
+}
+
+type UserChat = {
+  avatar: Partial<AvatarType>
+  name: string
+  _id: string | number
+}
+
+type ChatData = {
+  from: UserChat
+  to: UserChat
+  message: string
+  time: string
+}
+
+const ChatBox: React.FC<ChatBox> = (props: ChatBox) => {
   const { setIsOpenChatBox, friend } = props
   const user = {
     _id: 2
   }
 
-  const fakeData = [
+  const fakeData: ChatData[] = [
     {
       from: {
         avatar: {
@@ -150,7 +169,7 @@ const ChatBox: React.FC<any> = (props: any) => {
           />
         </div>
         <section className="chat-window">
-          {fakeData.map((item: any, index) => {
+          {fakeData.map((item: ChatData, index) => {
             const isYourMessage = item.from._id === user._id
             if (isYourMessage) {
               return (

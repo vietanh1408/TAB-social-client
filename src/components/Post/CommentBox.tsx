@@ -10,7 +10,7 @@ import CommentList from './CommentList'
 // extensions
 import yupExtension from 'extensions/yup'
 // models
-import { CommentPost, PostType, UserType } from 'Models'
+import { CommentPost, CommentType, PostType, UserType } from 'Models'
 // hooks
 import { useGetCommentByPostId } from 'features/newsFeed/hooks'
 // constants
@@ -63,7 +63,7 @@ const CommentBox: React.FC<CommentBoxProps> = (props: CommentBoxProps) => {
           itemLayout="horizontal"
           dataSource={comments}
           className="p-4"
-          renderItem={(item: any) => (
+          renderItem={(item: CommentType) => (
             <CommentList
               key={item?.id}
               comment={item}

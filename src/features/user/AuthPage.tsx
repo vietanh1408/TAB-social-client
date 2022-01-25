@@ -4,7 +4,7 @@ import AuthImage from 'assets/Auth-image.png'
 import { useGetAuth } from './hooks'
 
 type AuthPageProps = {
-  children: ReactChild | ReactChildren
+  children: ReactChild | ReactChildren | React.ReactNode
 }
 
 const AuthPage: React.FC<AuthPageProps> = ({ children }: AuthPageProps) => {

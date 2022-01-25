@@ -16,7 +16,7 @@ import { CreateOrEditPostInput, PostType } from 'Models'
 
 interface ModalCreateOrEditPostProps {
   isVisible?: boolean
-  setIsVisible?: any
+  setIsVisible: (params: boolean) => void
   post?: PostType
   title?: string
   handleSubmitForm: (args: CreateOrEditPostInput) => void
@@ -75,7 +75,7 @@ const ModalCreateOrEditPost: React.FC<ModalCreateOrEditPostProps> = (
   }
 
   const handleFileChange = async (e: any) => {
-    const file = e.target.files[0]
+    const file: File = e.target.files[0]
     const base64Code = await getBase64(file)
     setIsVisible(true)
     if (!base64Code) return
@@ -127,7 +127,7 @@ const ModalCreateOrEditPost: React.FC<ModalCreateOrEditPostProps> = (
                 className="ant-input-affix-wrapper-lg custom__input"
                 value={value}
                 onBlur={onBlur}
-                onChange={(e: any) => {
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   onChange(e.target.value)
                   setDescription(e.target.value)
                 }}

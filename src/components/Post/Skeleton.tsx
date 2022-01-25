@@ -8,7 +8,7 @@ type PostSkeletonProps = {
 const PostSkeleton: React.FC<PostSkeletonProps> = ({ length = 2 }) => {
   return (
     <>
-      {Array.from(new Array(length)).map((item: any, index: any) => {
+      {Array.from(new Array(length)).map((item, index: number) => {
         return (
           <div key={index} className="mb-8">
             <Skeleton active avatar paragraph={{ rows: 0 }} />

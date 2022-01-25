@@ -38,4 +38,11 @@ declare module 'Models' {
     pageIndex?: number | string
     pageSize?: number | string
   }
+
+  export interface CommentType {
+    id: string
+    user: UserType | null
+    createdAt: Date
+    content: string
+  }
 }

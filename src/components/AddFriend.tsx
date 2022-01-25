@@ -2,10 +2,10 @@
 import React, { useState } from 'react'
 import { Button } from 'antd'
 // models
-import { ProfileType } from 'Models'
+import { ProfileType, UserType } from 'Models'
 
 type AddFriendProps = {
-  user: any
+  user: UserType | null
   profile: ProfileType
   handleUnFriend: () => void
   handleFollow: () => void

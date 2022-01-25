@@ -2,7 +2,14 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import chatApi from 'api/chatApi'
 import { showError } from 'extensions'
 
-const initialState: any = {
+interface ConversationState {
+  isLoading: boolean
+  conversations: any[]
+  conversation: any | null
+  error: any | null
+}
+
+const initialState: ConversationState = {
   isLoading: false,
   conversations: [],
   conversation: null,
@@ -45,7 +52,7 @@ const chatSlice = createSlice({
       // get all conversation
       .addCase(
         fetchAllConversations.fulfilled,
-        (state, action: PayloadAction<any>) => {
+        (state, action: PayloadAction<ConversationState>) => {
           state.isLoading = false
           state.conversations = action.payload.conversations
         }
@@ -54,7 +61,7 @@ const chatSlice = createSlice({
       // get conversation by id
       .addCase(
         fetchConversationByRoomId.fulfilled,
-        (state, action: PayloadAction<any>) => {
+        (state, action: PayloadAction<ConversationState>) => {
           state.isLoading = false
           state.conversation = action.payload.conversation
         }

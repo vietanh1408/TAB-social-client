@@ -6,7 +6,7 @@ import { navName } from 'constants/navName'
 import { UserType } from 'Models'
 
 type SettingListProps = {
-  classList?: any
+  classList?: string
   onClose?: () => void
   user: UserType | null
 }

@@ -6,6 +6,12 @@ import UploadImage from 'features/upload/UploadImage'
 import { useEditProfile } from 'features/user/hooks'
 import { UserType } from 'Models'
 
+type ResponseType = {
+  public_id: string
+  url: string
+  success: boolean
+}
+
 type BackgroundImageProps = {
   user: UserType | null
 }
@@ -18,7 +24,7 @@ const BackgroundImage: React.FC<BackgroundImageProps> = (
   const [onRemove] = useRemoveUpload()
   const isOwnProfile = profile?._id === user?._id
 
-  const handleEditAvatar = (response: any) => {
+  const handleEditAvatar = (response: ResponseType) => {
     const data = {
       publicId: response?.public_id,
       url: response?.url
@@ -33,7 +39,7 @@ const BackgroundImage: React.FC<BackgroundImageProps> = (
     }
   }
 
-  const handleEditBackground = (response: any) => {
+  const handleEditBackground = (response: ResponseType) => {
     const data = {
       publicId: response?.public_id,
       url: response?.url

@@ -1,8 +1,14 @@
 import { Avatar, List } from 'antd'
 import { getTimeDuration } from 'extensions/dateTime'
+import { CommentType } from 'Models'
 import React from 'react'
 
-const CommentList: React.FC<any> = (props: any) => {
+type CommentListProps = {
+  comment: Partial<CommentType>
+  commentLength?: number
+}
+
+const CommentList: React.FC<CommentListProps> = (props: CommentListProps) => {
   const { comment } = props
   return (
     <List.Item>

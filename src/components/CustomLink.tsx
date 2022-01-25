@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { ReactChild } from 'react'
 import { Route } from 'react-router'
 import { Link } from 'react-router-dom'
 
 type CustomLinkProps = {
   to: string
   activeOnlyWhenExact?: boolean
-  children: any
+  children: ReactChild | JSX.Element | React.ReactNode
   className?: string
 }
 

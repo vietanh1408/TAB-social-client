@@ -7,7 +7,7 @@ declare module 'Models' {
 
   export interface NavigatorParams {
     key?: string
-    path?: string
+    path: string
     component?: any
     isMenu: boolean
     isProtected: boolean
