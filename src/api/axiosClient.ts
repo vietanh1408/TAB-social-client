@@ -1,5 +1,5 @@
 import queryString from 'query-string'
-import axios from 'axios'
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 const axiosClient = axios.create({
   baseURL: process.env.REACT_APP_API_URL || 'http://localhost:9001/api/',
   headers: {
@@ -10,16 +10,16 @@ const axiosClient = axios.create({
 })
 
 axios.interceptors.request.use(
-  (config) => {
+  (config: AxiosRequestConfig) => {
     return config
   },
-  (error) => {
+  (error: AxiosRequestConfig) => {
     return Promise.reject(error)
   }
 )
 
 axios.interceptors.response.use(
-  (response) => {
+  (response: AxiosResponse) => {
     return response.data
   },
   (error) => {

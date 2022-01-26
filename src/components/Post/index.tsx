@@ -56,7 +56,7 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
   }
 
   const handleOpenCmt = () => {
-    setOpenCmt(!openCmt)
+    setOpenCmt(true)
   }
 
   const handleDeletePost = () => {

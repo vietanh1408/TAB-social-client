@@ -14,6 +14,7 @@ import postReducer from 'features/newsFeed/api'
 import notificationReducer from 'features/notification/api'
 import friendReducer from 'features/friend/api'
 import chatReducer from 'features/chat/api'
+import searchReducer from 'features/search/api'
 
 const history = createBrowserHistory()
 
@@ -34,5 +35,6 @@ export const rootReducer = {
   post: postReducer,
   notification: notificationReducer,
   friend: friendReducer,
-  chat: chatReducer
+  chat: chatReducer,
+  search: searchReducer
 }

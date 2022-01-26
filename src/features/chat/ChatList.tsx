@@ -17,7 +17,7 @@ const ChatList: React.FC<ChatListProps> = (props: ChatListProps) => {
 
   const { user } = useGetAuth()
 
-  const onShowMessage = (id: any) => {
+  const onShowMessage = (id: string) => {
     handleShowMessage(id)
   }
 

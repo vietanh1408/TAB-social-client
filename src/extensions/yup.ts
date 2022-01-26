@@ -55,7 +55,7 @@ const nameRequired = yup
 const emailOrPhoneRequired = yup
   .string()
   .required(validate.required)
-  .test('test-name', validate.emailOrPhone, function (value: any) {
+  .test('test-name', validate.emailOrPhone, function (value: any): boolean {
     const phoneRegex = /^(\+84-|\+84|0)+\d{9}$/
     let isValidEmail = emailRegex.test(value)
     let isValidPhone = phoneRegex.test(value)

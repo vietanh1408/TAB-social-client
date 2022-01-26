@@ -8,5 +8,6 @@ export const navName = {
   FORGOT_PASSWORD: '/forgot-password',
   PROFILE: '/profile',
   CHAT: '/chats',
+  SEARCH: '/search',
   NOT_FOUND: ''
 }

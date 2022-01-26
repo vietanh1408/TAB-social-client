@@ -179,7 +179,7 @@ export const useGetCommentByPostId = (id: string, pagination: Pagination) => {
 
   const { pageIndex, pageSize } = pagination ?? {}
 
-  const { comments = [] } = post.find((item: any) => item._id === id)
+  const { comments = [] } = post.find((item: PostType) => item._id === id)
 
   useEffect(() => {
     dispatch(fetchGetCommentByPostId({ id, pagination }))
