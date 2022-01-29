@@ -53,6 +53,8 @@ const AddFriend: React.FC<AddFriendProps> = (props: AddFriendProps) => {
     handleCancelFriendRequest
   } = props
 
+  console.log('profile....', profile)
+
   const friends = profile?.friends ?? []
   const sendFriendRequests = profile?.friendRequests ?? []
   const friendRequests = profile?.sendFriendRequests ?? []
@@ -73,7 +75,7 @@ const AddFriend: React.FC<AddFriendProps> = (props: AddFriendProps) => {
 
   const [isSend, setIsSend] = useState(checkSendFriendRequest)
   const [isFollowed, setIsFollowed] = useState(checkFollowing)
-  const [isFriend, setIsFriend] = useState(alreadyFriend)
+  const [isFriend, setIsFriend] = useState(profile?.isFriend)
   const [alreadySend, setAlreadySend] = useState(checkFriendRequest)
 
   const handleSend = () => {

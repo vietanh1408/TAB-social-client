@@ -28,7 +28,7 @@ type PostCardProps = {
 const PostCard: React.FC<PostCardProps> = ({ post }) => {
   const { user } = useGetAuth()
   const checkLiked = post?.likes.some((id: string) => id === user?._id)
-  const isOwnPost = user?._id === post?.user?._id
+  const isOwnPost = post.isYour
 
   const [onLikePost] = useLikePost()
   const [onUnlikePost] = useUnlikePost()

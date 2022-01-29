@@ -29,6 +29,7 @@ declare module 'Models' {
     createdAt: Date
     isVerifiedMail: boolean
     verifyCode: string
+    isFriend: boolean
   }
 
   export interface ProfileState {

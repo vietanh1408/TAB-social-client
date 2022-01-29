@@ -3,18 +3,18 @@ import { List, Button, Skeleton, Avatar } from 'antd'
 import { Link } from 'react-router-dom'
 import { UserType } from 'Models'
 
-interface FriendCardType {
-  friend: UserType
+interface UserCardType {
+  user: UserType
   isLoading: boolean
   handleUnFriend: (id: string) => void
   handleSend: (id: string) => void
   handleUnSend: (id: string) => void
 }
 
-const FriendCard: React.FC<FriendCardType> = (props: FriendCardType) => {
-  const { friend, isLoading, handleUnFriend, handleSend, handleUnSend } = props
+const UserCard: React.FC<UserCardType> = (props: UserCardType) => {
+  const { user, isLoading, handleUnFriend, handleSend, handleUnSend } = props
 
-  const [isFriend, setIsFriend] = useState<boolean>(true)
+  const [isFriend, setIsFriend] = useState<boolean>(user.isFriend)
   const [isSend, setIsSend] = useState<boolean>(false)
 
   const unFriend = (id: string) => {
@@ -36,29 +36,27 @@ const FriendCard: React.FC<FriendCardType> = (props: FriendCardType) => {
     <List.Item
       actions={[
         isFriend ? (
-          <Button onClick={() => unFriend(friend?._id)} type={'primary'}>
+          <Button onClick={() => unFriend(user?._id)} type={'primary'}>
             Hủy kêt bạn
           </Button>
         ) : isSend ? (
           <Button
             type={'primary'}
-            onClick={() => unSendFriendRequest(friend?._id)}
+            onClick={() => unSendFriendRequest(user?._id)}
           >
             Đã gửi lời mời kết bạn
           </Button>
         ) : (
-          <Button onClick={() => sendFriendRequest(friend?._id)}>
-            Kết bạn
-          </Button>
+          <Button onClick={() => sendFriendRequest(user?._id)}>Kết bạn</Button>
         )
       ]}
     >
       <Skeleton avatar title={false} loading={isLoading} active>
         <List.Item.Meta
-          avatar={<Avatar src={friend?.avatar?.url} size="large" />}
+          avatar={<Avatar src={user?.avatar?.url} size="large" />}
           title={
-            <Link to={`/profile/${friend?._id}`} className="text-2xl font-bold">
-              {friend?.name}
+            <Link to={`/profile/${user?._id}`} className="text-2xl font-bold">
+              {user?.name}
             </Link>
           }
         />
@@ -67,4 +65,4 @@ const FriendCard: React.FC<FriendCardType> = (props: FriendCardType) => {
   )
 }
 
-export default FriendCard
+export default UserCard

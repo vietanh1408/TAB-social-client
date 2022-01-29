@@ -25,6 +25,7 @@ declare module 'Models' {
     image: ImageType
     user: UserPostType
     createdAt: Date
+    isYour: boolean
   }
 
   export interface CommentPost {

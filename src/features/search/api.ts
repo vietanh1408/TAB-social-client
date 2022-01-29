@@ -1,27 +1,26 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import searchApi from 'api/searchApi'
 import { showError } from 'extensions'
-import { SearchInput } from 'Models'
+import { PostType, SearchInput, SearchResult, UserType } from 'Models'
 import queryString from 'query-string'
 
 interface SearchState {
   isLoading: boolean
   error: any | null
-  result: any[]
+  result: Partial<SearchResult> | null
 }
 
 const initialState: SearchState = {
   isLoading: false,
   error: null,
-  result: []
+  result: null
 }
 
 export const fetchSearch = createAsyncThunk(
   'search/search',
   async (input: string, { rejectWithValue }) => {
     try {
-      const searchParams = queryString.parse(input) || {}
-
+      const searchParams: SearchInput = queryString.parse(input) || {}
       const response = await searchApi.search(searchParams)
       return response.data
     } catch (err: any) {
@@ -36,13 +35,22 @@ const searchSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(
-      fetchSearch.fulfilled,
-      (state, action: PayloadAction<SearchState>) => {
+    builder
+
+      .addCase(fetchSearch.pending, (state: SearchState) => {
+        state.isLoading = true
+      })
+      .addCase(
+        fetchSearch.fulfilled,
+        (state: SearchState, action: PayloadAction<SearchState>) => {
+          state.isLoading = false
+          state.result = action.payload.result
+        }
+      )
+
+      .addCase(fetchSearch.rejected, (state: SearchState) => {
         state.isLoading = false
-        state.result = action.payload.result
-      }
-    )
+      })
   }
 })
 
