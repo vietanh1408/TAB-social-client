@@ -53,15 +53,9 @@ const AddFriend: React.FC<AddFriendProps> = (props: AddFriendProps) => {
     handleCancelFriendRequest
   } = props
 
-  console.log('profile....', profile)
-
-  const friends = profile?.friends ?? []
   const sendFriendRequests = profile?.friendRequests ?? []
   const friendRequests = profile?.sendFriendRequests ?? []
   const followings = profile?.followers ?? []
-
-  // check da ket ban
-  const alreadyFriend = friends.some((friend: string) => friend === user?._id)
   // neu chua ket ban => check send friend request
   const checkSendFriendRequest = sendFriendRequests.some(
     (item: string) => item === user?._id

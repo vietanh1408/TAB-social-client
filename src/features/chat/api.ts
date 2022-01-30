@@ -1,10 +1,11 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import chatApi from 'api/chatApi'
 import { showError } from 'extensions'
+import { ConversationsType } from 'Models'
 
 interface ConversationState {
   isLoading: boolean
-  conversations: any[]
+  conversations: ConversationsType[]
   conversation: any | null
   error: any | null
 }

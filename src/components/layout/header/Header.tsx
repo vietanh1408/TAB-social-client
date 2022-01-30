@@ -1,12 +1,13 @@
 import { Affix, Col, Row } from 'antd'
-import React from 'react'
+import React, { useState } from 'react'
 import HeaderLeft from './HeaderLeft'
 import HeaderNav from './HeaderNav'
 import HeaderRight from './HeaderRight'
 
 const Header: React.FC = () => {
+  const [container, setContainer] = useState<HTMLDivElement | null>(null)
   return (
-    <Affix offsetTop={0} className="header">
+    <Affix offsetTop={0} className="header" target={() => container}>
       <header className="md:h-20 h-14 bg-white shadow-md">
         <div className="h-full w-full py-2 md:py-4 px-2 md:px-3 lg:px-4 xl:px-6">
           <Row className="w-full h-full">

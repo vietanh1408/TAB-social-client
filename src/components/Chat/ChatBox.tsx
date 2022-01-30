@@ -13,7 +13,7 @@ type UserChat = {
   _id: string | number
 }
 
-type ChatData = {
+export type ChatData = {
   from: UserChat
   to: UserChat
   message: string

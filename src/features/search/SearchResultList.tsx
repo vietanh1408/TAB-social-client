@@ -35,6 +35,7 @@ const SearchResultList: React.FC = () => {
 
       <Tabs
         defaultActiveKey={defaultType}
+        activeKey={defaultType}
         onChange={(e: string) => handleChangeType(e)}
       >
         <TabPane tab="Mọi người" key={SearchType.User}>
@@ -46,7 +47,9 @@ const SearchResultList: React.FC = () => {
                 pageIndex={Number(searchParams?.pageIndex)}
                 handleChangePageSize={handleChangePageSize}
               />
-            ) : null}
+            ) : (
+              <div>Không tìm thấy kết quả nào</div>
+            )}
           </Spin>
         </TabPane>
         <TabPane tab="Bài viết" key={SearchType.Post}>
@@ -58,7 +61,9 @@ const SearchResultList: React.FC = () => {
                 pageIndex={Number(searchParams?.pageIndex)}
                 handleChangePageSize={handleChangePageSize}
               />
-            ) : null}
+            ) : (
+              <div>Không tìm thấy kết quả nào</div>
+            )}
           </Spin>
         </TabPane>
       </Tabs>

@@ -1,5 +1,4 @@
 import React from 'react'
-import { useGetConversationByRoomId } from './hooks'
 
 interface ChatBoxListProps {}
 

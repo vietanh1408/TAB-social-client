@@ -1,36 +1,78 @@
 // libs
+import { Card, Space, Spin, Tabs, Typography } from 'antd'
+import Avatar from 'antd/lib/avatar/avatar'
+import Meta from 'antd/lib/card/Meta'
+import ChatBoxTab from 'components/Chat/ChatBoxTab'
+import { useSearchParams, useUpdateSearch } from 'hook/useSearchParams'
+import { ConversationsType } from 'Models'
 import React, { useState } from 'react'
-import { Col, Row } from 'antd'
-// components
-import LoadingPage from 'components/LoadingPage'
-import ChatBoxList from './ChatBoxList'
-import ChatList from './ChatList'
+import { useLocation } from 'react-router'
 // hooks
 import { useGetAllConversations, useGetConversationByRoomId } from './hooks'
+const { TabPane } = Tabs
 
 const ChatPage: React.FC = () => {
-  const [roomId, setRoomId] = useState<string>('')
+  const { search, pathname } = useLocation()
+  const searchParams = useSearchParams(search)
+  const [roomId, setRoomId] = useState<string>(searchParams.roomId ?? '')
+
+  const { handleSearchClick } = useUpdateSearch(pathname, search)
 
   const { conversations, isLoading } = useGetAllConversations()
 
   const { conversation } = useGetConversationByRoomId(roomId)
 
-  if (isLoading) {
-    return <LoadingPage />
+  console.log('conversation...........', conversation)
+
+  const handleChangeRoomChat = (id: string) => {
+    setRoomId(id)
+    handleSearchClick({ roomId: id })
   }
 
   return (
-    <Row gutter={6}>
-      <Col xs={12} md={10} lg={10}>
-        <ChatList
-          chatList={conversations}
-          handleShowMessage={(id: any) => setRoomId(id)}
-        />
-      </Col>
-      <Col xs={12} md={14} lg={14}>
-        <ChatBoxList />
-      </Col>
-    </Row>
+    <Card bordered={true} bodyStyle={{ background: 'white' }}>
+      <Spin spinning={isLoading}>
+        {conversations && conversations.length > 0 && (
+          <Tabs
+            type="card"
+            tabPosition={'left'}
+            onChange={(e: string) => handleChangeRoomChat(e)}
+          >
+            {conversations.map((chat: ConversationsType) => {
+              return (
+                <TabPane
+                  tab={
+                    <Meta
+                      className=" w-40"
+                      avatar={<Avatar src={chat.friend.avatar?.url} />}
+                      title={<p className="text-left">{chat.friend.name}</p>}
+                      description={
+                        <Space align="baseline">
+                          <Typography.Text strong>
+                            {chat.message.isYour
+                              ? 'Bạn'
+                              : chat.message.from?.name}
+                          </Typography.Text>
+                          :
+                          <Typography.Paragraph className="truncate text-left">
+                            {chat.message.message}
+                          </Typography.Paragraph>
+                        </Space>
+                      }
+                    />
+                  }
+                  key={chat.room._id}
+                >
+                  <ChatBoxTab
+                    roomId={searchParams?.roomId ?? chat.room._id}
+                  ></ChatBoxTab>
+                </TabPane>
+              )
+            })}
+          </Tabs>
+        )}
+      </Spin>
+    </Card>
   )
 }
 
