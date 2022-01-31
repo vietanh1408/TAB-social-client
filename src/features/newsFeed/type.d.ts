@@ -27,6 +27,7 @@ declare module 'Models' {
     createdAt: Date
     isYour: boolean
     isLiked: boolean
+    likeLength: number
   }
 
   export interface CommentPost {
@@ -42,9 +43,13 @@ declare module 'Models' {
   }
 
   export interface CommentType {
-    id: string
+    _id: string
     user: UserType | null
     createdAt: Date
     content: string
+    likes: string[]
+    postId: string
+    postUserId: string
+    updatedAt: Date
   }
 }

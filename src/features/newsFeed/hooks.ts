@@ -1,5 +1,5 @@
 // libs
-import { useEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 // interface
@@ -35,26 +35,26 @@ export const useGetPost = () => {
   const dispatch = useDispatch()
   const [pageIndex, setPageIndex] = useState<number>(1)
 
-  const { post, isLoading, postLength } = useSelector(
+  const { posts, isLoading, postLength } = useSelector(
     (state: RootState) => state.post
   )
 
   window.addEventListener('scroll', () => {
     const { scrollTop, scrollHeight, clientHeight } = document.documentElement
     if (clientHeight + scrollTop >= scrollHeight - 5) {
-      if (post?.length !== postLength) {
+      if (posts?.length !== postLength) {
         setPageIndex((prev) => prev + 1)
       }
     }
   })
 
   useEffect(() => {
-    if (post?.length !== postLength) {
+    if (posts?.length !== postLength) {
       dispatch(fetchGetAllPost({ pageIndex, pageSize: DEFAULT_PAGE_SIZE }))
     }
   }, [dispatch, pageIndex])
 
-  return { post, isLoading }
+  return { posts, isLoading }
 }
 
 export const useCreatePost = () => {
@@ -173,13 +173,15 @@ export const useCommentPost = () => {
 export const useGetCommentByPostId = (id: string, pagination: Pagination) => {
   const dispatch = useDispatch()
 
-  const { post, isLoadingComment } = useSelector(
+  const { posts, isLoadingComment } = useSelector(
     (state: RootState) => state.post
   )
 
   const { pageIndex, pageSize } = pagination ?? {}
 
-  const { comments = [] } = post.find((item: PostType) => item._id === id)
+  const post = posts.find((item: PostType) => item._id === id)
+
+  const comments: any = post?.comments ?? []
 
   useEffect(() => {
     dispatch(fetchGetCommentByPostId({ id, pagination }))

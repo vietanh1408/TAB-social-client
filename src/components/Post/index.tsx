@@ -30,7 +30,10 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
   const [isLiked, setIsLiked] = useState<boolean>(post.isLiked)
   const [openCmt, setOpenCmt] = useState<boolean>(false)
   const [isVisible, setIsVisible] = useState<boolean>(false)
-  const [likeNumb, setLikeNumb] = useState<number>(post?.likes.length ?? 0)
+  const [likeNumb, setLikeNumb] = useState<number>(post?.likeLength ?? 0)
+  const [commentLength, setCommentLength] = useState<number>(
+    post?.commentLength ?? 0
+  )
 
   const handleToggleLike = () => {
     if (post?._id) {
@@ -56,7 +59,8 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
   }
 
   const handleCommentPost = (data: CommentPost) => {
-    onCommentPost({ ...data, post })
+    onCommentPost(data)
+    setCommentLength((prev) => prev + 1)
   }
 
   const handleEditPost = (data: CreateOrEditPostInput) => {
@@ -122,7 +126,7 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
           </div>
           <div className="flex justify-around items-center text-lg">
             <CommentOutlined className="mr-2" />
-            <span>{post?.commentLength}</span>
+            <span>{commentLength}</span>
           </div>
         </div>
         <div className="flex justify-around items-center">

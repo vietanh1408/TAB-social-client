@@ -37,6 +37,8 @@ const CommentBox: React.FC<CommentBoxProps> = (props: CommentBoxProps) => {
   const [comments, isLoadingComment] =
     useGetCommentByPostId(post._id, { pageSize, pageIndex }) ?? []
 
+  console.log('comments....', comments)
+
   const isShowLoadMoreComment = post?.commentLength > comments.length
   const formProps = useForm<CommentPost>({
     defaultValues: {
@@ -53,7 +55,7 @@ const CommentBox: React.FC<CommentBoxProps> = (props: CommentBoxProps) => {
   }
 
   const handleLoadMoreComment = () => {
-    setPageIndex((prev) => prev + DEFAULT_PAGE_INDEX)
+    setPageSize((prev) => prev + DEFAULT_COMMENT_LENGTH)
   }
 
   return (
@@ -65,7 +67,7 @@ const CommentBox: React.FC<CommentBoxProps> = (props: CommentBoxProps) => {
           className="p-4"
           renderItem={(item: CommentType) => (
             <CommentList
-              key={item?.id}
+              key={item?._id}
               comment={item}
               commentLength={post?.commentLength}
             />

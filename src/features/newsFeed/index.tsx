@@ -6,15 +6,15 @@ import React from 'react'
 import { useGetPost } from './hooks'
 
 const NewsFeed: React.FC = () => {
-  const { post, isLoading } = useGetPost()
+  const { posts, isLoading } = useGetPost()
 
   return (
     <div id="news-feed">
       <CreatePost />
       <Divider />
       {isLoading && <PostSkeleton length={1} />}
-      {post && post.length > 0
-        ? post.map((item: any, index: any) => {
+      {posts && posts.length > 0
+        ? posts.map((item: any, index: any) => {
             return <PostCard post={item} key={index} />
           })
         : null}
