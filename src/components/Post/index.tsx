@@ -1,14 +1,7 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
-import {
-  CommentOutlined,
-  EllipsisOutlined,
-  LikeFilled
-} from '@ant-design/icons'
+import { CommentOutlined, EllipsisOutlined } from '@ant-design/icons'
+import { Button, Popover } from 'antd'
+import ModalCreateOrEditPost from 'components/Modal/ModalCreateOrEditPost'
 import { getTimeDuration } from 'extensions/dateTime'
-import { CommentPost, CreateOrEditPostInput, PostType } from 'Models'
-import { useGetAuth } from 'features/user/hooks'
-import { Button, Image, Popover } from 'antd'
 import {
   useCommentPost,
   useDeletePost,
@@ -16,10 +9,11 @@ import {
   useLikePost,
   useUnlikePost
 } from 'features/newsFeed/hooks'
+import { useGetAuth } from 'features/user/hooks'
+import { CommentPost, CreateOrEditPostInput, PostType } from 'Models'
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import CommentBox from './CommentBox'
-import ModalEditPost from 'components/Modal/ModalCreateOrEditPost'
-import CreatePost from 'features/newsFeed/CreatePost'
-import ModalCreateOrEditPost from 'components/Modal/ModalCreateOrEditPost'
 
 type PostCardProps = {
   post: PostType
@@ -27,15 +21,13 @@ type PostCardProps = {
 
 const PostCard: React.FC<PostCardProps> = ({ post }) => {
   const { user } = useGetAuth()
-  const checkLiked = post?.likes.some((id: string) => id === user?._id)
-  const isOwnPost = post.isYour
 
   const [onLikePost] = useLikePost()
   const [onUnlikePost] = useUnlikePost()
   const [onDeletePost] = useDeletePost()
   const [onCommentPost] = useCommentPost()
   const [onEditPost] = useEditPost()
-  const [isLiked, setIsLiked] = useState<boolean>(checkLiked)
+  const [isLiked, setIsLiked] = useState<boolean>(post.isLiked)
   const [openCmt, setOpenCmt] = useState<boolean>(false)
   const [isVisible, setIsVisible] = useState<boolean>(false)
   const [likeNumb, setLikeNumb] = useState<number>(post?.likes.length ?? 0)
@@ -92,7 +84,7 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
                 <div className="small">{getTimeDuration(post?.createdAt)}</div>
               </div>
             </div>
-            {isOwnPost && (
+            {post.isYour && (
               <Popover
                 placement="bottomRight"
                 trigger="click"

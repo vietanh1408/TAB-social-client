@@ -20,7 +20,7 @@ const AppLayout: React.FC = () => {
       {verifiedUser && <Header />}
       <div
         className={`h-full w-full ${
-          verifiedUser ? 'py-2 md:py-4 px-2 md:px-3 lg:px-4 xl:px-6' : ''
+          verifiedUser ? 'py-2 md:py-4 px-2 md:px-3 lg:px-4 xl:px-6 mt-20' : ''
         }`}
       >
         <Row className="w-full h-full">

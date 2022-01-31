@@ -26,6 +26,7 @@ declare module 'Models' {
     user: UserPostType
     createdAt: Date
     isYour: boolean
+    isLiked: boolean
   }
 
   export interface CommentPost {
