@@ -11,7 +11,7 @@ import Avatar from 'antd/lib/avatar/avatar'
 const { TabPane } = Tabs
 interface ChatListProps {
   chatList: any
-  handleShowMessage: any
+  handleShowMessage: (id: string) => void
 }
 
 const ChatList: React.FC<ChatListProps> = (props: ChatListProps) => {
@@ -42,7 +42,6 @@ const ChatList: React.FC<ChatListProps> = (props: ChatListProps) => {
       <Card bordered={true} bodyStyle={{ background: '000' }}>
         <Tabs tabPosition={'left'}>
           {chatList.map((chat: any) => {
-            console.log('chat..........', chat)
             return (
               <TabPane
                 tab={() => {
@@ -62,37 +61,7 @@ const ChatList: React.FC<ChatListProps> = (props: ChatListProps) => {
               </TabPane>
             )
           })}
-          {/* <TabPane tab="Tab 1" key="1">
-            Content of Tab 1
-          </TabPane> */}
         </Tabs>
-        {/* <List
-          itemLayout="horizontal"
-          dataSource={chatList}
-          renderItem={(item: any) => (
-            <List.Item
-              onClick={() => onShowMessage(item?.room?._id)}
-              className="cursor-pointer"
-            >
-              <List.Item.Meta
-                avatar={<ChatAvatars avatars={item?.room?.users} />}
-                title={item?.room?.name}
-                description={
-                  <p
-                    className={`${classNames('truncate', {
-                      'font-bold': !checkReadMessage(
-                        item?.message?.isRead,
-                        item?.message?.from?._id
-                      )
-                    })}`}
-                  >
-                    {item?.message?.message}
-                  </p>
-                }
-              />
-            </List.Item>
-          )}
-        /> */}
       </Card>
     </div>
   )

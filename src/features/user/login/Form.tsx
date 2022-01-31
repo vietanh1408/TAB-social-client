@@ -1,7 +1,10 @@
 // libs
 import React from 'react'
 import FacebookLogin from 'react-facebook-login'
-import GoogleLogin from 'react-google-login'
+import GoogleLogin, {
+  GoogleLoginResponse,
+  GoogleLoginResponseOffline
+} from 'react-google-login'
 import { ControllerRenderProps, FormProvider, useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 import * as yup from 'yup'
@@ -19,7 +22,9 @@ import { LoginAccount, LoginGoogle } from 'Models'
 
 type LoginFormProps = {
   handleSubmitForm(args: LoginAccount): void
-  handleLoginGoogle(args: LoginGoogle): void
+  handleLoginGoogle(
+    args: GoogleLoginResponse | GoogleLoginResponseOffline | LoginGoogle
+  ): void
   title?: string
   text?: string
   isLoading?: boolean
@@ -47,7 +52,9 @@ const LoginForm: React.FC<LoginFormProps> = (props: LoginFormProps) => {
     handleSubmitForm(data)
   }
 
-  const handleLoginWithGoogle = (response: any) => {
+  const handleLoginWithGoogle = (
+    response: GoogleLoginResponse | GoogleLoginResponseOffline
+  ) => {
     handleLoginGoogle(response)
   }
 

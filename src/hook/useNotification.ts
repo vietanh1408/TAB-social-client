@@ -6,7 +6,7 @@ export const useNotification = ({
   isSuccess,
   message
 }: {
-  error?: any
+  error?: string
   isSuccess?: boolean
   message?: string
 }) => {

@@ -1,11 +1,11 @@
 declare module 'Models' {
   export interface AvatarType {
-    publicId: any
-    url: any
+    publicId: string
+    url: string
   }
   export interface BackgroundType {
-    publicId: any
-    url: any
+    publicId: string
+    url: string
   }
   export interface ProfileType {
     _id: string

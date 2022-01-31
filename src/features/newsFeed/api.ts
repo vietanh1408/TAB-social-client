@@ -143,13 +143,13 @@ const postSlice = createSlice({
     builder
 
       // get post
-      .addCase(fetchGetAllPost.pending, (state, action: PayloadAction<any>) => {
+      .addCase(fetchGetAllPost.pending, (state: PostState) => {
         state.isLoading = true
       })
 
       .addCase(
         fetchGetAllPost.fulfilled,
-        (state, action: PayloadAction<any>) => {
+        (state: PostState, action: PayloadAction<any>) => {
           state.isLoading = false
           state.postLength = action.payload.postLength
           if (state.posts && state.posts.length > 0) {
@@ -160,18 +160,18 @@ const postSlice = createSlice({
         }
       )
 
-      .addCase(fetchGetAllPost.rejected, (state) => {
+      .addCase(fetchGetAllPost.rejected, (state: PostState) => {
         state.isLoading = false
       })
 
       // create post
-      .addCase(fetchCreatePost.pending, (state) => {
+      .addCase(fetchCreatePost.pending, (state: PostState) => {
         state.isLoading = true
       })
 
       .addCase(
         fetchCreatePost.fulfilled,
-        (state, action: PayloadAction<any>) => {
+        (state: PostState, action: PayloadAction<any>) => {
           state.isLoading = false
           state.postLength =
             state.postLength && state.postLength === 0
@@ -181,24 +181,27 @@ const postSlice = createSlice({
         }
       )
 
-      .addCase(fetchCreatePost.rejected, (state) => {
+      .addCase(fetchCreatePost.rejected, (state: PostState) => {
         state.isLoading = false
       })
 
-      .addCase(fetchEditPost.fulfilled, (state, action: PayloadAction<any>) => {
-        state.posts = state.posts.map((item: any) => {
-          if (item._id == action.payload.post._id) {
-            return (item = action.payload.post)
-          } else {
-            return item
-          }
-        })
-      })
+      .addCase(
+        fetchEditPost.fulfilled,
+        (state: PostState, action: PayloadAction<any>) => {
+          state.posts = state.posts.map((item: any) => {
+            if (item._id == action.payload.post._id) {
+              return (item = action.payload.post)
+            } else {
+              return item
+            }
+          })
+        }
+      )
 
       // delete post
       .addCase(
         fetchDeletePost.fulfilled,
-        (state: any, action: PayloadAction<any>) => {
+        (state: PostState, action: PayloadAction<any>) => {
           state.posts = state.posts.filter((item: any) => {
             return item._id !== action.payload.postId
           })
@@ -206,21 +209,15 @@ const postSlice = createSlice({
       )
 
       // comment a post
-      .addCase(
-        fetchCommentPost.pending,
-        (state: any, action: PayloadAction<any>) => {
-          state.isLoadingComment = true
-        }
-      )
-      .addCase(
-        fetchCommentPost.rejected,
-        (state: any, action: PayloadAction<any>) => {
-          state.isLoadingComment = false
-        }
-      )
+      .addCase(fetchCommentPost.pending, (state: PostState) => {
+        state.isLoadingComment = true
+      })
+      .addCase(fetchCommentPost.rejected, (state: PostState) => {
+        state.isLoadingComment = false
+      })
       .addCase(
         fetchCommentPost.fulfilled,
-        (state: any, action: PayloadAction<any>) => {
+        (state: PostState, action: PayloadAction<any>) => {
           const currentPost = state.posts.find(
             (item: any) => item._id === action.payload.postId
           )
@@ -232,40 +229,21 @@ const postSlice = createSlice({
       )
 
       // get comment by post id
-      .addCase(
-        fetchGetCommentByPostId.pending,
-        (state: any, action: PayloadAction<any>) => {
-          state.isLoadingComment = true
-        }
-      )
-      .addCase(
-        fetchGetCommentByPostId.rejected,
-        (state: any, action: PayloadAction<any>) => {
-          state.isLoadingComment = false
-        }
-      )
+      .addCase(fetchGetCommentByPostId.pending, (state: PostState) => {
+        state.isLoadingComment = true
+      })
+      .addCase(fetchGetCommentByPostId.rejected, (state: PostState) => {
+        state.isLoadingComment = false
+      })
       .addCase(
         fetchGetCommentByPostId.fulfilled,
         (state: any, action: PayloadAction<any>) => {
           state.isLoadingComment = false
           const currentPost = state.posts.find(
-            (item: any) => item._id === action.payload.post._id
+            (item: PostType) => item._id === action.payload.post._id
           )
-
-          // var index = _.findIndex(state.posts, { _id: action.payload.post._id })
-
           if (current(currentPost)) {
             currentPost.comments = action.payload.post.comments
-            // if (
-            //   Array.isArray(currentPost?.comments) &&
-            //   currentPost?.comments?.length > 0
-            // ) {
-            //   currentPost.comments = currentPost.comments.concat(
-            //     action.payload.comments
-            //   )
-            // } else {
-            //   currentPost.comments = action.payload.comments
-            // }
           }
         }
       )

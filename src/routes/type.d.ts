@@ -1,3 +1,5 @@
+import { ReactComponentElement, ReactNode } from 'react'
+
 declare module 'Models' {
   export interface Navigator {
     menuName?: string
@@ -8,10 +10,10 @@ declare module 'Models' {
   export interface NavigatorParams {
     key?: string
     path: string
-    component?: any
+    component?: ReactNode | ReactDOM | ReactComponentElement
     isMenu: boolean
     isProtected: boolean
-    icon?: any
+    icon?: ReactNode | ReactDOM | ReactComponentElement
     menuName?: string
     children?: Navigator[]
     isAuth?: boolean

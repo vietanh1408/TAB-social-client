@@ -10,11 +10,11 @@ const RequestList: React.FC<any> = (props: any) => {
     handleCancelFriendRequest
   } = props
 
-  const handleAccept = (id: any) => {
+  const handleAccept = (id: string) => {
     handleAcceptFriendRequest(id)
   }
 
-  const handleCancel = (id: any) => {
+  const handleCancel = (id: string) => {
     handleCancelFriendRequest(id)
   }
 
