@@ -22,8 +22,6 @@ const ChatPage: React.FC = () => {
 
   const { conversation } = useGetConversationByRoomId(roomId)
 
-  console.log('conversation...........', conversation)
-
   const handleChangeRoomChat = (id: string) => {
     setRoomId(id)
     handleSearchClick({ roomId: id })
@@ -65,6 +63,7 @@ const ChatPage: React.FC = () => {
                 >
                   <ChatBoxTab
                     roomId={searchParams?.roomId ?? chat.room._id}
+                    receiver={chat?.friend?._id}
                   ></ChatBoxTab>
                 </TabPane>
               )

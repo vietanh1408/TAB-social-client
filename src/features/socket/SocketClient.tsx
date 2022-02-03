@@ -13,6 +13,7 @@ import { NotificationType } from 'Models'
 // models
 // @ts-ignore
 import notificationSound from 'assets/swiftly-610.mp3'
+import { getMessages } from 'features/chat/api'
 
 const SocketClient: React.FC = () => {
   const {
@@ -99,6 +100,16 @@ const SocketClient: React.FC = () => {
       }
     )
     return () => socketActions?.off('sendNotificationCommentPost')
+  }, [socketActions, dispatch])
+
+  // nhan tin nhan
+  useEffect(() => {
+    socketActions?.on('receiveMessage', (data: any) => {
+      console.log('receive.........', data)
+      dispatch(getMessages(data))
+      playNotificationSound()
+    })
+    return () => socketActions?.off('receiveMessage')
   }, [socketActions, dispatch])
 
   return (

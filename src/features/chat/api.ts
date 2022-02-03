@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import chatApi from 'api/chatApi'
 import { showError } from 'extensions'
-import { ConversationsType } from 'Models'
+import { ConversationsType, CreateMessage } from 'Models'
 
 interface ConversationState {
   isLoading: boolean
@@ -43,10 +43,27 @@ export const fetchConversationByRoomId = createAsyncThunk(
   }
 )
 
+export const fetchCreateMessage = createAsyncThunk(
+  'chat/createMessage',
+  async (data: CreateMessage, { rejectWithValue }) => {
+    try {
+      const response = await chatApi.createMessage(data)
+      return response.data
+    } catch (err: any) {
+      showError(err)
+      return rejectWithValue(err.response)
+    }
+  }
+)
+
 const chatSlice = createSlice({
   name: 'chat',
   initialState,
-  reducers: {},
+  reducers: {
+    getMessages: (state: ConversationState, action: PayloadAction<any>) => {
+      state.conversation.push(action.payload)
+    }
+  },
   extraReducers: (builder) => {
     builder
 
@@ -68,6 +85,14 @@ const chatSlice = createSlice({
         }
       )
 
+      .addCase(
+        fetchCreateMessage.fulfilled,
+        (state, action: PayloadAction<ConversationState>) => {
+          state.isLoading = false
+          // state.conversation = action.payload.conversation
+        }
+      )
+
       .addMatcher(
         (action) =>
           action.type.startsWith('chat') && action.type.endsWith('pending'),
@@ -86,5 +111,6 @@ const chatSlice = createSlice({
   }
 })
 
-const { reducer } = chatSlice
+const { reducer, actions } = chatSlice
+export const { getMessages } = actions
 export default reducer

@@ -8,13 +8,14 @@ const chatApi = {
     return axiosClient.get(url, setHeaders())
   },
   getConversation(roomId?: string) {
-    let url = `/chats/`
+    let url = `/chats/get-conversation`
     if (roomId) {
       url += `?roomId=${roomId}`
     }
     return axiosClient.get(url, setHeaders())
   },
   createMessage(data: CreateMessage) {
+    console.log('message....', data)
     const url = `/chats`
     return axiosClient.post(url, data, setHeaders())
   }

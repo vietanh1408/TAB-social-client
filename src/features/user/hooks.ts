@@ -124,7 +124,6 @@ export const useSendFriendRequest = () => {
   const { user } = useSelector((state: RootState) => state.user)
 
   const onSendFriendRequest = async (profile: any) => {
-    console.log('profile.....', profile)
     const notification = {
       text: `${user?.name} đã gửi lời mời kết bạn`,
       sender: user,

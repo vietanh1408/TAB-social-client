@@ -1,8 +1,9 @@
 declare module 'Models' {
   export interface CreateMessage {
-    receiver: string
-    message: string
+    receiver?: string
+    message?: string
     roomId?: string
+    sender?: string
   }
 
   export interface MessageType {
