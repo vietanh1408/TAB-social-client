@@ -8,7 +8,7 @@ import { ConversationsType } from 'Models'
 import React, { useState } from 'react'
 import { useLocation } from 'react-router'
 // hooks
-import { useGetAllConversations, useGetConversationByRoomId } from './hooks'
+import { useGetAllConversations } from './hooks'
 const { TabPane } = Tabs
 
 const ChatPage: React.FC = () => {
@@ -19,8 +19,6 @@ const ChatPage: React.FC = () => {
   const { handleSearchClick } = useUpdateSearch(pathname, search)
 
   const { conversations, isLoading } = useGetAllConversations()
-
-  const { conversation } = useGetConversationByRoomId(roomId)
 
   const handleChangeRoomChat = (id: string) => {
     setRoomId(id)

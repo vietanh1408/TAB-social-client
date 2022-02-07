@@ -6,14 +6,19 @@ import { RootState } from 'app/store'
 // api
 import { socketAction } from './api'
 import { addToOnlineList, getOnlineUser } from 'features/onlineUser/api'
-import { getNotification } from 'features/notification/api'
+import {
+  fetchGetNotification,
+  fetchReadNotification,
+  getNotification
+} from 'features/notification/api'
 // socket.io
 import io from 'socket.io-client'
 import { NotificationType } from 'Models'
 // models
 // @ts-ignore
 import notificationSound from 'assets/swiftly-610.mp3'
-import { getMessages } from 'features/chat/api'
+import { fetchConversationByRoomId, getMessages } from 'features/chat/api'
+import { fetchGetRequests } from 'features/friend/api'
 
 const SocketClient: React.FC = () => {
   const {
@@ -71,7 +76,9 @@ const SocketClient: React.FC = () => {
     socketActions?.on(
       'receiveFriendRequest',
       (notification: NotificationType) => {
-        dispatch(getNotification(notification))
+        // dispatch(getNotification(notification))
+        dispatch(fetchGetNotification())
+        dispatch(fetchGetRequests())
         playNotificationSound()
       }
     )
@@ -83,7 +90,8 @@ const SocketClient: React.FC = () => {
     socketActions?.on(
       'sendNotificationLikePost',
       (notification: NotificationType) => {
-        dispatch(getNotification(notification))
+        // dispatch(getNotification(notification))
+        dispatch(fetchGetNotification())
         playNotificationSound()
       }
     )
@@ -95,7 +103,8 @@ const SocketClient: React.FC = () => {
     socketActions?.on(
       'sendNotificationCommentPost',
       (notification: NotificationType) => {
-        dispatch(getNotification(notification))
+        // dispatch(getNotification(notification))
+        dispatch(fetchGetNotification())
         playNotificationSound()
       }
     )
@@ -105,8 +114,8 @@ const SocketClient: React.FC = () => {
   // nhan tin nhan
   useEffect(() => {
     socketActions?.on('receiveMessage', (data: any) => {
-      console.log('receive.........', data)
-      dispatch(getMessages(data))
+      dispatch(fetchConversationByRoomId(data?.roomId))
+      // dispatch(getMessages(data))
       playNotificationSound()
     })
     return () => socketActions?.off('receiveMessage')

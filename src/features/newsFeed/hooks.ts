@@ -149,6 +149,7 @@ export const useCommentPost = () => {
     // @ts-ignore
     const resultAction = await dispatch(fetchCommentPost(data))
     if (fetchCommentPost.fulfilled.match(resultAction)) {
+      console.log('data............', data)
       // gui thong bao
       const notification = {
         text: `${user?.name} đã bình luận bài viết của bạn`,
@@ -160,6 +161,7 @@ export const useCommentPost = () => {
       }
       // @ts-ignore
       const result = await dispatch(fetchCreateNotification(notification))
+      console.log('result....', result)
       if (fetchCreateNotification.fulfilled.match(result)) {
         const newNotification = result?.payload?.data?.notification
         // gui thong bao socket

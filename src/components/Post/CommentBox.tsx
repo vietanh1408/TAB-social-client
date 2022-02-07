@@ -37,9 +37,8 @@ const CommentBox: React.FC<CommentBoxProps> = (props: CommentBoxProps) => {
   const [comments, isLoadingComment] =
     useGetCommentByPostId(post._id, { pageSize, pageIndex }) ?? []
 
-  console.log('comments....', comments)
-
   const isShowLoadMoreComment = post?.commentLength > comments.length
+
   const formProps = useForm<CommentPost>({
     defaultValues: {
       comment: undefined
@@ -50,7 +49,12 @@ const CommentBox: React.FC<CommentBoxProps> = (props: CommentBoxProps) => {
   const { handleSubmit, reset } = formProps
 
   const onSubmit = (data: CommentPost) => {
-    handleComment({ ...data, postId: post._id, authorId: post?.user?._id })
+    handleComment({
+      ...data,
+      postId: post._id,
+      authorId: post?.user?._id,
+      post
+    })
     reset()
   }
 

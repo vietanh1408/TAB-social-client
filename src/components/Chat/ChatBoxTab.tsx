@@ -11,6 +11,7 @@ import { CreateMessage } from 'Models'
 import React from 'react'
 import { ControllerRenderProps, FormProvider, useForm } from 'react-hook-form'
 import * as yup from 'yup'
+import ReactScrollableFeed from 'react-scrollable-feed'
 
 interface ChatBoxTab {
   roomId: string
@@ -58,27 +59,29 @@ const ChatBoxTab: React.FC<ChatBoxTab> = (props: ChatBoxTab) => {
         subTitle="Đang hoạt động"
       />
       <Divider />
-      <div className=" h-96 overflow-scroll">
-        {conversation && conversation.length > 0
-          ? conversation.map((item: any, index: number) => {
-              return (
-                <div
-                  key={index}
-                  className={`flex items-center w-full mb-2 overflow-hidden ${
-                    item?.isYour ? 'justify-end  ' : 'justify-start'
-                  }`}
-                >
+      <div className=" h-96 overflow-scroll ">
+        <ReactScrollableFeed>
+          {conversation && conversation.length > 0
+            ? conversation.map((item: any, index: number) => {
+                return (
                   <div
-                    className={`${
-                      item?.isYour && 'bg-blue-500 text-white'
-                    } w-auto py-4 px-2 rounded-xl border-['#5b5959'] border-2`}
+                    key={index}
+                    className={`flex items-center w-full mb-2 overflow-hidden ${
+                      item?.isYour ? 'justify-end  ' : 'justify-start'
+                    }`}
                   >
-                    {item?.message}
+                    <div
+                      className={`${
+                        item?.isYour && 'bg-blue-500 text-white'
+                      } w-auto py-4 px-2 rounded-xl border-['#5b5959'] border-2`}
+                    >
+                      {item?.message}
+                    </div>
                   </div>
-                </div>
-              )
-            })
-          : null}
+                )
+              })
+            : null}
+        </ReactScrollableFeed>
       </div>
       <FormProvider {...formProps}>
         <Form onFinish={handleSubmit(onSubmit)}>
