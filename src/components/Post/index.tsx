@@ -27,7 +27,7 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
   const [onDeletePost] = useDeletePost()
   const [onCommentPost] = useCommentPost()
   const [onEditPost] = useEditPost()
-  const [isLiked, setIsLiked] = useState<boolean>(post.isLiked)
+  const [isLiked, setIsLiked] = useState<boolean>(post.isLiked ?? false)
   const [openCmt, setOpenCmt] = useState<boolean>(false)
   const [isVisible, setIsVisible] = useState<boolean>(false)
   const [likeNumb, setLikeNumb] = useState<number>(post?.likeLength ?? 0)

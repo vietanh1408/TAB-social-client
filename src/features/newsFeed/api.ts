@@ -18,14 +18,13 @@ interface PostState {
   posts: PostType[]
   isLoading: boolean
   isLoadingComment: boolean
-  postLength: number | null
+  postLength?: number
 }
 
 const initialState: PostState = {
   posts: [],
   isLoading: false,
   isLoadingComment: false,
-  postLength: null
 }
 
 export const fetchGetAllPost = createAsyncThunk(

@@ -46,6 +46,16 @@ const postApi = {
       url += `&limit=${pagination.pageSize}`
     }
     return axiosClient.get(url, setHeaders())
+  },
+  getPostsByProfileId(id: string, pagination?: Pagination) {
+    let url = `/posts/profile/${id}`
+    if(pagination?.pageIndex) {
+      url += `?page=${pagination.pageIndex}`
+    }
+    if(pagination?.pageSize) {
+      url += `&limit=${pagination.pageSize}`
+    }
+    return axiosClient.get(url, setHeaders())
   }
 }
 
