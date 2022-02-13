@@ -14,7 +14,7 @@ import { CommentPost, CommentType, PostType, UserType } from 'Models'
 // hooks
 import { useGetCommentByPostId } from 'features/newsFeed/hooks'
 // constants
-import { DEFAULT_COMMENT_LENGTH, DEFAULT_PAGE_INDEX } from 'constants/index'
+import { DEFAULT_COMMENT_LENGTH } from 'constants/index'
 
 const { TextArea } = Input
 

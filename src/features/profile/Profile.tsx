@@ -11,10 +11,8 @@ import {
   useUnfriend
 } from 'features/user/hooks'
 import React from 'react'
-import { useGetPostsByProfileId, useLoadProfile } from './hooks'
-import PostSkeleton from '../../components/Post/Skeleton'
-import PostCard from '../../components/Post'
-import {PostType} from 'Models'
+import { useLoadProfile } from './hooks'
+import Posts from './Posts'
 
 const Profile: React.FC = () => {
   const { profile, isLoading } = useLoadProfile()
@@ -27,7 +25,6 @@ const Profile: React.FC = () => {
   const [onCancelSendFriendRequest] = useCancelSendFriendRequest()
   const [onAccept] = useAcceptFriendRequest()
   const [onCancel] = useCancelFriendRequest()
-  const {posts, postLength, isLoading: loadingPosts} = useGetPostsByProfileId()
 
   const handleSendFriendRequest = () => {
     onSendFriendRequest(profile)
@@ -57,7 +54,6 @@ const Profile: React.FC = () => {
     onCancel(id)
   }
 
-
   if (isLoading) {
     return <LoadingPage />
   }
@@ -65,7 +61,6 @@ const Profile: React.FC = () => {
   if (!profile) {
     return <NotFoundPage />
   }
-
 
   return (
     <div id="profile_page" style={{ height: '1000px' }}>
@@ -83,14 +78,7 @@ const Profile: React.FC = () => {
           handleCancelFriendRequest={handleCancelFriendRequest}
         />
       ) : null}
-      <div className="w-full py-4">
-        {isLoading && <PostSkeleton length={1} />}
-        {posts && posts.length > 0
-          ? posts.map((item: any, index: number) => {
-            return <PostCard post={item} key={index} />
-          })
-          : null}
-        </div>
+      <Posts />
     </div>
   )
 }

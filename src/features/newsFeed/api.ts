@@ -14,6 +14,11 @@ import {
 } from 'Models'
 import * as _ from 'lodash'
 
+interface ProfilePosts {
+  posts?: PostType[]
+  total?: 0
+  isLoading?: boolean
+}
 interface PostState {
   posts: PostType[]
   isLoading: boolean
@@ -24,7 +29,7 @@ interface PostState {
 const initialState: PostState = {
   posts: [],
   isLoading: false,
-  isLoadingComment: false,
+  isLoadingComment: false
 }
 
 export const fetchGetAllPost = createAsyncThunk(
@@ -134,10 +139,35 @@ export const fetchGetCommentByPostId = createAsyncThunk(
   }
 )
 
+export const fetchGetPostsByProfileId = createAsyncThunk(
+  'post/getPostsByProfileId',
+  async (
+    { id, pagination }: { id: string; pagination?: Pagination },
+    { rejectWithValue }
+  ) => {
+    try {
+      const { data: response } = await postApi.getPostsByProfileId(
+        id,
+        pagination
+      )
+      return response
+    } catch (err: any) {
+      showError(err)
+      return rejectWithValue(err.response)
+    }
+  }
+)
+
 const postSlice = createSlice({
   name: 'post',
   initialState,
-  reducers: {},
+  reducers: {
+    updatePosts(state, action) {
+      console.log('action............', action)
+      state.posts = action.payload.posts
+      state.postLength = action.payload.postLength
+    }
+  },
   extraReducers: (builder) => {
     builder
 
@@ -249,6 +279,6 @@ const postSlice = createSlice({
   }
 })
 
-const { reducer } = postSlice
-
+const { reducer, actions } = postSlice
+export const { updatePosts } = actions
 export default reducer

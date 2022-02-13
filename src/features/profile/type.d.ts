@@ -33,9 +33,9 @@ declare module 'Models' {
   }
 
   export interface ProfileState {
-    profile?:  ProfileType | null
+    profile?: ProfileType | null
     isLoading: boolean
     posts: PostType[]
-    postLength: number
+    postLength?: number
   }
 }
